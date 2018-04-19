@@ -1,13 +1,12 @@
-const express = require( "express");
-const { route } = require( "./api");
-const { router } = require("./api/router");
+const express = require("express");
+const repoRouter = require("./api/resources/repo/router");
 
 const app = express();
 
-app.use("/repo", router);
+app.use("/praise/repo", repoRouter);
 
 app.all("*", (req, res) => {
   res.json({ code: 200, message: "Hey" });
 });
 
-module.exports =  app;
+module.exports = app;
