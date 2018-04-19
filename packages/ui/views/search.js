@@ -30,7 +30,11 @@ class Search extends Component {
       <div className={styles.searchContainer}>
         <TextField onInputChange={e => this.onInputChange(e.target.value)} />
         <div className={styles.repoListContainer}>
-          {this.state.repos.map((repo, index) => <div key={index}>{repo}</div>)}
+          {this.state.repos.map((repo, index) => (
+            <div className={styles.repoCard} key={index}>
+              {repo}
+            </div>
+          ))}
         </div>
       </div>
     );

@@ -1,0 +1,14 @@
+.input {
+  outline: none;
+  border: none;
+  font-size: 72px;
+  font-weight: 900;
+  margin-bottom: 10px;
+  padding-bottom: 7px;
+
+  border-bottom: 5px solid #a7a7a7;
+
+  &::-webkit-input-placeholder {
+    color: #a7a7a7;
+  }
+}
