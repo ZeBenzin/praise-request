@@ -1,18 +1,19 @@
 .searchIcon {
-  height: 57px;
-  width: 57px;
+  height: 30px;
+  width: 30px;
   display: inline-block;
   border-radius: 50%;
   border: 5px solid #a7a7a7;
+  margin-top: 19px;
 
   &:before {
     content: "";
-    width: 29px;
-    height: 9px;
+    width: 10px;
+    height: 7px;
     border-radius: 4px;
     position: absolute;
     background-color: #a7a7a7;
-    transform: rotate(45deg) translate(70px, 7px);
+    transform: rotate(45deg) translate(39px, 0px);
   }
 }
 
