@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 
 import styles from "./repo-card.scss";
 
@@ -14,21 +15,28 @@ class RepoCard extends PureComponent {
   }
 
   render() {
+    const { name, description, owner } = this.props.repo;
     return (
-      <div className={styles.repoCard}>
+      <div className={styles.repoCard} onClick={this.props.onClick}>
         <div className={styles.repoIcon}>
-          <img src="https://avatars3.githubusercontent.com/u/69631?v=4" />
+          <img alt="" src={owner.avatar_url} />
         </div>
         <div className={styles.repoDetails}>
-          <span className={styles.repoName}>reactjs/reactjs.org</span>
-          <p className={styles.repoDescription}>
-            The React documentation website
-          </p>
-          {this.renderTags()}
+          <span className={styles.repoName}>{name}</span>
+          <p className={styles.repoDescription}>{description}</p>
         </div>
       </div>
     );
   }
 }
+
+RepoCard.propTypes = {
+  repo: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired
+};
+
+RepoCard.defaultProps = {
+  onClick: () => {}
+};
 
 export default RepoCard;

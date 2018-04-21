@@ -14,7 +14,7 @@ const getByQuery = (req, res) => {
     const items = JSON.parse(response.body).items || [];
     const reducedItems = items.map(item => item.name);
 
-    res.json({ data: reducedItems });
+    res.json({ data: items });
   });
 };
 

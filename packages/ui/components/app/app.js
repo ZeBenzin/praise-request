@@ -1,19 +1,25 @@
 import React, { Component } from "react";
 import Search from "ui/views/search";
-import style from "./app.scss";
+
+import SearchIcon from "component/search-icon/search-icon";
+
+import styles from "./app.scss";
 
 class App extends Component {
   render() {
     return (
-      <div className={style.app}>
-        <div className={style.header} />
-        <div className={style.content}>
-          <div className={style.navBar}>
-            <div className={style.navLink}>Search</div>
-            <div className={style.navLink}>Account</div>
-            <div className={style.navLink}>Wallet</div>
+      <div className={styles.app}>
+        <div className={styles.header} />
+        <div className={styles.content}>
+          <div className={styles.navBar}>
+            <div className={styles.navLink}>
+              <SearchIcon small />
+              <span className={styles.navLinkLabel}>Search</span>
+            </div>
+            <div className={styles.navLink}>Account</div>
+            <div className={styles.navLink}>Wallet</div>
           </div>
-          <div className={style.mainContent}>
+          <div className={styles.mainContent}>
             <Search />
           </div>
         </div>

@@ -2,8 +2,7 @@
 $header-height: 165px;
 
 .app {
-  width: 100vw;
-  height: calc(100vh - 253px);
+  height: calc(100vh - 165px);
 }
 
 .header {
@@ -12,11 +11,9 @@ $header-height: 165px;
 
 .content {
   display: flex;
-  height: 100%;
 }
 
 .navBar {
-  height: 100%;
   display: flex;
   flex-direction: column;
   padding-left: 153px;
@@ -25,6 +22,11 @@ $header-height: 165px;
 
 .navLink {
   margin-bottom: 10px;
+  display: flex;
+}
+
+.navLinkLabel {
+  padding-left: 18px;
 }
 
 .mainContent {
