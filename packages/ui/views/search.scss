@@ -7,12 +7,6 @@
 
 .repoListContainer {
   height: 873px;
+  padding-top: 40px;
   overflow-y: scroll;
-}
-
-.repoCard {
-  height: 100px;
-  &:nth-child(even) {
-    background-color: #f9f9f9;
-  }
 }

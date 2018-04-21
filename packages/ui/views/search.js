@@ -3,6 +3,7 @@ import { debounce } from "lodash";
 import { searchRepos } from "ui/api/repo";
 
 import TextField from "component/text-field/text-field";
+import RepoCard from "component/repo-card/repo-card";
 
 import styles from "./search.scss";
 
@@ -11,7 +12,7 @@ class Search extends Component {
     super();
     this.onInputChange = debounce(this.onInputChange.bind(this), 300);
     this.state = {
-      repos: []
+      repos: [{}]
     };
   }
 
@@ -30,11 +31,7 @@ class Search extends Component {
       <div className={styles.searchContainer}>
         <TextField onInputChange={e => this.onInputChange(e.target.value)} />
         <div className={styles.repoListContainer}>
-          {this.state.repos.map((repo, index) => (
-            <div className={styles.repoCard} key={index}>
-              {repo}
-            </div>
-          ))}
+          <RepoCard />
         </div>
       </div>
     );
