@@ -1,0 +1,12 @@
+.input {
+  outline: none;
+  border: none;
+  font-size: 72px;
+  font-weight: 900;
+  font-family: "Ubuntu";
+  padding-left: 32px;
+
+  &::-webkit-input-placeholder {
+    color: #a7a7a7;
+  }
+}

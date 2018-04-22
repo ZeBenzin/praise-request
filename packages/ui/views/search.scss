@@ -1,0 +1,15 @@
+.searchContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 171px;
+  max-width: 1000px;
+}
+
+.search {
+  display: flex;
+  border-bottom: 5px solid #a7a7a7;
+}
+
+.repoListContainer {
+  padding-top: 40px;
+}

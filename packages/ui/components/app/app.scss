@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css?family=Ubuntu:400,700,600");
+$header-height: 165px;
+
+.app {
+  height: calc(100vh - 165px);
+}
+
+.header {
+  height: $header-height;
+}
+
+.content {
+  display: flex;
+}
+
+.navBar {
+  display: flex;
+  flex-direction: column;
+  padding-left: 153px;
+  padding-top: 100px;
+}
+
+.navLink {
+  padding-bottom: 20px;
+  display: flex;
+}
+
+.navLinkLabel {
+  padding-left: 18px;
+}
+
+.mainContent {
+  flex-grow: 1;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Ubuntu", sans-serif;
+}
