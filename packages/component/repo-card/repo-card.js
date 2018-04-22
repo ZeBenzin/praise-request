@@ -15,9 +15,9 @@ class RepoCard extends PureComponent {
   }
 
   render() {
-    const { name, description, owner } = this.props.repo;
+    const { name, description, owner, id } = this.props.repo;
     return (
-      <div className={styles.repoCard} onClick={this.props.onClick}>
+      <div id={id} className={styles.repoCard} onClick={this.props.onClick}>
         <div className={styles.repoIcon}>
           <img alt="" src={owner.avatar_url} />
         </div>

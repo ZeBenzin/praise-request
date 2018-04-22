@@ -6,7 +6,11 @@ class SearchIcon extends PureComponent {
     const className = this.props.small
       ? styles.searchIconSmall
       : styles.searchIcon;
-    return <div className={className} />;
+    return (
+      <div>
+        <div className={className} />
+      </div>
+    );
   }
 }
 

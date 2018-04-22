@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { debounce } from "lodash";
 import { searchRepos } from "ui/api/repo";
+import { ErrorContext } from "ui/components/app/app";
 
 import TextField from "component/text-field/text-field";
 import RepoCard from "component/repo-card/repo-card";
@@ -16,7 +18,8 @@ class Search extends Component {
     this.onRepoClick = this.onRepoClick.bind(this);
 
     this.state = {
-      repos: []
+      repos: [],
+      selectedRepo: null
     };
   }
 
@@ -26,23 +29,40 @@ class Search extends Component {
         this.setState({ repos: data.data });
       })
       .catch(err => {
-        console.log(err);
-        // Display toast - yeah right!
+        // Early toast implementation
+        this.setState({ error: true });
       });
   }
 
-  onRepoClick() {}
+  onRepoClick(e, id) {
+    this.setState({ selectedRepo: id });
+  }
 
   render() {
-    return (
+    return this.state.selectedRepo ? (
+      <Redirect to={`/search/${this.state.selectedRepo}`} />
+    ) : (
       <div className={styles.searchContainer}>
         <div className={styles.search}>
           <SearchIcon />
           <TextField onInputChange={e => this.onInputChange(e.target.value)} />
+          {this.state.error ? (
+            <ErrorContext.Consumer>
+              {val => {
+                this.setState({ error: false });
+                val();
+              }}
+            </ErrorContext.Consumer>
+          ) : null}
         </div>
         <div className={styles.repoListContainer}>
           {this.state.repos.map(repo => (
-            <RepoCard key={repo.id} repo={repo} onClick={this.onRepoClick} />
+            <RepoCard
+              id={repo.id}
+              key={repo.id}
+              repo={repo}
+              onClick={e => this.onRepoClick(e, repo.id)}
+            />
           ))}
         </div>
       </div>
