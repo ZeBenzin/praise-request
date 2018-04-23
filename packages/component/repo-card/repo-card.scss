@@ -1,14 +1,19 @@
 .repoCard {
-  min-height: 93px;
-  border-bottom: 1px solid #eaeaea;
-  padding: 17px;
+  min-height: 47px;
+  padding: 7px;
+  margin-bottom: 10px;
+  display: -ms-flexbox;
   display: flex;
+  -ms-flex-pack: justify;
   justify-content: space-between;
+  border-radius: 3px;
+  background-color: #f7f7f7;
 }
 
 .repoIcon {
-  height: 75px;
-  width: 75px;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
 
   & > img {
     height: 100%;
@@ -21,11 +26,13 @@
 }
 
 .repoName {
-  font-size: 24px;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .repoDescription {
   font-size: 14px;
+  margin: 0;
 }
 
 .repoTag {

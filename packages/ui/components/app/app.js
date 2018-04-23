@@ -5,13 +5,12 @@ import Account from "ui/views/account";
 import Wallet from "ui/views/wallet";
 import Repo from "ui/views/repo";
 
-import SearchIcon from "component/search-icon/search-icon";
-import PersonIcon from "component/person-icon/person-icon";
-import WalletIcon from "component/wallet-icon/wallet-icon";
+import SearchIcon from "@material-ui/icons/Search";
+import PersonIcon from "@material-ui/icons/Person";
+import WalletIcon from "@material-ui/icons/AccountBalanceWallet";
 
 import Header from "ui/components/header/header";
 
-import classNames from "classnames";
 import styles from "./app.scss";
 
 export const ErrorContext = React.createContext("error");
@@ -24,7 +23,7 @@ class App extends Component {
         label: "Search",
         path: "/search",
         exact: false,
-        icon: <SearchIcon small />,
+        icon: <SearchIcon className={styles.navIconElem} />,
         view: Search,
         visible: true
       },
@@ -33,7 +32,7 @@ class App extends Component {
         label: "Account",
         path: "/account",
         exact: false,
-        icon: <PersonIcon />,
+        icon: <PersonIcon className={styles.navIconElem} />,
         view: Account,
         visible: true
       },
@@ -42,7 +41,7 @@ class App extends Component {
         label: "Wallet",
         path: "/wallet",
         exact: false,
-        icon: <WalletIcon small />,
+        icon: <WalletIcon className={styles.navIconElem} />,
         view: Wallet,
         visible: true
       }
@@ -57,9 +56,9 @@ class App extends Component {
         key={id}
         to={path}
       >
-        <div className={styles.navLink}>
+        <div className={styles.navIcon}>
           {icon}
-          <span className={styles.navLinkLabel}>{label}</span>
+          <span className={styles.navIconLabel}>{label}</span>
         </div>
       </NavLink>
     );
@@ -83,14 +82,26 @@ class App extends Component {
       <ErrorContext.Provider value={() => this.renderErrorToast()}>
         <Router>
           <div className={styles.app}>
-            <Header />
-            <div className={styles.content}>
-              <div className={styles.navBar}>
-                {this.getNavLinks().map(link => this.renderNavLink(link))}
+            <div className={styles.appContainer}>
+              <div className={styles.sidebar}>
+                <div className={styles.logo}>
+                  <span className={styles.logoName}>{`<PR />`}</span>
+                </div>
+                <div className={styles.navLinks}>
+                  {this.getNavLinks().map(link => this.renderNavLink(link))}
+                </div>
               </div>
-              <div className={styles.mainContent}>
-                {this.getNavLinks().map(link => this.renderRoute(link))}
-                <Route path="/search/:id" component={() => <Repo />} />
+              <div className={styles.rightContentContainer}>
+                <Header />
+                <div className={styles.content}>
+                  <div className={styles.mainContent}>
+                    {this.getNavLinks().map(link => this.renderRoute(link))}
+                    <Route
+                      path="/search/:id"
+                      render={routeProps => <Repo {...routeProps} />}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

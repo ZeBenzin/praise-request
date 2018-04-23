@@ -7,10 +7,11 @@ class Header extends PureComponent {
     return (
       <div className={styles.header}>
         <div className={styles.headerContent}>
-          <div>(praiseRequest)</div>
-          <div>About</div>
-          <div>OST</div>
-          <div>GitHub</div>
+          <div className={styles.hamburger}>
+            <div className={styles.top} />
+            <div className={styles.middle} />
+            <div className={styles.bottom} />
+          </div>
         </div>
       </div>
     );
