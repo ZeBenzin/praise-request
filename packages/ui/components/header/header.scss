@@ -2,8 +2,7 @@ $header-height: 85px;
 
 .header {
   height: $header-height;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
-  margin-bottom: 30px;
+  border-bottom: 1px solid #f3f3f3;
 }
 
 .headerContent {
@@ -11,5 +10,38 @@ $header-height: 85px;
   align-items: center;
   height: 100%;
   justify-content: space-between;
-  padding: 0 500px;
+}
+
+.hamburger {
+  height: 15px;
+  padding-left: 15px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .top {
+    height: 3px;
+    width: 15px;
+    background-color: #467ebd;
+    border-radius: 2px;
+  }
+
+  .middle {
+    height: 3px;
+    width: 21px;
+    background-color: #467ebd;
+    border-radius: 2px;
+  }
+
+  .bottom {
+    height: 3px;
+    width: 15px;
+    background-color: #467ebd;
+    border-radius: 2px;
+  }
 }

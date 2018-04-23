@@ -1,12 +1,94 @@
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,600");
+@import url("https://fonts.googleapis.com/css?family=Oswald:400,700,600");
 
 .app {
   height: 100vh;
 }
 
+.appContainer {
+  display: flex;
+}
+
+.sidebar {
+  height: 100vh;
+  width: 95px;
+  border-right: 1px solid #f3f3f3;
+  display: flex;
+  flex-direction: column;
+}
+
+.navIcon {
+  width: 100%;
+  height: 62px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px 0;
+  border-right: 3px solid transparent;
+
+  &:hover {
+    cursor: pointer;
+    & > .navIconLabel {
+      transform: translateX(0);
+    }
+
+    & > .searchIconLabel {
+      transition-delay: 0.1s;
+    }
+
+    & > .accountIconLabel {
+      transition-delay: 0.16s;
+    }
+
+    & > .walletIconLabel {
+      transition-delay: 0.2s;
+    }
+  }
+
+  &:hover > .navIconLabel {
+    transition-delay: 0.1s;
+    transform: translateX(0%, 100%);
+  }
+}
+
+.navIconElem {
+  margin: auto;
+  font-size: 31px !important;
+  color: #467fbd;
+}
+
 .content {
   display: flex;
-  padding-top: 80px;
+  padding-top: 70px;
+  height: calc(100vh - 156px);
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.rightContentContainer {
+  flex-grow: 1;
+}
+
+.logo {
+  height: 85px;
+  border-bottom: 1px solid #f3f3f3;
+  display: flex;
+}
+
+.logoName {
+  margin: auto;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "Oswald";
+  color: #467fbd;
+}
+
+.navIconLabel {
+  transition: 0.1s ease-in;
+  transform: translateX(-200px);
+  color: #467ebd;
+  font-weight: 700;
+  padding-bottom: 5px;
+  font-family: "Oswald";
 }
 
 .navBar {
@@ -37,6 +119,15 @@
 
 .activeNavLink {
   border-bottom: 3px solid #30cbe4;
+
+  .navIcon {
+    background-color: rgba(70, 126, 189, 0.25);
+    border-right: 3px solid #467ebd;
+  }
+
+  .navIconLabel {
+    transform: translateX(0);
+  }
 }
 
 .mainContent {

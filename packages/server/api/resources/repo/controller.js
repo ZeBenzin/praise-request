@@ -12,12 +12,15 @@ const getByQuery = (req, res) => {
   const url = githubBasePath + "/search/repositories?q=" + req.query.q;
   customRequest.get(url, (err, response) => {
     const items = JSON.parse(response.body).items || [];
-    const reducedItems = items.map(item => item.name);
-
     res.json({ data: items });
   });
 };
 
-const getById = (req, res) => {};
+const getById = (req, res) => {
+  const url = githubBasePath + "/repositories/" + req.params.id;
+  customRequest.get(url, (err, response) => {
+    res.json({ data: JSON.parse(response.body) });
+  });
+};
 
-module.exports = { getByQuery };
+module.exports = { getByQuery, getById };

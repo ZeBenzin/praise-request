@@ -40,7 +40,12 @@ class Search extends Component {
 
   render() {
     return this.state.selectedRepo ? (
-      <Redirect to={`/search/${this.state.selectedRepo}`} />
+      <Redirect
+        to={{
+          pathname: `/search/${this.state.selectedRepo}`,
+          state: { repoId: this.state.selectedRepo }
+        }}
+      />
     ) : (
       <div className={styles.searchContainer}>
         <div className={styles.search}>

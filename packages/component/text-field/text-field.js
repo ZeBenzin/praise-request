@@ -8,6 +8,7 @@ class TextField extends PureComponent {
     return (
       <input
         placeholder="Search"
+        autoFocus
         onChange={this.props.onInputChange}
         className={styles.input}
       />
