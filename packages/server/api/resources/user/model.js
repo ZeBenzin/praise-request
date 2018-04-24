@@ -13,18 +13,12 @@ const userSchema = new Schema(
 
 const User = mongoose.model("user", userSchema);
 
-userSchema.methods = {
-  hashPassword(plainTextPassword) {
-    const salt = bcrypt.getSaltSync(10);
-    return bcrypt.hashSync(plainTextPassword, salt);
-  }
-};
-
-userSchema.pre("save", next => {
+userSchema.pre("save", function(next) {
   if (!this.isModified("password")) {
     return next();
   }
-  this.password = this.hashPassword(this.password);
+  const salt = bcrypt.genSaltSync(10);
+  this.password = bcrypt.hashSync(this.password, salt);
   next();
 });
 

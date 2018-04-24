@@ -1,5 +1,5 @@
 const getAccountById = () => {};
 
-const createAccount = accountDefn => {};
+const createAccount = (req, res) => {};
 
 module.exports = { getAccountById, createAccount };
