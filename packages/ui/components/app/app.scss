@@ -1,16 +1,12 @@
-@import url("https://fonts.googleapis.com/css?family=Ubuntu:400,700,600");
-$header-height: 165px;
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,600");
 
 .app {
-  height: calc(100vh - 165px);
-}
-
-.header {
-  height: $header-height;
+  height: 100vh;
 }
 
 .content {
   display: flex;
+  padding-top: 80px;
 }
 
 .navBar {
@@ -20,22 +16,37 @@ $header-height: 165px;
   padding-top: 100px;
 }
 
+.navLinkAnchor {
+  text-decoration: none;
+  margin-bottom: 20px;
+  border-bottom: 3px solid transparent;
+
+  &:visited {
+    color: grey;
+  }
+}
+
 .navLink {
-  padding-bottom: 20px;
+  padding-bottom: 5px;
   display: flex;
 }
 
 .navLinkLabel {
-  padding-left: 18px;
+  margin-left: 18px;
+}
+
+.activeNavLink {
+  border-bottom: 3px solid #30cbe4;
 }
 
 .mainContent {
   flex-grow: 1;
   width: 100%;
+  min-width: 0;
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: "Ubuntu", sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
 }

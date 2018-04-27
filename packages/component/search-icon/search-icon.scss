@@ -3,7 +3,7 @@
   width: 57px;
   display: inline-block;
   border-radius: 50%;
-  border: 5px solid #a7a7a7;
+  border: 5px solid #e0e0e0;
 
   &:before {
     content: "";
@@ -11,7 +11,7 @@
     height: 9px;
     border-radius: 4px;
     position: absolute;
-    background-color: #a7a7a7;
+    background-color: #e0e0e0;
     transform: rotate(45deg) translate(70px, 7px);
   }
 }
@@ -21,7 +21,7 @@
   width: 15px;
   display: inline-block;
   border-radius: 50%;
-  border: 3px solid #a7a7a7;
+  border: 3px solid #e0e0e0;
 
   &:before {
     content: "";
@@ -29,7 +29,7 @@
     height: 4px;
     border-radius: 4px;
     position: absolute;
-    background-color: #a7a7a7;
+    background-color: #e0e0e0;
     transform: rotate(45deg) translate(18px, 1px);
   }
 }
