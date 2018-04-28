@@ -8,9 +8,9 @@ const getAccountById = () => {};
 
 const generateQueryString = (name, timestamp) => {
   const inputParams = {
-    api_key: "1f1b79301ce430bad039",
-    request_timestamp: timestamp,
-    name
+    api_key: process.env.API_KEY,
+    name,
+    request_timestamp: timestamp
   };
 
   const inputParamsString = queryString
@@ -22,11 +22,10 @@ const generateQueryString = (name, timestamp) => {
 
 // Will go in a utility file
 const generateSignature = stringToSign => {
-  const buffer = new Buffer.from(process.env.API_SECRET, "utf8");
-  const hmac = crypto.createHmac("sha256", buffer);
+  const buff = new Buffer.from(process.env.API_SECRET, "utf8");
+  const hmac = crypto.createHmac("sha256", buff);
   hmac.update(stringToSign);
-  const digest = hmac.digest("hex");
-  return digest;
+  return hmac.digest("hex");
 };
 
 const createAccount = (req, res) => {
@@ -35,14 +34,18 @@ const createAccount = (req, res) => {
       const timestamp = moment().unix();
       const queryString = generateQueryString(account.userName, timestamp);
       const signature = generateSignature(queryString);
-      return axios.post(
-        `https://playgroundapi.ost.com/users/create?api_key=1f1b79301ce430bad039&name=${
-          account.userName
-        }&request_timestamp=${timestamp}&signature=${signature}`
-      );
+      const url = `https://playgroundapi.ost.com${queryString}&signature=${signature}`;
+      const body = {
+        api_key: process.env.API_KEY,
+        name: account.userName,
+        request_timestamp: timestamp,
+        signature
+      };
+
+      return axios.post(url, body);
     })
-    .then(result => {
-      res.status(201).json(result);
+    .then(({ data }) => {
+      res.status(201).json(data.data.economy_users);
     })
     .catch(err => {
       res.status(400).json({ code: 400, err: err.config });
