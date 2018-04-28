@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const githubAccountSchema = new Schema({
-  userId: Number,
-  userName: String,
+  userId: { type: Number, unique: true },
+  userName: { type: String, unique: true },
   ostKeyPair: { publicKey: String, privateKey: String }
 });
 
