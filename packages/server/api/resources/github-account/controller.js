@@ -29,6 +29,7 @@ const generateSignature = stringToSign => {
 };
 
 const createAccount = (req, res) => {
+  let persistedAccount;
   return GithubAccount.create(req.body)
     .then(({ _doc: account }) => {
       const timestamp = moment().unix();
@@ -41,14 +42,21 @@ const createAccount = (req, res) => {
         request_timestamp: timestamp,
         signature
       };
-
+      persistedAccount = account;
       return axios.post(url, body);
     })
     .then(({ data }) => {
-      res.status(201).json(data.data.economy_users);
+      const ostUser = data.data.economy_users[0];
+      return GithubAccount.findOneAndUpdate(
+        { userId: persistedAccount.userId },
+        { ostId: ostUser.uuid }
+      );
+    })
+    .then(({ _doc: account }) => {
+      res.status(201).json(account);
     })
     .catch(err => {
-      res.status(400).json({ code: 400, err: err.config });
+      res.status(400).json({ code: 400, err: err.message });
     });
 };
 
