@@ -8,7 +8,13 @@ class SearchIcon extends PureComponent {
       : styles.searchIcon;
     return (
       <div>
-        <div className={className} />
+        <div className={className}>
+          <div className={styles.windowShine}>
+            <div className={styles.windowShineTop} />
+            <div className={styles.windowShineMiddle} />
+            <div className={styles.windowShineBottom} />
+          </div>
+        </div>
       </div>
     );
   }

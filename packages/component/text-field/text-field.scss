@@ -3,10 +3,11 @@
   border: none;
   font-size: 72px;
   font-weight: 900;
-  font-family: "Ubuntu";
+  font-family: inherit;
   padding-left: 32px;
+  min-width: 0;
 
   &::-webkit-input-placeholder {
-    color: #a7a7a7;
+    color: #e0e0e0;
   }
 }
