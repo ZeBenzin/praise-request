@@ -1,4 +1,7 @@
+const moment = require("moment");
 const GithubAccount = require("../github-account/model");
+const githubAccountController = require("../github-account/controller");
+const utils = require("../../../utils/auth");
 const axios = require("axios");
 
 const githubBasePath = "https://api.github.com";
@@ -10,7 +13,9 @@ const createTransaction = (req, res) => {
         const url = `${githubBasePath}/user/${req.body.to.userId}`;
         return axios.get(url).then(data => {
           if (data.data) {
-            return GithubAccount.create(req.body.to);
+            return githubAccountController.createAccount(res, {
+              body: req.body.to
+            });
           }
         });
       }
@@ -22,15 +27,28 @@ const createTransaction = (req, res) => {
 
   Promise.all([toAccount, fromAccount])
     .then(accounts => {
-      const toKeyPair = accounts.toAccount.keyPair;
-      const fromKeyPair = accounts.fromAccount.keyPair;
-      const transactionAmount = req.body.amount;
-
-      // 1. Check balance is sufficient
-      // 2. Make transaction
-
-      // OST API
-      // /transaction-types/execute?api_key=API_KEY&from_uuid=FROM_UUID&request_timestamp=EPOCH_TIME_SEC&to_uuid=TO_UUID&transaction_kind=NAME
+      const toUUID = accounts[0]._doc.ostId;
+      const fromUUID = accounts[1]._doc.ostId;
+      const timestamp = moment().unix();
+      const queryString = utils.generateQueryString(
+        timestamp,
+        "/transaction-types/execute",
+        { from_uuid: fromUUID, to_uuid: toUUID, transaction_kind: "Praise" }
+      );
+      const signature = utils.generateSignature(queryString);
+      const url = `https://playgroundapi.ost.com${queryString}&signature=${signature}`;
+      const body = {
+        api_key: process.env.API_KEY,
+        to_uuid: toUUID,
+        from_uuid: fromUUID,
+        transaction_kind: "Praise",
+        request_timestamp: timestamp,
+        signature
+      };
+      return axios.post(url, body);
+    })
+    .then(({ data }) => {
+      return res.status(200).json(data);
     })
     .catch(err => res.json({ code: 400, message: err.message }));
 };
