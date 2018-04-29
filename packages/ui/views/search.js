@@ -19,10 +19,12 @@ class Search extends Component {
 
     this.onInputChange = debounce(this.onInputChange.bind(this), 300);
     this.onRepoClick = this.onRepoClick.bind(this);
+    this.onCloseModal = this.onCloseModal.bind(this);
 
     this.state = {
       repos: [],
-      selectedRepo: null
+      selectedRepo: null,
+      modalOpen: false
     };
   }
 
@@ -41,7 +43,11 @@ class Search extends Component {
     const repo = this.state.repos.find(repo => repo.id === id);
     getByRepoId(repo.name, repo.owner.login)
       .then(({ data }) => {
-        this.setState({ selectedRepo: id, pullRequests: data });
+        this.setState({
+          selectedRepo: id,
+          pullRequests: data,
+          modalOpen: true
+        });
       })
       .catch(err => {
         // Do a toast or suttin
@@ -55,6 +61,10 @@ class Search extends Component {
         console.log("success", data);
       })
       .catch(err => console.log(err));
+  }
+
+  onCloseModal() {
+    this.setState({ modalOpen: false });
   }
 
   renderPRModal() {
@@ -79,7 +89,7 @@ class Search extends Component {
         ))}
       </div>
     );
-    return <Modal content={modalContent} />;
+    return <Modal content={modalContent} onClose={this.onCloseModal} />;
   }
 
   render() {
@@ -107,7 +117,7 @@ class Search extends Component {
             />
           ))}
         </div>
-        {this.state.selectedRepo ? this.renderPRModal() : null}
+        {this.state.modalOpen ? this.renderPRModal() : null}
       </div>
     );
   }
