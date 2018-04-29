@@ -9,6 +9,7 @@ import SearchIcon from "component/search-icon/search-icon";
 import Modal from "component/modal/modal";
 
 import { getByRepoId } from "ui/api/pull-request";
+import { executeTransaction } from "ui/api/transaction";
 
 import styles from "./search.scss";
 
@@ -47,6 +48,15 @@ class Search extends Component {
       });
   }
 
+  onPraiseClick(id) {
+    const pr = this.state.pullRequests.find(pr => pr.id === id);
+    executeTransaction(pr)
+      .then(data => {
+        console.log("success", data);
+      })
+      .catch(err => console.log(err));
+  }
+
   renderPRModal() {
     const modalContent = (
       <div>
@@ -58,7 +68,12 @@ class Search extends Component {
               <div>{pr.user.login}</div>
             </div>
             <div className={styles.praiseButtonContainer}>
-              <button className={styles.praiseButton}>Praise</button>
+              <button
+                className={styles.praiseButton}
+                onClick={() => this.onPraiseClick(pr.id)}
+              >
+                Praise
+              </button>
             </div>
           </div>
         ))}
