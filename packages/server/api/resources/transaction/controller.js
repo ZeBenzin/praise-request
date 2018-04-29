@@ -6,16 +6,18 @@ const axios = require("axios");
 
 const githubBasePath = "https://api.github.com";
 
-const createTransaction = (req, res) => {
+const createTransaction = (req, res, next) => {
   const toAccount = GithubAccount.findOne({ userId: req.body.to.userId }).then(
     account => {
       if (!account) {
         const url = `${githubBasePath}/user/${req.body.to.userId}`;
         return axios.get(url).then(data => {
           if (data.data) {
-            return githubAccountController.createAccount(res, {
-              body: req.body.to
-            });
+            return githubAccountController
+              .create(req.body.to, next)
+              .then(model => {
+                return model;
+              });
           }
         });
       }

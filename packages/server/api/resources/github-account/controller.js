@@ -5,33 +5,37 @@ const utils = require("../../../utils/auth");
 
 const getAccountById = () => {};
 
-const createAccount = (req, res) => {
-  let persistedAccount;
-  return GithubAccount.create(req.body)
-    .then(({ _doc: account }) => {
-      const timestamp = moment().unix();
-      const queryString = utils.generateQueryString(
-        timestamp,
-        "/users/create",
-        { name: account.userName }
-      );
-      const signature = utils.generateSignature(queryString);
-      const url = `https://playgroundapi.ost.com${queryString}&signature=${signature}`;
-      const body = {
-        api_key: process.env.API_KEY,
-        name: account.userName,
-        request_timestamp: timestamp,
-        signature
-      };
-      persistedAccount = account;
-      return axios.post(url, body);
-    })
-    .then(({ data }) => {
-      const ostUser = data.data.economy_users[0];
-      return GithubAccount.findOneAndUpdate(
-        { userId: persistedAccount.userId },
-        { ostId: ostUser.uuid }
-      );
+const create = (body, next) => {
+  const account = body;
+  const timestamp = moment().unix();
+  const queryString = utils.generateQueryString(timestamp, "/users/create", {
+    name: account.userName
+  });
+  const signature = utils.generateSignature(queryString);
+  const url = `https://playgroundapi.ost.com${queryString}&signature=${signature}`;
+  const payload = {
+    api_key: process.env.API_KEY,
+    name: account.userName,
+    request_timestamp: timestamp,
+    signature
+  };
+  return axios.post(url, payload).then(({ data }) => {
+    const ostUser = data.data.economy_users[0];
+    const account = Object.assign({}, body, { ostId: ostUser.uuid });
+    return GithubAccount.create(account);
+  });
+};
+
+const createAccount = (req, res, next) => {
+  GithubAccount.findOne({ userId: req.body.userId })
+    .then(doc => {
+      if (doc) {
+        throw new Error(
+          `GithubAccount with ID ${req.body.userId} already exists`
+        );
+      } else {
+        return create(req.body, next);
+      }
     })
     .then(({ _doc: account }) => {
       res.status(201).json(account);
@@ -41,4 +45,4 @@ const createAccount = (req, res) => {
     });
 };
 
-module.exports = { getAccountById, createAccount };
+module.exports = { getAccountById, createAccount, create };
