@@ -3,7 +3,6 @@ import { BrowserRouter as Router, NavLink, Route } from "react-router-dom";
 import Search from "ui/views/search";
 import Account from "ui/views/account";
 import Wallet from "ui/views/wallet";
-import Repo from "ui/views/repo";
 
 import SearchIcon from "@material-ui/icons/Search";
 import PersonIcon from "@material-ui/icons/Person";
@@ -96,10 +95,6 @@ class App extends Component {
                 <div className={styles.content}>
                   <div className={styles.mainContent}>
                     {this.getNavLinks().map(link => this.renderRoute(link))}
-                    <Route
-                      path="/search/:id"
-                      render={routeProps => <Repo {...routeProps} />}
-                    />
                   </div>
                 </div>
               </div>

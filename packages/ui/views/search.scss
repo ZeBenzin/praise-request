@@ -15,12 +15,13 @@
 }
 
 .prCard {
-  background-color: #fff;
+  background-color: #2d3646;
   height: 70px;
   border-radius: 3px;
   padding: 21px;
   margin-bottom: 15px;
   display: flex;
+  color: #fff;
   justify-content: space-between;
   align-items: center;
 }
@@ -38,13 +39,17 @@
 .praiseButton {
   outline: none;
   width: 100px;
-  border: 2px solid #467ebd;
+  border: 2px solid #fff;
   border-radius: 35px;
-  color: #467ebd;
+  color: #fff;
   font-size: 16px;
+  background-color: #2d3646;
   font-family: "Oswald";
+  transition: all 0.25s ease;
 
   &:hover {
     cursor: pointer;
+    background-color: #fff;
+    color: #2d3646;
   }
 }
