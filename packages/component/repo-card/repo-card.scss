@@ -1,33 +1,39 @@
 .repoCard {
-  min-height: 47px;
-  padding: 7px;
+  min-height: 110px;
+  padding: 8px 30px;
   margin-bottom: 10px;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: justify;
   justify-content: space-between;
   border-radius: 3px;
-  background-color: #f7f7f7;
+  background-color: #fff;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .repoIcon {
   height: 45px;
   width: 45px;
-  border-radius: 50%;
+  margin-right: 28px;
 
   & > img {
     height: 100%;
+    border-radius: 50%;
   }
 }
 
 .repoDetails {
   flex-grow: 1;
   padding: 0 30px;
+  border-left: 1px solid #ececec;
 }
 
 .repoName {
-  font-size: 18px;
+  font-size: 28px;
   font-weight: 600;
+  font-family: "Oswald";
 }
 
 .repoDescription {

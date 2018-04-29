@@ -4,7 +4,7 @@ const request = require("request");
 const githubBasePath = "https://api.github.com";
 const customRequest = request.defaults({
   headers: {
-    "User-Agent": "praise request"
+    "User-Agent": "PraiseRequest"
   }
 });
 
@@ -23,4 +23,20 @@ const getById = (req, res) => {
   });
 };
 
-module.exports = { getByQuery, getById };
+const getPullRequests = (req, res) => {
+  const ownerName = req.params.ownerName;
+  const repoName = req.params.repoName;
+  const url = `${githubBasePath}/repos/${repoName}/${ownerName}/pulls`;
+  axios
+    .get(url, {
+      headers: { "User-Agent": "PraiseRequest" }
+    })
+    .then(({ data }) => {
+      res.status(200).json(data);
+    })
+    .catch(err => {
+      res.json({ code: err.code, message: err.message });
+    });
+};
+
+module.exports = { getByQuery, getById, getPullRequests };

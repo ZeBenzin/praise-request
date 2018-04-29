@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 import { debounce } from "lodash";
 import { searchRepos } from "ui/api/repo";
 import { ErrorContext } from "ui/components/app/app";
@@ -7,6 +6,9 @@ import { ErrorContext } from "ui/components/app/app";
 import TextField from "component/text-field/text-field";
 import RepoCard from "component/repo-card/repo-card";
 import SearchIcon from "component/search-icon/search-icon";
+import Modal from "component/modal/modal";
+
+import { getByRepoId } from "ui/api/pull-request";
 
 import styles from "./search.scss";
 
@@ -35,18 +37,38 @@ class Search extends Component {
   }
 
   onRepoClick(e, id) {
-    this.setState({ selectedRepo: id });
+    const repo = this.state.repos.find(repo => repo.id === id);
+    getByRepoId(repo.name, repo.owner.login)
+      .then(({ data }) => {
+        this.setState({ selectedRepo: id, pullRequests: data });
+      })
+      .catch(err => {
+        // Do a toast or suttin
+      });
+  }
+
+  renderPRModal() {
+    const modalContent = (
+      <div>
+        {this.state.pullRequests.map(pr => (
+          <div className={styles.prCard} key={pr.id}>
+            <div className={styles.leftSide} />
+            <div className={styles.rightSide}>
+              <div>{pr.title}</div>
+              <div>{pr.user.login}</div>
+            </div>
+            <div className={styles.praiseButtonContainer}>
+              <button className={styles.praiseButton}>Praise</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+    return <Modal content={modalContent} />;
   }
 
   render() {
-    return this.state.selectedRepo ? (
-      <Redirect
-        to={{
-          pathname: `/search/${this.state.selectedRepo}`,
-          state: { repoId: this.state.selectedRepo }
-        }}
-      />
-    ) : (
+    return (
       <div className={styles.searchContainer}>
         <div className={styles.search}>
           <SearchIcon />
@@ -70,6 +92,7 @@ class Search extends Component {
             />
           ))}
         </div>
+        {this.state.selectedRepo ? this.renderPRModal() : null}
       </div>
     );
   }
