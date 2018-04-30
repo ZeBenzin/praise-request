@@ -33,19 +33,18 @@
 }
 
 .modalContent {
-  overflow-y: scroll;
   width: 430px;
   margin: auto;
 }
 
 .closeButton {
   outline: none;
-  width: 100px;
-  border: 1px solid #467ebd;
-  background-color: #467ebd;
+  border: none;
+  width: 100%;
+  background-color: rgba(70, 126, 189, 0.25);
   height: 39px;
   border-radius: 35px;
-  color: #fff;
+  color: #467ebd;
   font-size: 16px;
   font-family: "Oswald";
 
@@ -56,5 +55,5 @@
 
 .modalActions {
   text-align: center;
-  padding: 30px;
+  padding: 5px 75px 60px;
 }
