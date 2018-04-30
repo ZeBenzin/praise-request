@@ -6,6 +6,7 @@ import { ErrorContext } from "ui/components/app/app";
 import TextField from "component/text-field/text-field";
 import RepoCard from "component/repo-card/repo-card";
 import SearchIcon from "component/search-icon/search-icon";
+// import SearchIcon from "@material-ui/icons/Search";
 import Modal from "component/modal/modal";
 
 import { getByRepoId } from "ui/api/pull-request";

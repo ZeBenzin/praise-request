@@ -9,12 +9,12 @@ $header-height: 85px;
   display: flex;
   align-items: center;
   height: 100%;
+  padding: 0 10px;
   justify-content: space-between;
 }
 
 .hamburger {
   height: 15px;
-  padding-left: 15px;
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -44,4 +44,84 @@ $header-height: 85px;
     background-color: #467ebd;
     border-radius: 2px;
   }
+}
+
+.loginButton {
+  outline: none;
+  width: 100px;
+  border: 2px solid #467ebd;
+  background-color: #fff;
+  height: 35px;
+  border-top-left-radius: 35px;
+  border-bottom-left-radius: 35px;
+  color: #467ebd;
+  font-size: 16px;
+  font-family: "Oswald";
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #467ebd;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+.registerButton {
+  outline: none;
+  margin-left: 2px;
+  width: 100px;
+  border: 2px solid #467ebd;
+  background-color: #fff;
+  height: 35px;
+  border-top-right-radius: 35px;
+  border-bottom-right-radius: 35px;
+  color: #467ebd;
+  font-size: 16px;
+  font-family: "Oswald";
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #467ebd;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+.registerModal {
+  min-width: 300px;
+  padding: 0;
+  max-height: 100%;
+}
+
+.contentContainer {
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  height: 70px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.tab {
+  background-color: rgba(70, 126, 189, 0.25);
+  width: 100%;
+  display: flex;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.tabLabel {
+  margin: auto;
+  color: #457dbd;
+  font-weight: 600;
+}
+
+.loginTab {
+  border-bottom: 0;
+  background-color: #fff;
 }

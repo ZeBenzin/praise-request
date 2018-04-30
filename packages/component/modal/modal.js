@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+import classNames from "classnames";
 import styles from "./modal.scss";
 
 class Modal extends Component {
@@ -17,7 +18,12 @@ class Modal extends Component {
     return (
       <div className={styles.container} ref={r => (this._container = r)}>
         <div className={styles.overlay} onClick={this.props.onClose} />
-        <div className={styles.modalContainer}>
+        <div
+          className={classNames(
+            styles.modalContainer,
+            this.props.containerClassName
+          )}
+        >
           <div className={styles.modalContent}>{this.props.content}</div>
           <div className={styles.modalActions}>
             <button className={styles.closeButton} onClick={this.props.onClose}>
