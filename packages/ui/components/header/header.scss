@@ -46,132 +46,32 @@ $header-height: 85px;
   }
 }
 
-.loginButton {
+.authenticationButton {
   outline: none;
-  width: 100px;
   border: 2px solid #467ebd;
   background-color: #fff;
   height: 35px;
-  border-top-left-radius: 35px;
-  border-bottom-left-radius: 35px;
   color: #467ebd;
   font-size: 16px;
   font-family: "Oswald";
   transition: all 0.2s ease;
+  width: 100px;
 
   &:hover {
     background-color: #467ebd;
     color: #fff;
     cursor: pointer;
   }
+}
+
+.loginButton {
+  border-top-left-radius: 35px;
+  border-bottom-left-radius: 35px;
 }
 
 .registerButton {
-  outline: none;
   margin-left: 2px;
-  width: 100px;
-  border: 2px solid #467ebd;
-  background-color: #fff;
-  height: 35px;
+
   border-top-right-radius: 35px;
   border-bottom-right-radius: 35px;
-  color: #467ebd;
-  font-size: 16px;
-  font-family: "Oswald";
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: #467ebd;
-    color: #fff;
-    cursor: pointer;
-  }
-}
-
-.registerModal {
-  min-width: 300px;
-  padding: 0;
-  max-height: 100%;
-}
-
-.contentContainer {
-  display: flex;
-  flex-direction: column;
-}
-
-.tabs {
-  height: 70px;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.tab {
-  background-color: rgba(70, 126, 189, 0.25);
-  width: 100%;
-  display: flex;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.tabLabel {
-  margin: auto;
-  color: #457dbd;
-  font-weight: 600;
-}
-
-.loginTab {
-  border-bottom: 0;
-  background-color: #fff;
-  border-top-right-radius: 4px;
-}
-
-.registerTab {
-  border-top-left-radius: 4px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  padding: 60px 75px 30px;
-}
-
-.inputContainer {
-  display: flex;
-}
-
-.input {
-  outline: none;
-  border: none;
-  font-size: 14px;
-  border-bottom: 2px solid;
-  font-family: inherit;
-  padding-bottom: 5px;
-  margin-bottom: 38px;
-  margin-left: -23px;
-  min-width: 0;
-  background-color: transparent;
-  padding-left: 30px;
-  width: 100%;
-
-  &::-webkit-input-placeholder {
-    color: #e0e0e0;
-  }
-}
-
-.githubAuthButton {
-  outline: none;
-  border: none;
-  width: 100%;
-  background-color: #46bd85;
-  height: 39px;
-  border-radius: 35px;
-  color: #fff;
-  font-size: 16px;
-  font-family: "Oswald";
-
-  &:hover {
-    cursor: pointer;
-  }
 }

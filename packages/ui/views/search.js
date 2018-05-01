@@ -5,8 +5,8 @@ import { ErrorContext } from "ui/components/app/app";
 
 import TextField from "component/text-field/text-field";
 import RepoCard from "component/repo-card/repo-card";
-import SearchIcon from "component/search-icon/search-icon";
-// import SearchIcon from "@material-ui/icons/Search";
+// import SearchIcon from "component/search-icon/search-icon";
+import SearchIcon from "@material-ui/icons/Search";
 import Modal from "component/modal/modal";
 
 import { getByRepoId } from "ui/api/pull-request";
@@ -97,7 +97,7 @@ class Search extends Component {
     return (
       <div className={styles.searchContainer}>
         <div className={styles.search}>
-          <SearchIcon />
+          <SearchIcon className={styles.searchIcon} />
           <TextField onInputChange={e => this.onInputChange(e.target.value)} />
           {this.state.error ? (
             <ErrorContext.Consumer>

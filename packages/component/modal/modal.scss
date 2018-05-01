@@ -36,24 +36,3 @@
   width: 430px;
   margin: auto;
 }
-
-.closeButton {
-  outline: none;
-  border: none;
-  width: 100%;
-  background-color: rgba(70, 126, 189, 0.25);
-  height: 39px;
-  border-radius: 35px;
-  color: #467ebd;
-  font-size: 16px;
-  font-family: "Oswald";
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.modalActions {
-  text-align: center;
-  padding: 5px 75px 60px;
-}

@@ -25,11 +25,6 @@ class Modal extends Component {
           )}
         >
           <div className={styles.modalContent}>{this.props.content}</div>
-          <div className={styles.modalActions}>
-            <button className={styles.closeButton} onClick={this.props.onClose}>
-              Close
-            </button>
-          </div>
         </div>
       </div>
     );
