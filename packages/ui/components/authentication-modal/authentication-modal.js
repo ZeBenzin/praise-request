@@ -160,7 +160,13 @@ class AuthenticationModal extends Component {
             onClick={() => this.setState({ activeTab: TAB_ENUM.login })}
           >
             <span className={styles.tabLabel}>Login</span>
-            <span className={styles.exitButton}>
+            <span
+              className={styles.exitButton}
+              onClick={e => {
+                e.stopPropagation();
+                this.onCloseModal();
+              }}
+            >
               <Close />
             </span>
           </div>
