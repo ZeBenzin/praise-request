@@ -11,6 +11,12 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
+userSchema.methods = {
+  authenticate: function(plainTextPassword) {
+    return bcrypt.compareSync(plainTextPassword, this.password);
+  }
+};
+
 const User = mongoose.model("user", userSchema);
 
 userSchema.pre("save", function(next) {
