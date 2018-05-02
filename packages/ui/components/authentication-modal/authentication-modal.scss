@@ -1,0 +1,57 @@
+.registerModal {
+  min-width: 300px;
+  padding: 0;
+}
+
+.contentContainer {
+  min-height: 504px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  height: 70px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.tab {
+  border-bottom: 0;
+  background-color: #fff;
+  width: 100%;
+  display: flex;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.tabLabel {
+  margin: auto;
+  color: #457dbd;
+  font-weight: 600;
+}
+
+.loginTab {
+  border-top-left-radius: 4px;
+  position: relative;
+}
+
+.exitButton {
+  position: absolute;
+  right: -8px;
+  background-color: #457dbd;
+  color: #d1dfef;
+  display: flex;
+  border-radius: 50%;
+  top: -8px;
+}
+
+.registerTab {
+  border-top-right-radius: 4px;
+}
+
+.activeTab {
+  background-color: rgba(70, 126, 189, 0.25);
+}

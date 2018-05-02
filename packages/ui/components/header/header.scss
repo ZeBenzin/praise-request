@@ -9,12 +9,12 @@ $header-height: 85px;
   display: flex;
   align-items: center;
   height: 100%;
+  padding: 0 10px;
   justify-content: space-between;
 }
 
 .hamburger {
   height: 15px;
-  padding-left: 15px;
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -44,4 +44,34 @@ $header-height: 85px;
     background-color: #467ebd;
     border-radius: 2px;
   }
+}
+
+.authenticationButton {
+  outline: none;
+  border: 2px solid #467ebd;
+  background-color: #fff;
+  height: 35px;
+  color: #467ebd;
+  font-size: 16px;
+  font-family: "Oswald";
+  transition: all 0.2s ease;
+  width: 100px;
+
+  &:hover {
+    background-color: #467ebd;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+.loginButton {
+  border-top-left-radius: 35px;
+  border-bottom-left-radius: 35px;
+}
+
+.registerButton {
+  margin-left: 2px;
+
+  border-top-right-radius: 35px;
+  border-bottom-right-radius: 35px;
 }

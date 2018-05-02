@@ -7,7 +7,7 @@ class TextField extends PureComponent {
   render() {
     return (
       <input
-        placeholder="Search"
+        placeholder="Search repos"
         autoFocus
         onChange={this.props.onInputChange}
         className={styles.input}

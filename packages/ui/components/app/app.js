@@ -10,6 +10,7 @@ import WalletIcon from "@material-ui/icons/AccountBalanceWallet";
 
 import Header from "ui/components/header/header";
 
+import classNames from "classnames";
 import styles from "./app.scss";
 
 export const ErrorContext = React.createContext("error");
@@ -24,6 +25,7 @@ class App extends Component {
         exact: false,
         icon: <SearchIcon className={styles.navIconElem} />,
         view: Search,
+        style: styles.searchIconLabel,
         visible: true
       },
       {
@@ -33,6 +35,7 @@ class App extends Component {
         exact: false,
         icon: <PersonIcon className={styles.navIconElem} />,
         view: Account,
+        style: styles.accountIconLabel,
         visible: true
       },
       {
@@ -42,12 +45,13 @@ class App extends Component {
         exact: false,
         icon: <WalletIcon className={styles.navIconElem} />,
         view: Wallet,
+        style: styles.walletIconLabel,
         visible: true
       }
     ];
   }
 
-  renderNavLink({ id, label, icon, path }) {
+  renderNavLink({ id, label, icon, path, style }) {
     return (
       <NavLink
         className={styles.navLinkAnchor}
@@ -57,7 +61,9 @@ class App extends Component {
       >
         <div className={styles.navIcon}>
           {icon}
-          <span className={styles.navIconLabel}>{label}</span>
+          <span className={classNames(styles.navIconLabel, style)}>
+            {label}
+          </span>
         </div>
       </NavLink>
     );

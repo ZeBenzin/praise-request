@@ -1,0 +1,66 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  padding: 60px 75px 30px;
+}
+
+.inputContainer {
+  display: flex;
+}
+
+.input {
+  outline: none;
+  border: none;
+  font-size: 14px;
+  border-bottom: 2px solid;
+  font-family: inherit;
+  padding-bottom: 5px;
+  margin-bottom: 38px;
+  margin-left: -23px;
+  min-width: 0;
+  background-color: transparent;
+  padding-left: 30px;
+  width: 100%;
+
+  &::-webkit-input-placeholder {
+    color: #e0e0e0;
+  }
+}
+
+.githubAuthButton {
+  outline: none;
+  border: none;
+  width: 100%;
+  background-color: #46bd85;
+  height: 39px;
+  border-radius: 35px;
+  color: #fff;
+  font-size: 16px;
+  font-family: "Oswald";
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.confirmButton {
+  outline: none;
+  border: none;
+  width: 100%;
+  background-color: rgba(70, 126, 189, 0.25);
+  height: 39px;
+  border-radius: 35px;
+  color: #467ebd;
+  font-size: 16px;
+  font-family: "Oswald";
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.modalActions {
+  text-align: center;
+}
