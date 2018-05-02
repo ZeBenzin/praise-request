@@ -16,10 +16,7 @@ class AuthenticationModal extends Component {
     super(props);
 
     this.state = {
-      activeTab: TAB_ENUM[props.activeTab],
-      password: "",
-      confirmedPassword: "",
-      username: ""
+      activeTab: TAB_ENUM[props.activeTab]
     };
 
     this.onCloseModal = this.onCloseModal.bind(this);

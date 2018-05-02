@@ -11,7 +11,6 @@ class LoginForm extends Component {
 
     this.state = {
       password: "",
-      confirmedPassword: "",
       username: ""
     };
 
