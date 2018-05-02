@@ -134,7 +134,7 @@ class AuthenticationModal extends Component {
         </div>
         <div className={styles.modalActions}>
           <button className={styles.closeButton} onClick={this.onCloseModal}>
-            Login
+            Log in
           </button>
         </div>
       </div>
@@ -146,20 +146,20 @@ class AuthenticationModal extends Component {
       <div className={styles.contentContainer}>
         <div className={styles.tabs}>
           <div
+            className={classNames(styles.tab, styles.loginTab, {
+              [styles.activeTab]: this.state.activeTab === TAB_ENUM.login
+            })}
+            onClick={() => this.setState({ activeTab: TAB_ENUM.login })}
+          >
+            <span className={styles.tabLabel}>Log in</span>
+          </div>
+          <div
             className={classNames(styles.tab, styles.registerTab, {
               [styles.activeTab]: this.state.activeTab === TAB_ENUM.register
             })}
             onClick={() => this.setState({ activeTab: TAB_ENUM.register })}
           >
             <span className={styles.tabLabel}>Register</span>
-          </div>
-          <div
-            className={classNames(styles.tab, styles.loginTab, {
-              [styles.activeTab]: this.state.activeTab === TAB_ENUM.login
-            })}
-            onClick={() => this.setState({ activeTab: TAB_ENUM.login })}
-          >
-            <span className={styles.tabLabel}>Login</span>
             <span
               className={styles.exitButton}
               onClick={e => {
