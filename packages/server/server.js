@@ -3,6 +3,7 @@ const repoRouter = require("./api/resources/repo/router");
 const userRouter = require("./api/resources/user/router");
 const githubAccountRouter = require("./api/resources/github-account/router");
 const transactionRouter = require("./api/resources/transaction/router");
+const signinController = require("./api/auth");
 const connect = require("./db");
 const bodyParser = require("body-parser");
 
@@ -17,6 +18,7 @@ app.use("/praise/repo", repoRouter);
 app.use("/praise/user", userRouter);
 app.use("/praise/githubaccount", githubAccountRouter);
 app.use("/praise/transaction", transactionRouter);
+app.use("/praise/signin", signinController.verifyUser, signinController.signin);
 
 app.all("*", (req, res) => {
   res.json({ code: 404, message: "Not found" });

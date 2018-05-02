@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import Modal from "component/modal/modal";
 import { Email, Lock, Close } from "@material-ui/icons";
-import { createUser } from "ui/api/user";
+import { createUser, authenticateUser } from "ui/api/user";
 
 import classNames from "classnames";
 import styles from "./authentication-modal.scss";
@@ -15,19 +15,14 @@ class AuthenticationModal extends Component {
 
     this.state = {
       activeTab: TAB_ENUM[props.activeTab],
-      registerState: {
-        password: "",
-        confirmedPassword: "",
-        username: ""
-      },
-      loginState: {
-        password: "",
-        username: ""
-      }
+      password: "",
+      confirmedPassword: "",
+      username: ""
     };
 
     this.onCloseModal = this.onCloseModal.bind(this);
-    this.onSaveUser = this.onSaveUser.bind(this);
+    this.onRegisterUser = this.onRegisterUser.bind(this);
+    this.onLogin = this.onLogin.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onUsernameChange = this.onUsernameChange.bind(this);
   }
@@ -36,36 +31,36 @@ class AuthenticationModal extends Component {
     this.props.onClose();
   }
 
-  onSaveUser() {
+  onRegisterUser() {
     createUser({ username: this.state.username, password: this.state.password })
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
+  }
+
+  onLogin() {
+    authenticateUser({
+      username: this.state.username,
+      password: this.state.password
+    })
       .then(data => console.log(data))
       .catch(err => console.log(err));
   }
 
   onPasswordChange(e) {
     this.setState({
-      registerState: {
-        ...this.state.registerState,
-        password: e.currentTarget.value
-      }
+      password: e.currentTarget.value
     });
   }
 
   onConfirmPasswordChange(e) {
     this.setState({
-      registerState: {
-        ...this.state.registerState,
-        confirmPassword: e.currentTarget.value
-      }
+      confirmPassword: e.currentTarget.value
     });
   }
 
   onUsernameChange(e) {
     this.setState({
-      registerState: {
-        ...this.state.registerState,
-        username: e.currentTarget.value
-      }
+      username: e.currentTarget.value
     });
   }
 
@@ -102,7 +97,7 @@ class AuthenticationModal extends Component {
           <button className={styles.githubAuthButton}>Connect to GitHub</button>
         </div>
         <div className={styles.modalActions}>
-          <button className={styles.closeButton} onClick={this.onCloseModal}>
+          <button className={styles.closeButton} onClick={this.onRegisterUser}>
             Register
           </button>
         </div>
@@ -133,7 +128,7 @@ class AuthenticationModal extends Component {
           </div>
         </div>
         <div className={styles.modalActions}>
-          <button className={styles.closeButton} onClick={this.onCloseModal}>
+          <button className={styles.closeButton} onClick={this.onLogin}>
             Log in
           </button>
         </div>
