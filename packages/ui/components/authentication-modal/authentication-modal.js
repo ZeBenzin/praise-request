@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 
 import Modal from "component/modal/modal";
-import { Email, Lock, Close } from "@material-ui/icons";
+import RegisterForm from "ui/components/register-form/register-form";
+import LoginForm from "ui/components/login-form/login-form";
+import { Close } from "@material-ui/icons";
 import { createUser, authenticateUser } from "ui/api/user";
 
 import classNames from "classnames";
@@ -22,118 +24,26 @@ class AuthenticationModal extends Component {
 
     this.onCloseModal = this.onCloseModal.bind(this);
     this.onRegisterUser = this.onRegisterUser.bind(this);
-    this.onLogin = this.onLogin.bind(this);
-    this.onPasswordChange = this.onPasswordChange.bind(this);
-    this.onUsernameChange = this.onUsernameChange.bind(this);
+    this.onLoginUser = this.onLoginUser.bind(this);
   }
 
   onCloseModal() {
     this.props.onClose();
   }
 
-  onRegisterUser() {
-    createUser({ username: this.state.username, password: this.state.password })
-      .then(data => console.log(data))
+  onRegisterUser({ username, password }) {
+    createUser({ username, password })
+      .then(() => this.props.onClose())
       .catch(err => console.log(err));
   }
 
-  onLogin() {
+  onLoginUser({ username, password }) {
     authenticateUser({
-      username: this.state.username,
-      password: this.state.password
+      username,
+      password
     })
-      .then(data => console.log(data))
+      .then(() => this.props.onClose())
       .catch(err => console.log(err));
-  }
-
-  onPasswordChange(e) {
-    this.setState({
-      password: e.currentTarget.value
-    });
-  }
-
-  onConfirmPasswordChange(e) {
-    this.setState({
-      confirmPassword: e.currentTarget.value
-    });
-  }
-
-  onUsernameChange(e) {
-    this.setState({
-      username: e.currentTarget.value
-    });
-  }
-
-  renderRegisterForm() {
-    return (
-      <div className={styles.form}>
-        <div>
-          <div className={styles.inputContainer}>
-            <Email />
-            <input
-              className={styles.input}
-              placeholder="email"
-              onChange={this.onUsernameChange}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <Lock />
-            <input
-              type="password"
-              className={styles.input}
-              placeholder="password"
-              onChange={this.onPasswordChange}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <Lock />
-            <input
-              type="password"
-              className={styles.input}
-              placeholder="confirm password"
-              onChange={this.onConfirmPasswordChange}
-            />
-          </div>
-          <button className={styles.githubAuthButton}>Connect to GitHub</button>
-        </div>
-        <div className={styles.modalActions}>
-          <button className={styles.closeButton} onClick={this.onRegisterUser}>
-            Register
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  renderLoginForm() {
-    return (
-      <div className={styles.form}>
-        <div>
-          <div className={styles.inputContainer}>
-            <Email />
-            <input
-              className={styles.input}
-              placeholder="email"
-              onChange={this.onUsernameChange}
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <Lock />
-            <input
-              type="password"
-              className={styles.input}
-              placeholder="password"
-              onChange={this.onPasswordChange}
-            />
-          </div>
-        </div>
-        <div className={styles.modalActions}>
-          <button className={styles.closeButton} onClick={this.onLogin}>
-            Log in
-          </button>
-        </div>
-      </div>
-    );
   }
 
   render() {
@@ -166,9 +76,11 @@ class AuthenticationModal extends Component {
             </span>
           </div>
         </div>
-        {this.state.activeTab === TAB_ENUM.register
-          ? this.renderRegisterForm()
-          : this.renderLoginForm()}
+        {this.state.activeTab === TAB_ENUM.register ? (
+          <RegisterForm onRegisterUser={this.onRegisterUser} />
+        ) : (
+          <LoginForm onLoginUser={this.onLoginUser} />
+        )}
       </div>
     );
     return (
