@@ -10,7 +10,8 @@ $header-height: 85px;
   align-items: center;
   height: 100%;
   padding: 0 10px;
-  justify-content: space-between;
+  justify-content: flex-end;
+  border-bottom: 1px solid #e2e2e2;
 }
 
 .hamburger {
@@ -19,9 +20,12 @@ $header-height: 85px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 0 15px 0 30px;
+  transition: height 0.1s ease-in;
 
   &:hover {
     cursor: pointer;
+    height: 22px;
   }
 
   .top {
