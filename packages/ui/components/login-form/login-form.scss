@@ -6,8 +6,19 @@
   padding: 60px 75px 30px;
 }
 
+.inputWrapper {
+  margin-bottom: 20px;
+  height: 50px;
+}
+
 .inputContainer {
   display: flex;
+}
+
+.errorText {
+  color: #bd4662;
+  font-size: 14px;
+  padding-top: 5px;
 }
 
 .input {
@@ -17,7 +28,6 @@
   border-bottom: 2px solid;
   font-family: inherit;
   padding-bottom: 5px;
-  margin-bottom: 38px;
   margin-left: -23px;
   min-width: 0;
   background-color: transparent;
@@ -27,6 +37,10 @@
   &::-webkit-input-placeholder {
     color: #e0e0e0;
   }
+}
+
+.inputInvalid {
+  border-bottom: 2px solid #bd4662;
 }
 
 .githubAuthButton {

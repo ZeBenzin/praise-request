@@ -35,12 +35,10 @@ class AuthenticationModal extends Component {
   }
 
   onLoginUser({ username, password }) {
-    authenticateUser({
+    return authenticateUser({
       username,
       password
-    })
-      .then(() => this.props.onClose())
-      .catch(err => console.log(err));
+    });
   }
 
   render() {
@@ -76,7 +74,10 @@ class AuthenticationModal extends Component {
         {this.state.activeTab === TAB_ENUM.register ? (
           <RegisterForm onRegisterUser={this.onRegisterUser} />
         ) : (
-          <LoginForm onLoginUser={this.onLoginUser} />
+          <LoginForm
+            onLoginUser={this.onLoginUser}
+            onClose={this.props.onClose}
+          />
         )}
       </div>
     );

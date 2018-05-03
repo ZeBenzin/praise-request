@@ -1,25 +1,83 @@
-.repoCard {
-  min-height: 110px;
+.repoCardWrapper {
+  margin-bottom: 57px;
+  position: relative;
+  margin-right: 57px;
+
+  &:hover {
+    > .cardAction {
+      // display: block;
+      opacity: 1;
+    }
+
+    > .repoCardContainer {
+      filter: blur(10px);
+    }
+  }
+}
+
+.cardAction {
+  position: absolute;
+  opacity: 0;
+  top: calc(50% - 16px);
+  left: calc(50% - 50px);
+  outline: none;
+  border-radius: 50px;
+  border: 2px solid #467ebd;
+  background-color: #467ebd;
+  height: 35px;
+  font-family: "Oswald";
+  color: #fff;
+  font-size: 16px;
+  transition: all 0.2s ease-in;
+  filter: blur(0px);
+  width: 100px;
+
+  &:hover {
+    background-color: #467ebd;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+.repoCardContainer {
+  min-height: 168px;
+  width: 325px;
   padding: 8px 30px;
-  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
-  border-radius: 3px;
+  box-shadow: 0 0 11px 7px #ececec;
   background-color: #fff;
   align-items: center;
+  position: relative;
+  transition: all 0.2s ease-in;
 
   &:hover {
     cursor: pointer;
   }
 }
 
+.repoOverlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  opacity: 0;
+  background-color: rgb(255, 255, 255);
+  transition: opacity ease-in 0.2s;
+}
+
 .repoIcon {
-  height: 45px;
-  width: 45px;
+  height: 74px;
   margin-right: 28px;
+  left: -37px;
+  z-index: 1;
+  position: absolute;
+  transform: translateX(0%);
 
   & > img {
     height: 100%;
+    box-shadow: 0 0 6px 4px #d6d6d6;
+    background-color: #fff;
     border-radius: 50%;
   }
 }
@@ -27,12 +85,15 @@
 .repoDetails {
   flex-grow: 1;
   padding: 0 30px;
+  margin-left: 31px;
   border-left: 1px solid #ececec;
 }
 
 .repoName {
   font-size: 28px;
   font-weight: 600;
+  margin-bottom: 13px;
+  color: #467ebd;
   font-family: "Oswald";
 }
 
@@ -49,7 +110,6 @@
   margin-right: 10px;
 
   &:before {
-    // content: "";
     content: "";
     float: left;
     position: absolute;

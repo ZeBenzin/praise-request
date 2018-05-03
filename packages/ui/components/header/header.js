@@ -39,11 +39,6 @@ class Header extends PureComponent {
     return (
       <div className={styles.header}>
         <div className={styles.headerContent}>
-          <div className={styles.hamburger}>
-            <div className={styles.top} />
-            <div className={styles.middle} />
-            <div className={styles.bottom} />
-          </div>
           <div>
             <button
               className={classNames(
@@ -63,6 +58,14 @@ class Header extends PureComponent {
             >
               Register
             </button>
+          </div>
+          <div
+            className={styles.hamburger}
+            onClick={this.props.onActivityIconClick}
+          >
+            <div className={styles.top} />
+            <div className={styles.middle} />
+            <div className={styles.bottom} />
           </div>
         </div>
         {this.state.authModalOpen ? (

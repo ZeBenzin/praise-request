@@ -2,13 +2,18 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, NavLink, Route } from "react-router-dom";
 import Search from "ui/views/search";
 import Account from "ui/views/account";
-import Wallet from "ui/views/wallet";
+import Activity from "ui/views/activity";
+import Statistic from "ui/views/statistic";
+import About from "ui/views/about";
 
 import SearchIcon from "@material-ui/icons/Search";
 import PersonIcon from "@material-ui/icons/Person";
-import WalletIcon from "@material-ui/icons/AccountBalanceWallet";
+import ActivityIcon from "@material-ui/icons/History";
+import StatisticIcon from "@material-ui/icons/ShowChart";
+import AboutIcon from "@material-ui/icons/Info";
 
 import Header from "ui/components/header/header";
+import Drawer from "component/drawer/drawer";
 
 import classNames from "classnames";
 import styles from "./app.scss";
@@ -16,6 +21,14 @@ import styles from "./app.scss";
 export const ErrorContext = React.createContext("error");
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activityVisible: false
+    };
+  }
+
   getNavLinks() {
     return [
       {
@@ -39,13 +52,33 @@ class App extends Component {
         visible: true
       },
       {
-        id: "wallet",
-        label: "Wallet",
-        path: "/wallet",
+        id: "activity",
+        label: "Activity",
+        path: "/activity",
         exact: false,
-        icon: <WalletIcon className={styles.navIconElem} />,
-        view: Wallet,
-        style: styles.walletIconLabel,
+        icon: <ActivityIcon className={styles.navIconElem} />,
+        view: Activity,
+        style: styles.activityIconLabel,
+        visible: true
+      },
+      {
+        id: "statistic",
+        label: "Stats",
+        path: "/statistic",
+        exact: false,
+        icon: <StatisticIcon className={styles.navIconElem} />,
+        view: Statistic,
+        style: styles.statisticIconLabel,
+        visible: true
+      },
+      {
+        id: "about",
+        label: "About",
+        path: "/about",
+        exact: false,
+        icon: <AboutIcon className={styles.navIconElem} />,
+        view: About,
+        style: styles.aboutIconLabel,
         visible: true
       }
     ];
@@ -82,6 +115,35 @@ class App extends Component {
     console.log("Toast");
   }
 
+  renderDrawerContent() {
+    return (
+      <div className={styles.activityDrawerContent}>
+        <div className={styles.balanceContainer}>
+          <div className={styles.balance}>
+            <span className={styles.balanceAmount}>
+              1500<sup className={styles.currencyTicker}>pr</sup>
+            </span>
+          </div>
+        </div>
+        <div className={styles.activity}>
+          <div className={styles.activityItem}>
+            <div className={styles.activityDate}>
+              <span>Jul 9</span>
+            </div>
+            <div className={styles.activityTimelineIcon}>
+              <div className={styles.line} />
+              <div className={styles.timelinePoint} />
+              <div className={styles.line} />
+            </div>
+            <div className={styles.activityDescription}>
+              You sent 21pr to ZakBrown93
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <ErrorContext.Provider value={() => this.renderErrorToast()}>
@@ -97,7 +159,17 @@ class App extends Component {
                 </div>
               </div>
               <div className={styles.rightContentContainer}>
-                <Header />
+                <Header
+                  onActivityIconClick={() =>
+                    this.setState({
+                      activityVisible: !this.state.activityVisible
+                    })
+                  }
+                />
+                <Drawer
+                  isVisible={this.state.activityVisible}
+                  drawerContent={this.renderDrawerContent()}
+                />
                 <div className={styles.content}>
                   <div className={styles.mainContent}>
                     {this.getNavLinks().map(link => this.renderRoute(link))}
