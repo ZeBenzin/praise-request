@@ -1,13 +1,31 @@
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 #dadada;
+  }
+  40% {
+    box-shadow: 0 0 6px 4px #dadada;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .searchContainer {
   display: flex;
   flex-direction: column;
   padding: 0px 85px;
-  max-width: 809px;
 }
 
 .search {
   display: flex;
   border-bottom: 5px solid #e0e0e0;
+  max-width: 809px;
 }
 
 .searchIcon {
@@ -18,44 +36,132 @@
 
 .repoListContainer {
   padding-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .prCard {
-  background-color: #2d3646;
   height: 70px;
-  border-radius: 3px;
-  padding: 21px;
-  margin-bottom: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e2e2e2;
   display: flex;
-  color: #fff;
   justify-content: space-between;
   align-items: center;
 }
 
-.leftSide {
-  border-right: 1px solid #ececec;
-  width: 70px;
+.input {
+  outline: none;
+  border: none;
+  font-size: 14px;
+  border-bottom: 2px solid;
+  font-family: inherit;
+  padding-bottom: 5px;
+  margin-left: -23px;
+  min-width: 0;
+  background-color: transparent;
+  padding-left: 30px;
+  width: 100%;
+
+  &::-webkit-input-placeholder {
+    color: #e0e0e0;
+  }
+}
+// rgba(0,0,0,0.7)
+.inputContainer {
+  display: flex;
+  width: 235px;
+}
+
+.filters {
+  display: flex;
+  padding: 30px 16px;
+}
+
+.statusFilters {
+  padding-left: 36px;
+}
+
+.stateFilter {
+  margin-right: 10px;
+  padding-bottom: 3px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.activeStateFilter {
+  border-bottom: 2px solid;
+}
+
+.prTitle {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.prList {
+  overflow-y: auto;
+  padding-top: 30px;
+  height: 550px;
+  padding: 0 16px;
+}
+
+.prModal {
+  width: 874px;
+}
+
+.repoName {
+  font-size: 56px;
+  font-weight: 700;
+  padding: 0 16px;
 }
 
 .rightSide {
   flex-grow: 1;
-  padding-left: 15px;
+}
+
+.praiseButtonContainer {
+  display: flex;
+  align-items: center;
+}
+
+.clicked {
+  background-color: #fff !important;
+  color: #fff !important;
+  border: 2px solid #bbb !important;
+  border-left-color: #46bd85 !important;
+  animation: rotate 1s linear infinite;
+}
+
+.complete {
 }
 
 .praiseButton {
   outline: none;
-  width: 100px;
-  border: 2px solid #fff;
-  border-radius: 35px;
-  color: #fff;
+  display: flex;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #46bd85;
+  border-radius: 50%;
   font-size: 16px;
-  background-color: #2d3646;
-  font-family: "Oswald";
-  transition: all 0.25s ease;
+  color: #46bd85;
+  transition: background-color 0.25s ease;
 
   &:hover {
     cursor: pointer;
-    background-color: #fff;
-    color: #2d3646;
+    background-color: #46bd85;
+    color: #fff;
+    // animation: pulse 3s infinite;
   }
+}
+
+.favoriteIcon {
+  margin: auto;
+}
+
+.praiseCount {
+  font-size: 14px;
+  color: #bbb;
+  padding-right: 10px;
 }
