@@ -23,25 +23,65 @@
 }
 
 .prCard {
-  background-color: #2d3646;
   height: 70px;
-  border-radius: 3px;
-  padding: 21px;
   margin-bottom: 15px;
+  border-bottom: 1px solid #e2e2e2;
   display: flex;
-  color: #fff;
   justify-content: space-between;
   align-items: center;
 }
 
-.leftSide {
-  border-right: 1px solid #ececec;
-  width: 70px;
+.input {
+  outline: none;
+  border: none;
+  font-size: 14px;
+  border-bottom: 2px solid;
+  font-family: inherit;
+  padding-bottom: 5px;
+  margin-left: -23px;
+  min-width: 0;
+  background-color: transparent;
+  padding-left: 30px;
+  width: 100%;
+
+  &::-webkit-input-placeholder {
+    color: #e0e0e0;
+  }
+}
+
+.inputContainer {
+  display: flex;
+  width: 235px;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
+.prTitle {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.prList {
+  overflow-y: scroll;
+  padding-top: 20px;
+  height: 550px;
+}
+
+.prModal {
+  min-width: 100px;
+}
+
+.repoName {
+  font-size: 56px;
+  font-weight: 700;
 }
 
 .rightSide {
   flex-grow: 1;
-  padding-left: 15px;
 }
 
 .praiseButton {

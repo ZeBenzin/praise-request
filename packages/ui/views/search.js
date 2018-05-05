@@ -24,7 +24,7 @@ class Search extends Component {
     this.state = {
       repos: [],
       selectedRepo: null,
-      modalOpen: false
+      modalOpen: true
     };
   }
 
@@ -40,18 +40,19 @@ class Search extends Component {
   }
 
   onRepoClick(e, id) {
-    const repo = this.state.repos.find(repo => repo.id === id);
-    getByRepoId(repo.name, repo.owner.login)
-      .then(({ data }) => {
-        this.setState({
-          selectedRepo: id,
-          pullRequests: data,
-          modalOpen: true
-        });
-      })
-      .catch(err => {
-        // Do a toast or suttin
-      });
+    // const repo = this.state.repos.find(repo => repo.id === id);
+    // getByRepoId(repo.name, repo.owner.login)
+    //   .then(({ data }) => {
+    //     this.setState({
+    //       selectedRepo: id,
+    //       pullRequests: data,
+    //       modalOpen: true
+    //     });
+    //   })
+    //   .catch(err => {
+    //     // Do a toast or suttin
+    //   });
+    this.setState({ modalOpen: true });
   }
 
   onPraiseClick(id) {
@@ -68,15 +69,31 @@ class Search extends Component {
   }
 
   renderPRModal() {
+    const fakePrs = [
+      { id: 1, title: "Do a thing for a thing", login: "that_guy_93" },
+      { id: 2, title: "Do a thing for a thing", login: "that_guy_93" },
+      { id: 3, title: "Do a thing for a thing", login: "that_guy_93" },
+      { id: 4, title: "Do a thing for a thing", login: "that_guy_93" }
+    ];
     const modalContent = (
       <div className={styles.prContainer}>
+        <div className={styles.repoName}>You-Dont-Know-JS</div>
+        <div className={styles.filters}>
+          <div className={styles.inputContainer}>
+            <SearchIcon />
+            <input placeholder="Filter" className={styles.input} autoFocus />
+          </div>
+          <div>
+            <span>Open</span>
+            <span>Closed</span>
+          </div>
+        </div>
         <div className={styles.prList}>
-          {this.state.pullRequests.map(pr => (
+          {fakePrs.map(pr => (
             <div className={styles.prCard} key={pr.id}>
-              <div className={styles.leftSide} />
               <div className={styles.rightSide}>
-                <div>{pr.title}</div>
-                <div>{pr.user.login}</div>
+                <div className={styles.prTitle}>{pr.title}</div>
+                <div>{pr.login}</div>
               </div>
               <div className={styles.praiseButtonContainer}>
                 <button
@@ -89,10 +106,15 @@ class Search extends Component {
             </div>
           ))}
         </div>
-        <div className={styles.sidebar}>Hello</div>
       </div>
     );
-    return <Modal content={modalContent} onClose={this.onCloseModal} />;
+    return (
+      <Modal
+        content={modalContent}
+        onClose={this.onCloseModal}
+        containerClassName={styles.prModal}
+      />
+    );
   }
 
   render() {
