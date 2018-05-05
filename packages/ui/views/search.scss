@@ -66,7 +66,7 @@
     color: #e0e0e0;
   }
 }
-
+// rgba(0,0,0,0.7)
 .inputContainer {
   display: flex;
   width: 235px;
@@ -74,8 +74,17 @@
 
 .filters {
   display: flex;
-  justify-content: space-between;
   padding-top: 30px;
+}
+
+.statusFilters {
+  padding-left: 36px;
+}
+
+.openFilter {
+  margin-right: 10px;
+  padding-bottom: 3px;
+  border-bottom: 2px solid;
 }
 
 .prTitle {

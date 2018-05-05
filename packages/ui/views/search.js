@@ -87,8 +87,8 @@ class Search extends Component {
             <SearchIcon />
             <input placeholder="Filter" className={styles.input} autoFocus />
           </div>
-          <div>
-            <span>Open</span>
+          <div className={styles.statusFilters}>
+            <span className={styles.openFilter}>Open</span>
             <span>Closed</span>
           </div>
         </div>
