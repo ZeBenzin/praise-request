@@ -31,8 +31,16 @@
       transition-delay: 0.16s;
     }
 
-    & .walletIconLabel {
+    & .activityIconLabel {
       transition-delay: 0.2s;
+    }
+
+    & .statisticIconLabel {
+      transition-delay: 0.24s;
+    }
+
+    & .aboutIconLabel {
+      transition-delay: 0.28s;
     }
   }
 }

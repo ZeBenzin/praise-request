@@ -12,7 +12,13 @@ import Modal from "component/modal/modal";
 import { getByRepoId } from "ui/api/pull-request";
 import { executeTransaction } from "ui/api/transaction";
 
+import classNames from "classnames";
 import styles from "./search.scss";
+
+const PR_STATE = {
+  closed: "closed",
+  open: "open"
+};
 
 class Search extends Component {
   constructor() {
@@ -21,11 +27,17 @@ class Search extends Component {
     this.onInputChange = debounce(this.onInputChange.bind(this), 300);
     this.onRepoClick = this.onRepoClick.bind(this);
     this.onCloseModal = this.onCloseModal.bind(this);
+    this.onFilterPRs = debounce(this.onFilterPRs.bind(this), 300);
 
     this.state = {
       repos: [],
       selectedRepo: null,
-      modalOpen: true
+      modalOpen: false,
+      pullRequests: [],
+      prFilters: {
+        term: "",
+        state: PR_STATE.open
+      }
     };
   }
 
@@ -42,7 +54,9 @@ class Search extends Component {
 
   onRepoClick(e, id) {
     const repo = this.state.repos.find(repo => repo.id === id);
-    getByRepoId(repo.name, repo.owner.login)
+    getByRepoId(repo.name, repo.owner.login, {
+      state: this.state.prFilters.state
+    })
       .then(({ data }) => {
         this.setState({
           selectedRepo: id,
@@ -54,6 +68,25 @@ class Search extends Component {
         // Do a toast or suttin
       });
     this.setState({ modalOpen: true });
+  }
+
+  onPRFilterChanged(nextFilters) {
+    const repo = this.state.repos.find(
+      repo => repo.id === this.state.selectedRepo
+    );
+    this.setState(
+      {
+        prFilters: { ...this.state.prFilters, ...nextFilters }
+      },
+      () =>
+        getByRepoId(repo.name, repo.owner.login, nextFilters).then(
+          ({ data }) => {
+            this.setState({
+              pullRequests: data
+            });
+          }
+        )
+    );
   }
 
   onPraiseClick(e, id) {
@@ -72,32 +105,60 @@ class Search extends Component {
     this.setState({ modalOpen: false });
   }
 
+  onFilterPRs(query) {
+    this.setState({
+      prFilters: { ...this.state.prFilters, term: query }
+    });
+  }
+
   renderPRModal() {
-    const fakePrs = [
-      { id: 1, title: "Do a thing for a thing", login: "that_guy_93" },
-      { id: 2, title: "Do a thing for a thing", login: "that_guy_93" },
-      { id: 3, title: "Do a thing for a thing", login: "that_guy_93" },
-      { id: 4, title: "Do a thing for a thing", login: "that_guy_93" }
-    ];
+    const filteredPRs = this.state.prFilters.term
+      ? this.state.pullRequests.filter(pr =>
+          pr.title
+            .toLowerCase()
+            .includes(this.state.prFilters.term.toLowerCase())
+        )
+      : this.state.pullRequests;
     const modalContent = (
       <div className={styles.prContainer}>
         <div className={styles.repoName}>You-Dont-Know-JS</div>
         <div className={styles.filters}>
           <div className={styles.inputContainer}>
             <SearchIcon />
-            <input placeholder="Filter" className={styles.input} autoFocus />
+            <input
+              placeholder="Filter"
+              className={styles.input}
+              autoFocus
+              onChange={e => this.onFilterPRs(e.currentTarget.value)}
+            />
           </div>
           <div className={styles.statusFilters}>
-            <span className={styles.openFilter}>Open</span>
-            <span>Closed</span>
+            <span
+              className={classNames(styles.stateFilter, {
+                [styles.activeStateFilter]:
+                  this.state.prFilters.state === PR_STATE.open
+              })}
+              onClick={() => this.onPRFilterChanged({ state: PR_STATE.open })}
+            >
+              Open
+            </span>
+            <span
+              className={classNames(styles.stateFilter, {
+                [styles.activeStateFilter]:
+                  this.state.prFilters.state === PR_STATE.closed
+              })}
+              onClick={() => this.onPRFilterChanged({ state: PR_STATE.closed })}
+            >
+              Closed
+            </span>
           </div>
         </div>
         <div className={styles.prList}>
-          {fakePrs.map(pr => (
+          {filteredPRs.map(pr => (
             <div className={styles.prCard} key={pr.id}>
               <div className={styles.rightSide}>
                 <div className={styles.prTitle}>{pr.title}</div>
-                <div>{pr.login}</div>
+                <div>{pr.user.login}</div>
               </div>
               <div className={styles.praiseButtonContainer}>
                 <span className={styles.praiseCount}>270</span>

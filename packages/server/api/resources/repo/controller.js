@@ -26,7 +26,12 @@ const getById = (req, res) => {
 const getPullRequests = (req, res) => {
   const ownerName = req.params.ownerName;
   const repoName = req.params.repoName;
-  const url = `${githubBasePath}/repos/${repoName}/${ownerName}/pulls`;
+  const convertedQueryParams = Object.keys(req.query).map(
+    paramKey => `${paramKey}=${req.query[paramKey]}`
+  );
+  const url = `${githubBasePath}/repos/${repoName}/${ownerName}/pulls?${convertedQueryParams.join(
+    "&"
+  )}`;
   axios
     .get(url, {
       headers: { "User-Agent": "PraiseRequest" }
