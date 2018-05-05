@@ -1,4 +1,4 @@
-.repoCard {
+.repoCardContainer {
   min-height: 168px;
   width: 325px;
   padding: 8px 30px;
@@ -13,11 +13,17 @@
   position: relative;
 
   &:hover {
+    filter: blur(10px);
     cursor: pointer;
 
     .repoIcon {
-      left: calc(50% - 36px);
+      // left: calc(50% - 36px);
     }
+  }
+}
+
+.repoCard {
+  &:hover {
   }
 }
 
@@ -31,7 +37,7 @@
   transition: opacity ease-in 0.2s;
 
   &:hover {
-    opacity: 0.96;
+    // opacity: 0.96;
   }
 }
 
@@ -42,7 +48,7 @@
   z-index: 1;
   position: absolute;
   transform: translateX(0%);
-  transition: left ease-in 0.2s;
+  // transition: left ease-in 0.2s;
 
   & > img {
     height: 100%;

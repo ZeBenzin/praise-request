@@ -6,6 +6,7 @@ import { ErrorContext } from "ui/components/app/app";
 import TextField from "component/text-field/text-field";
 import RepoCard from "component/repo-card/repo-card";
 import SearchIcon from "@material-ui/icons/Search";
+import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import Modal from "component/modal/modal";
 
 import { getByRepoId } from "ui/api/pull-request";
@@ -40,25 +41,28 @@ class Search extends Component {
   }
 
   onRepoClick(e, id) {
-    // const repo = this.state.repos.find(repo => repo.id === id);
-    // getByRepoId(repo.name, repo.owner.login)
-    //   .then(({ data }) => {
-    //     this.setState({
-    //       selectedRepo: id,
-    //       pullRequests: data,
-    //       modalOpen: true
-    //     });
-    //   })
-    //   .catch(err => {
-    //     // Do a toast or suttin
-    //   });
+    const repo = this.state.repos.find(repo => repo.id === id);
+    getByRepoId(repo.name, repo.owner.login)
+      .then(({ data }) => {
+        this.setState({
+          selectedRepo: id,
+          pullRequests: data,
+          modalOpen: true
+        });
+      })
+      .catch(err => {
+        // Do a toast or suttin
+      });
     this.setState({ modalOpen: true });
   }
 
-  onPraiseClick(id) {
+  onPraiseClick(e, id) {
     const pr = this.state.pullRequests.find(pr => pr.id === id);
+    const elem = e.currentTarget;
+    elem.classList.add(styles.clicked);
     executeTransaction(pr)
       .then(data => {
+        elem.classList.remove(styles.clicked);
         console.log("success", data);
       })
       .catch(err => console.log(err));
@@ -96,11 +100,12 @@ class Search extends Component {
                 <div>{pr.login}</div>
               </div>
               <div className={styles.praiseButtonContainer}>
+                <span className={styles.praiseCount}>270</span>
                 <button
                   className={styles.praiseButton}
-                  onClick={() => this.onPraiseClick(pr.id)}
+                  onClick={e => this.onPraiseClick(e, pr.id)}
                 >
-                  Praise
+                  <FavoriteBorder className={styles.favoriteIcon} />
                 </button>
               </div>
             </div>

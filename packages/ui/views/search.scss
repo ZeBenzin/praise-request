@@ -1,3 +1,21 @@
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 #dadada;
+  }
+  40% {
+    box-shadow: 0 0 6px 4px #dadada;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .searchContainer {
   display: flex;
   flex-direction: column;
@@ -24,7 +42,7 @@
 
 .prCard {
   height: 70px;
-  margin-bottom: 15px;
+  padding: 10px 0;
   border-bottom: 1px solid #e2e2e2;
   display: flex;
   justify-content: space-between;
@@ -57,7 +75,7 @@
 .filters {
   display: flex;
   justify-content: space-between;
-  padding-top: 20px;
+  padding-top: 30px;
 }
 
 .prTitle {
@@ -67,7 +85,7 @@
 
 .prList {
   overflow-y: scroll;
-  padding-top: 20px;
+  padding-top: 30px;
   height: 550px;
 }
 
@@ -84,20 +102,48 @@
   flex-grow: 1;
 }
 
+.praiseButtonContainer {
+  display: flex;
+  align-items: center;
+}
+
+.clicked {
+  background-color: #fff !important;
+  color: #fff !important;
+  border: 2px solid #bbb !important;
+  border-left-color: #46bd85 !important;
+  animation: rotate 1s linear infinite;
+}
+
+.complete {
+}
+
 .praiseButton {
   outline: none;
-  width: 100px;
-  border: 2px solid #fff;
-  border-radius: 35px;
-  color: #fff;
+  display: flex;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #46bd85;
+  border-radius: 50%;
   font-size: 16px;
-  background-color: #2d3646;
-  font-family: "Oswald";
-  transition: all 0.25s ease;
+  color: #46bd85;
+  transition: background-color 0.25s ease;
 
   &:hover {
     cursor: pointer;
-    background-color: #fff;
-    color: #2d3646;
+    background-color: #46bd85;
+    color: #fff;
+    // animation: pulse 3s infinite;
   }
+}
+
+.favoriteIcon {
+  margin: auto;
+}
+
+.praiseCount {
+  font-size: 14px;
+  color: #bbb;
+  padding-right: 10px;
 }
