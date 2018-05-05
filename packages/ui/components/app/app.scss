@@ -15,34 +15,6 @@
   border-right: 1px solid #e2e2e2;
   display: flex;
   flex-direction: column;
-
-  &:hover {
-    cursor: pointer;
-    & .navIconLabel {
-      will-change: transform;
-      transform: translateX(0);
-    }
-
-    & .searchIconLabel {
-      transition-delay: 0.1s;
-    }
-
-    & .accountIconLabel {
-      transition-delay: 0.16s;
-    }
-
-    & .activityIconLabel {
-      transition-delay: 0.2s;
-    }
-
-    & .statisticIconLabel {
-      transition-delay: 0.24s;
-    }
-
-    & .aboutIconLabel {
-      transition-delay: 0.28s;
-    }
-  }
 }
 
 .navIcon {
@@ -106,6 +78,36 @@
   padding-top: 100px;
 }
 
+.navLinks {
+  flex-grow: 1;
+  &:hover {
+    & .navIconLabel {
+      will-change: transform;
+      transform: translateX(0);
+    }
+
+    & .searchIconLabel {
+      transition-delay: 0.1s;
+    }
+
+    & .accountIconLabel {
+      transition-delay: 0.16s;
+    }
+
+    & .activityIconLabel {
+      transition-delay: 0.2s;
+    }
+
+    & .statisticIconLabel {
+      transition-delay: 0.24s;
+    }
+
+    & .aboutIconLabel {
+      transition-delay: 0.28s;
+    }
+  }
+}
+
 .navLinkAnchor {
   text-decoration: none;
   margin-bottom: 20px;
@@ -119,6 +121,9 @@
 .navLink {
   padding-bottom: 5px;
   display: flex;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .navLinkLabel {

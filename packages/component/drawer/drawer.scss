@@ -1,0 +1,17 @@
+$drawer-width: 340px;
+
+.drawer {
+  position: fixed;
+  width: $drawer-width;
+  height: 100%;
+  background-color: #fff;
+  transition: right 0.2s ease;
+}
+
+.drawerHidden {
+  right: -$drawer-width;
+}
+
+.drawerVisible {
+  right: 0;
+}

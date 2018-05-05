@@ -13,6 +13,7 @@ import StatisticIcon from "@material-ui/icons/ShowChart";
 import AboutIcon from "@material-ui/icons/Info";
 
 import Header from "ui/components/header/header";
+import Drawer from "component/drawer/drawer";
 
 import classNames from "classnames";
 import styles from "./app.scss";
@@ -20,6 +21,14 @@ import styles from "./app.scss";
 export const ErrorContext = React.createContext("error");
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activityVisible: false
+    };
+  }
+
   getNavLinks() {
     return [
       {
@@ -121,7 +130,14 @@ class App extends Component {
                 </div>
               </div>
               <div className={styles.rightContentContainer}>
-                <Header />
+                <Header
+                  onActivityIconClick={() =>
+                    this.setState({
+                      activityVisible: !this.state.activityVisible
+                    })
+                  }
+                />
+                <Drawer isVisible={this.state.activityVisible} />
                 <div className={styles.content}>
                   <div className={styles.mainContent}>
                     {this.getNavLinks().map(link => this.renderRoute(link))}
