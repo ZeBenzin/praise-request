@@ -12,6 +12,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 2;
   height: 100%;
   background-color: #ebecee;
   opacity: 0.9;
@@ -23,6 +24,7 @@
   padding: 35px 60px;
   min-width: 800px;
   max-height: 500px;
+  z-index: 2;
   margin: auto;
   border-radius: 4px;
   background-color: #fff;

@@ -69,24 +69,27 @@ class Search extends Component {
 
   renderPRModal() {
     const modalContent = (
-      <div>
-        {this.state.pullRequests.map(pr => (
-          <div className={styles.prCard} key={pr.id}>
-            <div className={styles.leftSide} />
-            <div className={styles.rightSide}>
-              <div>{pr.title}</div>
-              <div>{pr.user.login}</div>
+      <div className={styles.prContainer}>
+        <div className={styles.prList}>
+          {this.state.pullRequests.map(pr => (
+            <div className={styles.prCard} key={pr.id}>
+              <div className={styles.leftSide} />
+              <div className={styles.rightSide}>
+                <div>{pr.title}</div>
+                <div>{pr.user.login}</div>
+              </div>
+              <div className={styles.praiseButtonContainer}>
+                <button
+                  className={styles.praiseButton}
+                  onClick={() => this.onPraiseClick(pr.id)}
+                >
+                  Praise
+                </button>
+              </div>
             </div>
-            <div className={styles.praiseButtonContainer}>
-              <button
-                className={styles.praiseButton}
-                onClick={() => this.onPraiseClick(pr.id)}
-              >
-                Praise
-              </button>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <div className={styles.sidebar}>Hello</div>
       </div>
     );
     return <Modal content={modalContent} onClose={this.onCloseModal} />;
