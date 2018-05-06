@@ -188,6 +188,10 @@
 .activityItem {
   display: flex;
   justify-content: center;
+
+  &:nth-child(2n) {
+    flex-direction: row-reverse;
+  }
 }
 
 .activityTimelineIcon {
@@ -211,11 +215,11 @@
 }
 
 .activityDescription {
-  flex-grow: 1;
+  width: 144px;
 }
 
 .activityDate {
-  width: 50px;
+  width: 144px;
   display: flex;
 
   & > span {

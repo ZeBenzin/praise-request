@@ -115,7 +115,33 @@ class App extends Component {
     console.log("Toast");
   }
 
+  renderActivityItem({ date, description }, index) {
+    return (
+      <div key={index} className={styles.activityItem}>
+        <div className={styles.activityDate}>
+          <span>{date}</span>
+        </div>
+        <div className={styles.activityTimelineIcon}>
+          <div className={styles.line} />
+          <div className={styles.timelinePoint} />
+          <div className={styles.line} />
+        </div>
+        <div className={styles.activityDescription}>{description}</div>
+      </div>
+    );
+  }
+
   renderDrawerContent() {
+    const activityItems = [
+      { date: "JAN 01", description: "You sent a thing to a thing" },
+      { date: "JAN 01", description: "You sent a thing to a thing" },
+      { date: "JAN 01", description: "You sent a thing to a thing" },
+      { date: "JAN 01", description: "You sent a thing to a thing" },
+      { date: "JAN 01", description: "You sent a thing to a thing" },
+      { date: "JAN 01", description: "You sent a thing to a thing" },
+      { date: "JAN 01", description: "You sent a thing to a thing" },
+      { date: "JAN 01", description: "You sent a thing to a thing" }
+    ];
     return (
       <div className={styles.activityDrawerContent}>
         <div className={styles.balanceContainer}>
@@ -126,19 +152,9 @@ class App extends Component {
           </div>
         </div>
         <div className={styles.activity}>
-          <div className={styles.activityItem}>
-            <div className={styles.activityDate}>
-              <span>Jul 9</span>
-            </div>
-            <div className={styles.activityTimelineIcon}>
-              <div className={styles.line} />
-              <div className={styles.timelinePoint} />
-              <div className={styles.line} />
-            </div>
-            <div className={styles.activityDescription}>
-              You sent 21pr to ZakBrown93
-            </div>
-          </div>
+          {activityItems.map((item, index) => {
+            return this.renderActivityItem(item, index);
+          })}
         </div>
       </div>
     );
