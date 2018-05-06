@@ -18,6 +18,14 @@ app.use("/praise/repo", repoRouter);
 app.use("/praise/user", userRouter);
 app.use("/praise/githubaccount", githubAccountRouter);
 app.use("/praise/transaction", transactionRouter);
+app.use(
+  "/praise/session",
+  authController.decodeToken,
+  authController.checkUser,
+  (req, res) => {
+    res.status(200).send("As you were");
+  }
+);
 app.use("/praise/signin", authController.verifyUser, authController.signin);
 
 app.all("*", (req, res) => {

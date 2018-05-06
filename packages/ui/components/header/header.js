@@ -27,7 +27,7 @@ class Header extends PureComponent {
   }
 
   onLogoutClick() {
-    // First we need to invalidate the token, then re-render the UI
+    localStorage.removeItem("praiseRequestToken");
     this.props.onUserLogOut();
   }
 

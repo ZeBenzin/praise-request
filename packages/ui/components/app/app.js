@@ -15,6 +15,8 @@ import AboutIcon from "@material-ui/icons/Info";
 import Header from "ui/components/header/header";
 import Drawer from "component/drawer/drawer";
 
+import { getSessionStatus } from "ui/api/user";
+
 import classNames from "classnames";
 import styles from "./app.scss";
 
@@ -27,8 +29,30 @@ class App extends Component {
 
     this.state = {
       activityVisible: false,
-      isUserAuthenticated: false
+      isUserAuthenticated: false,
+      checkingUserAuthenticationStatus: true
     };
+  }
+
+  componentWillMount() {
+    if (localStorage.getItem("praiseRequestToken")) {
+      return getSessionStatus()
+        .then(data => {
+          this.setState({
+            isUserAuthenticated: data.status === 200,
+            checkingUserAuthenticationStatus: false
+          });
+        })
+        .catch(() => {
+          this.setState({ checkingUserAuthenticationStatus: false });
+        });
+    } else {
+      this.setState({ checkingUserAuthenticationStatus: false });
+    }
+  }
+
+  componentWillReceiveProps(nextProps, nextState) {
+    debugger;
   }
 
   getNavLinks() {
@@ -192,39 +216,41 @@ class App extends Component {
       >
         <ErrorContext.Provider value={() => this.renderErrorToast()}>
           <Router>
-            <div className={styles.app}>
-              <div className={styles.appContainer}>
-                <div className={styles.sidebar}>
-                  <div className={styles.logo}>
-                    <span className={styles.logoName}>{`<PR />`}</span>
+            {!this.state.checkingUserAuthenticationStatus ? (
+              <div className={styles.app}>
+                <div className={styles.appContainer}>
+                  <div className={styles.sidebar}>
+                    <div className={styles.logo}>
+                      <span className={styles.logoName}>{`<PR />`}</span>
+                    </div>
+                    <div className={styles.navLinks}>
+                      {this.getNavLinks()
+                        .filter(link => link.visible)
+                        .map(link => this.renderNavLink(link))}
+                    </div>
                   </div>
-                  <div className={styles.navLinks}>
-                    {this.getNavLinks()
-                      .filter(link => link.visible)
-                      .map(link => this.renderNavLink(link))}
-                  </div>
-                </div>
-                <div className={styles.rightContentContainer}>
-                  <Header
-                    onActivityIconClick={() =>
-                      this.setState({
-                        activityVisible: !this.state.activityVisible
-                      })
-                    }
-                    isUserAuthenticated={this.state.isUserAuthenticated}
-                  />
-                  <Drawer
-                    isVisible={this.state.activityVisible}
-                    drawerContent={this.renderDrawerContent()}
-                  />
-                  <div className={styles.content}>
-                    <div className={styles.mainContent}>
-                      {this.getNavLinks().map(link => this.renderRoute(link))}
+                  <div className={styles.rightContentContainer}>
+                    <Header
+                      onActivityIconClick={() =>
+                        this.setState({
+                          activityVisible: !this.state.activityVisible
+                        })
+                      }
+                      isUserAuthenticated={this.state.isUserAuthenticated}
+                    />
+                    <Drawer
+                      isVisible={this.state.activityVisible}
+                      drawerContent={this.renderDrawerContent()}
+                    />
+                    <div className={styles.content}>
+                      <div className={styles.mainContent}>
+                        {this.getNavLinks().map(link => this.renderRoute(link))}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : null}
           </Router>
         </ErrorContext.Provider>
       </AuthenticationContext.Provider>
