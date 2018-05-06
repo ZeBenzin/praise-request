@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 
 import AuthenticationModal from "ui/components/authentication-modal/authentication-modal";
+import { withAuthentication } from "ui/higher-order-components/with-authentication";
 
 import classNames from "classnames";
 import styles from "./header.scss";
@@ -15,6 +16,7 @@ class Header extends PureComponent {
 
     this.onRegisterClick = this.onRegisterClick.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
+    this.onLogoutClick = this.onLogoutClick.bind(this);
     this.onAuthenticationModalClosed = this.onAuthenticationModalClosed.bind(
       this
     );
@@ -22,6 +24,11 @@ class Header extends PureComponent {
 
   onLoginClick() {
     this.setState({ authModalOpen: true, activeTab: "login" });
+  }
+
+  onLogoutClick() {
+    localStorage.removeItem("praiseRequestToken");
+    this.props.onUserLogOut();
   }
 
   onRegisterClick() {
@@ -40,32 +47,49 @@ class Header extends PureComponent {
       <div className={styles.header}>
         <div className={styles.headerContent}>
           <div>
-            <button
-              className={classNames(
-                styles.authenticationButton,
-                styles.loginButton
-              )}
-              onClick={this.onLoginClick}
-            >
-              Log in
-            </button>
-            <button
-              className={classNames(
-                styles.authenticationButton,
-                styles.registerButton
-              )}
-              onClick={this.onRegisterClick}
-            >
-              Register
-            </button>
-          </div>
-          <div
-            className={styles.hamburger}
-            onClick={this.props.onActivityIconClick}
-          >
-            <div className={styles.top} />
-            <div className={styles.middle} />
-            <div className={styles.bottom} />
+            {!this.props.isUserAuthenticated ? (
+              <div>
+                {" "}
+                <button
+                  className={classNames(
+                    styles.authenticationButton,
+                    styles.loginButton
+                  )}
+                  onClick={this.onLoginClick}
+                >
+                  Log in
+                </button>
+                <button
+                  className={classNames(
+                    styles.authenticationButton,
+                    styles.registerButton
+                  )}
+                  onClick={this.onRegisterClick}
+                >
+                  Register
+                </button>
+              </div>
+            ) : (
+              <div className={styles.authenticatedActions}>
+                <button
+                  className={classNames(
+                    styles.authenticationButton,
+                    styles.logoutButton
+                  )}
+                  onClick={this.onLogoutClick}
+                >
+                  Log out
+                </button>
+                <div
+                  className={styles.hamburger}
+                  onClick={this.props.onActivityIconClick}
+                >
+                  <div className={styles.top} />
+                  <div className={styles.middle} />
+                  <div className={styles.bottom} />
+                </div>
+              </div>
+            )}
           </div>
         </div>
         {this.state.authModalOpen ? (
@@ -79,4 +103,4 @@ class Header extends PureComponent {
   }
 }
 
-export default Header;
+export default withAuthentication(Header);

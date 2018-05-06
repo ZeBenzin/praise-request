@@ -1,10 +1,12 @@
-const expressJwt = require("express-jwt");
 const jwt = require("jsonwebtoken");
+const expressJwt = require("express-jwt");
 const config = require("../config/dev.config");
 const User = require("./resources/user/model");
 
 const signin = (req, res, next) => {
-  const token = jwt.sign({ id: req.user.id }, config.config.JWT_SECRET);
+  const token = jwt.sign({ id: req.user.id }, config.config.JWT_SECRET, {
+    expiresIn: "12h"
+  });
   res.json({ token });
 };
 
@@ -31,4 +33,20 @@ const verifyUser = (req, res, next) => {
   });
 };
 
-module.exports = { verifyUser, signin };
+const decodeToken = (req, res, next) => {
+  if (!req.headers.authorization) {
+    res.status(401).send("Unauthorized");
+  }
+
+  req.headers.authorization = `Bearer ${req.headers.authorization}`;
+  expressJwt({ secret: config.config.JWT_SECRET })(req, res, next);
+};
+
+const checkUser = (req, res, next) => {
+  if (!req.user) {
+    res.status(401).send("Unauthorized");
+  }
+  next();
+};
+
+module.exports = { verifyUser, signin, decodeToken, checkUser };
