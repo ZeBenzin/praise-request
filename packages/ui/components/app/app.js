@@ -19,13 +19,15 @@ import classNames from "classnames";
 import styles from "./app.scss";
 
 export const ErrorContext = React.createContext("error");
+export const AuthenticationContext = React.createContext("auth");
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      activityVisible: false
+      activityVisible: false,
+      isUserAuthenticated: false
     };
   }
 
@@ -49,7 +51,7 @@ class App extends Component {
         icon: <PersonIcon className={styles.navIconElem} />,
         view: Account,
         style: styles.accountIconLabel,
-        visible: true
+        visible: this.state.isUserAuthenticated
       },
       {
         id: "activity",
@@ -59,7 +61,7 @@ class App extends Component {
         icon: <ActivityIcon className={styles.navIconElem} />,
         view: Activity,
         style: styles.activityIconLabel,
-        visible: true
+        visible: this.state.isUserAuthenticated
       },
       {
         id: "statistic",
@@ -69,7 +71,7 @@ class App extends Component {
         icon: <StatisticIcon className={styles.navIconElem} />,
         view: Statistic,
         style: styles.statisticIconLabel,
-        visible: true
+        visible: this.state.isUserAuthenticated
       },
       {
         id: "about",
@@ -82,6 +84,14 @@ class App extends Component {
         visible: true
       }
     ];
+  }
+
+  onUserAuthenticated() {
+    this.setState({ isUserAuthenticated: true });
+  }
+
+  onUserLogOut() {
+    this.setState({ isUserAuthenticated: false });
   }
 
   renderNavLink({ id, label, icon, path, style }) {
@@ -162,40 +172,53 @@ class App extends Component {
 
   render() {
     return (
-      <ErrorContext.Provider value={() => this.renderErrorToast()}>
-        <Router>
-          <div className={styles.app}>
-            <div className={styles.appContainer}>
-              <div className={styles.sidebar}>
-                <div className={styles.logo}>
-                  <span className={styles.logoName}>{`<PR />`}</span>
+      <AuthenticationContext.Provider
+        value={state => {
+          if (state === "login") {
+            this.onUserAuthenticated();
+          } else if (state === "logout") {
+            this.onUserLogOut();
+          }
+        }}
+      >
+        <ErrorContext.Provider value={() => this.renderErrorToast()}>
+          <Router>
+            <div className={styles.app}>
+              <div className={styles.appContainer}>
+                <div className={styles.sidebar}>
+                  <div className={styles.logo}>
+                    <span className={styles.logoName}>{`<PR />`}</span>
+                  </div>
+                  <div className={styles.navLinks}>
+                    {this.getNavLinks()
+                      .filter(link => link.visible)
+                      .map(link => this.renderNavLink(link))}
+                  </div>
                 </div>
-                <div className={styles.navLinks}>
-                  {this.getNavLinks().map(link => this.renderNavLink(link))}
-                </div>
-              </div>
-              <div className={styles.rightContentContainer}>
-                <Header
-                  onActivityIconClick={() =>
-                    this.setState({
-                      activityVisible: !this.state.activityVisible
-                    })
-                  }
-                />
-                <Drawer
-                  isVisible={this.state.activityVisible}
-                  drawerContent={this.renderDrawerContent()}
-                />
-                <div className={styles.content}>
-                  <div className={styles.mainContent}>
-                    {this.getNavLinks().map(link => this.renderRoute(link))}
+                <div className={styles.rightContentContainer}>
+                  <Header
+                    onActivityIconClick={() =>
+                      this.setState({
+                        activityVisible: !this.state.activityVisible
+                      })
+                    }
+                    isUserAuthenticated={this.state.isUserAuthenticated}
+                  />
+                  <Drawer
+                    isVisible={this.state.activityVisible}
+                    drawerContent={this.renderDrawerContent()}
+                  />
+                  <div className={styles.content}>
+                    <div className={styles.mainContent}>
+                      {this.getNavLinks().map(link => this.renderRoute(link))}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </Router>
-      </ErrorContext.Provider>
+          </Router>
+        </ErrorContext.Provider>
+      </AuthenticationContext.Provider>
     );
   }
 }

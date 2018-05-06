@@ -5,5 +5,7 @@ export const createUser = user => {
 };
 
 export const authenticateUser = credentials => {
-  return axios.post("/praise/signin", credentials);
+  return axios.post("/praise/signin", credentials).then(({ data }) => {
+    axios.defaults.headers.common["Authorization"] = data.token;
+  });
 };

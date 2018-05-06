@@ -5,6 +5,7 @@ import RegisterForm from "ui/components/register-form/register-form";
 import LoginForm from "ui/components/login-form/login-form";
 import { Close } from "@material-ui/icons";
 import { createUser, authenticateUser } from "ui/api/user";
+import { withAuthentication } from "ui/higher-order-components/with-authentication";
 
 import classNames from "classnames";
 import styles from "./authentication-modal.scss";
@@ -38,6 +39,9 @@ class AuthenticationModal extends Component {
     return authenticateUser({
       username,
       password
+    }).then(() => {
+      this.props.onUserAuthenticated();
+      this.props.onClose();
     });
   }
 
@@ -91,4 +95,4 @@ class AuthenticationModal extends Component {
   }
 }
 
-export default AuthenticationModal;
+export default withAuthentication(AuthenticationModal);
