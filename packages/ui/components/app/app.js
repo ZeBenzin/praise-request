@@ -15,18 +15,46 @@ import AboutIcon from "@material-ui/icons/Info";
 import Header from "ui/components/header/header";
 import Drawer from "component/drawer/drawer";
 
+import { getSessionStatus } from "ui/api/user";
+
 import classNames from "classnames";
 import styles from "./app.scss";
 
 export const ErrorContext = React.createContext("error");
+export const AuthenticationContext = React.createContext("auth");
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      activityVisible: false
+      activityVisible: false,
+      isUserAuthenticated: false,
+      checkingUserAuthenticationStatus: true
     };
+  }
+
+  componentWillMount() {
+    if (localStorage.getItem("praiseRequestToken")) {
+      return getSessionStatus()
+        .then(data => {
+          this.setState({
+            isUserAuthenticated: data.status === 200,
+            checkingUserAuthenticationStatus: false
+          });
+        })
+        .catch(() => {
+          this.setState({
+            checkingUserAuthenticationStatus: false,
+            isUserAuthenticated: false
+          });
+        });
+    } else {
+      this.setState({
+        checkingUserAuthenticationStatus: false,
+        isUserAuthenticated: false
+      });
+    }
   }
 
   getNavLinks() {
@@ -49,7 +77,7 @@ class App extends Component {
         icon: <PersonIcon className={styles.navIconElem} />,
         view: Account,
         style: styles.accountIconLabel,
-        visible: true
+        visible: this.state.isUserAuthenticated
       },
       {
         id: "activity",
@@ -59,7 +87,7 @@ class App extends Component {
         icon: <ActivityIcon className={styles.navIconElem} />,
         view: Activity,
         style: styles.activityIconLabel,
-        visible: true
+        visible: this.state.isUserAuthenticated
       },
       {
         id: "statistic",
@@ -69,7 +97,7 @@ class App extends Component {
         icon: <StatisticIcon className={styles.navIconElem} />,
         view: Statistic,
         style: styles.statisticIconLabel,
-        visible: true
+        visible: this.state.isUserAuthenticated
       },
       {
         id: "about",
@@ -82,6 +110,14 @@ class App extends Component {
         visible: true
       }
     ];
+  }
+
+  onUserAuthenticated() {
+    this.setState({ isUserAuthenticated: true });
+  }
+
+  onUserLogOut() {
+    this.setState({ isUserAuthenticated: false });
   }
 
   renderNavLink({ id, label, icon, path, style }) {
@@ -102,8 +138,17 @@ class App extends Component {
     );
   }
 
-  renderRoute({ id, path, view, exact }) {
-    return <Route key={id} exact={exact} path={path} component={view} />;
+  renderRoute({ id, path, view: View, exact }) {
+    return (
+      <Route
+        key={id}
+        exact={exact}
+        path={path}
+        render={() => (
+          <View isUserAuthenticated={this.state.isUserAuthenticated} />
+        )}
+      />
+    );
   }
 
   renderErrorToast() {
@@ -115,7 +160,33 @@ class App extends Component {
     console.log("Toast");
   }
 
+  renderActivityItem({ date, description }, index) {
+    return (
+      <div key={index} className={styles.activityItem}>
+        <div className={styles.activityDate}>
+          <span>{date}</span>
+        </div>
+        <div className={styles.activityTimelineIcon}>
+          <div className={styles.line} />
+          <div className={styles.timelinePoint} />
+          <div className={styles.line} />
+        </div>
+        <div className={styles.activityDescription}>{description}</div>
+      </div>
+    );
+  }
+
   renderDrawerContent() {
+    const activityItems = [
+      { date: "JAN 01", description: "You sent a thing to a thing" },
+      { date: "JAN 01", description: "You sent a thing to a thing" },
+      { date: "JAN 01", description: "You sent a thing to a thing" },
+      { date: "JAN 01", description: "You sent a thing to a thing" },
+      { date: "JAN 01", description: "You sent a thing to a thing" },
+      { date: "JAN 01", description: "You sent a thing to a thing" },
+      { date: "JAN 01", description: "You sent a thing to a thing" },
+      { date: "JAN 01", description: "You sent a thing to a thing" }
+    ];
     return (
       <div className={styles.activityDrawerContent}>
         <div className={styles.balanceContainer}>
@@ -126,19 +197,9 @@ class App extends Component {
           </div>
         </div>
         <div className={styles.activity}>
-          <div className={styles.activityItem}>
-            <div className={styles.activityDate}>
-              <span>Jul 9</span>
-            </div>
-            <div className={styles.activityTimelineIcon}>
-              <div className={styles.line} />
-              <div className={styles.timelinePoint} />
-              <div className={styles.line} />
-            </div>
-            <div className={styles.activityDescription}>
-              You sent 21pr to ZakBrown93
-            </div>
-          </div>
+          {activityItems.map((item, index) => {
+            return this.renderActivityItem(item, index);
+          })}
         </div>
       </div>
     );
@@ -146,40 +207,55 @@ class App extends Component {
 
   render() {
     return (
-      <ErrorContext.Provider value={() => this.renderErrorToast()}>
-        <Router>
-          <div className={styles.app}>
-            <div className={styles.appContainer}>
-              <div className={styles.sidebar}>
-                <div className={styles.logo}>
-                  <span className={styles.logoName}>{`<PR />`}</span>
-                </div>
-                <div className={styles.navLinks}>
-                  {this.getNavLinks().map(link => this.renderNavLink(link))}
-                </div>
-              </div>
-              <div className={styles.rightContentContainer}>
-                <Header
-                  onActivityIconClick={() =>
-                    this.setState({
-                      activityVisible: !this.state.activityVisible
-                    })
-                  }
-                />
-                <Drawer
-                  isVisible={this.state.activityVisible}
-                  drawerContent={this.renderDrawerContent()}
-                />
-                <div className={styles.content}>
-                  <div className={styles.mainContent}>
-                    {this.getNavLinks().map(link => this.renderRoute(link))}
+      <AuthenticationContext.Provider
+        value={state => {
+          if (state === "login") {
+            this.onUserAuthenticated();
+          } else if (state === "logout") {
+            this.onUserLogOut();
+          }
+        }}
+      >
+        <ErrorContext.Provider value={() => this.renderErrorToast()}>
+          <Router>
+            {!this.state.checkingUserAuthenticationStatus ? (
+              <div className={styles.app}>
+                <div className={styles.appContainer}>
+                  <div className={styles.sidebar}>
+                    <div className={styles.logo}>
+                      <span className={styles.logoName}>{`<PR />`}</span>
+                    </div>
+                    <div className={styles.navLinks}>
+                      {this.getNavLinks()
+                        .filter(link => link.visible)
+                        .map(link => this.renderNavLink(link))}
+                    </div>
+                  </div>
+                  <div className={styles.rightContentContainer}>
+                    <Header
+                      onActivityIconClick={() =>
+                        this.setState({
+                          activityVisible: !this.state.activityVisible
+                        })
+                      }
+                      isUserAuthenticated={this.state.isUserAuthenticated}
+                    />
+                    <Drawer
+                      isVisible={this.state.activityVisible}
+                      drawerContent={this.renderDrawerContent()}
+                    />
+                    <div className={styles.content}>
+                      <div className={styles.mainContent}>
+                        {this.getNavLinks().map(link => this.renderRoute(link))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </Router>
-      </ErrorContext.Provider>
+            ) : null}
+          </Router>
+        </ErrorContext.Provider>
+      </AuthenticationContext.Provider>
     );
   }
 }
