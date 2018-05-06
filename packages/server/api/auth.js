@@ -4,7 +4,9 @@ const config = require("../config/dev.config");
 const User = require("./resources/user/model");
 
 const signin = (req, res, next) => {
-  const token = jwt.sign({ id: req.user.id }, config.config.JWT_SECRET);
+  const token = jwt.sign({ id: req.user.id }, config.config.JWT_SECRET, {
+    expiresIn: "12h"
+  });
   res.json({ token });
 };
 

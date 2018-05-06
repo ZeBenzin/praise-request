@@ -44,10 +44,16 @@ class App extends Component {
           });
         })
         .catch(() => {
-          this.setState({ checkingUserAuthenticationStatus: false });
+          this.setState({
+            checkingUserAuthenticationStatus: false,
+            isUserAuthenticated: false
+          });
         });
     } else {
-      this.setState({ checkingUserAuthenticationStatus: false });
+      this.setState({
+        checkingUserAuthenticationStatus: false,
+        isUserAuthenticated: false
+      });
     }
   }
 

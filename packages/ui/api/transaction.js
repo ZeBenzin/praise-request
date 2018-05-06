@@ -12,5 +12,5 @@ export const executeTransaction = pr => {
     }
   };
 
-  return axios.post("/praise/transaction", body);
+  return axios.post("/api/praise/transaction", body);
 };
