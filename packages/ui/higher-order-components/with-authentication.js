@@ -9,7 +9,6 @@ export const withAuthentication = WrappedComponent => {
     }
 
     onUserLogOut(val) {
-      debugger;
       val("logout");
     }
 

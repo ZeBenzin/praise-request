@@ -112,8 +112,17 @@ class App extends Component {
     );
   }
 
-  renderRoute({ id, path, view, exact }) {
-    return <Route key={id} exact={exact} path={path} component={view} />;
+  renderRoute({ id, path, view: View, exact }) {
+    return (
+      <Route
+        key={id}
+        exact={exact}
+        path={path}
+        render={() => (
+          <View isUserAuthenticated={this.state.isUserAuthenticated} />
+        )}
+      />
+    );
   }
 
   renderErrorToast() {

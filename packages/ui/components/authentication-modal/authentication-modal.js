@@ -31,7 +31,13 @@ class AuthenticationModal extends Component {
 
   onRegisterUser({ username, password }) {
     createUser({ username, password })
-      .then(() => this.props.onClose())
+      .then(() => {
+        return authenticateUser({ username, password });
+      })
+      .then(() => {
+        this.props.onUserAuthenticated();
+        this.props.onClose();
+      })
       .catch(err => console.log(err));
   }
 
