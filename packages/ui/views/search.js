@@ -162,12 +162,14 @@ class Search extends Component {
               </div>
               <div className={styles.praiseButtonContainer}>
                 <span className={styles.praiseCount}>270</span>
-                <button
-                  className={styles.praiseButton}
-                  onClick={e => this.onPraiseClick(e, pr.id)}
-                >
-                  <FavoriteBorder className={styles.favoriteIcon} />
-                </button>
+                {this.props.isUserAuthenticated ? (
+                  <button
+                    className={styles.praiseButton}
+                    onClick={e => this.onPraiseClick(e, pr.id)}
+                  >
+                    <FavoriteBorder className={styles.favoriteIcon} />
+                  </button>
+                ) : null}
               </div>
             </div>
           ))}

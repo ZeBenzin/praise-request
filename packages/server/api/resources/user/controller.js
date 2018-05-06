@@ -1,10 +1,5 @@
 const User = require("./model");
 
-const getUserAccounts = (req, res) => {
-  // Not sure how to do this yet in Mongo
-  // Get the array of accounts and then Promise.all ?
-};
-
 const getUserById = (req, res) => {
   User.findById(req.params.id)
     .then(user => res.status(200).json(user))

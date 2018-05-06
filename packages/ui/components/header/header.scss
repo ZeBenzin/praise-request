@@ -50,6 +50,11 @@ $header-height: 85px;
   }
 }
 
+.authenticatedActions {
+  display: flex;
+  align-items: center;
+}
+
 .authenticationButton {
   outline: none;
   border: 2px solid #467ebd;
@@ -71,6 +76,10 @@ $header-height: 85px;
 .loginButton {
   border-top-left-radius: 35px;
   border-bottom-left-radius: 35px;
+}
+
+.logoutButton {
+  border-radius: 35px;
 }
 
 .registerButton {
