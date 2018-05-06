@@ -145,9 +145,84 @@
 
 .mainContent {
   flex-grow: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
   width: 100%;
   min-width: 0;
+}
+
+.activityDrawerContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.balanceContainer {
+  height: 250px;
+  display: flex;
+  border-bottom: 1px solid #f3f3f3;
+}
+
+.balance {
+  margin: auto;
+  width: 188px;
+  height: 188px;
+  border-radius: 50%;
+  color: #46bd85;
+  display: flex;
+}
+
+.balanceAmount {
+  margin: auto;
+  font-size: 75px;
+}
+
+.currencyTicker {
+  font-size: 23px;
+}
+
+.activity {
+  flex-grow: 1;
+  padding: 15px 23px;
+}
+
+.activityItem {
+  display: flex;
+  justify-content: center;
+}
+
+.activityTimelineIcon {
+  width: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timelinePoint {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  border: 2px solid gainsboro;
+}
+
+.line {
+  height: 27px;
+  border: 1px solid;
+  color: gainsboro;
+}
+
+.activityDescription {
+  flex-grow: 1;
+}
+
+.activityDate {
+  width: 50px;
+  display: flex;
+
+  & > span {
+    margin: auto;
+    font-size: 14px;
+    font-weight: 600;
+  }
 }
 
 body {

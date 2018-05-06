@@ -115,6 +115,35 @@ class App extends Component {
     console.log("Toast");
   }
 
+  renderDrawerContent() {
+    return (
+      <div className={styles.activityDrawerContent}>
+        <div className={styles.balanceContainer}>
+          <div className={styles.balance}>
+            <span className={styles.balanceAmount}>
+              1500<sup className={styles.currencyTicker}>pr</sup>
+            </span>
+          </div>
+        </div>
+        <div className={styles.activity}>
+          <div className={styles.activityItem}>
+            <div className={styles.activityDate}>
+              <span>Jul 9</span>
+            </div>
+            <div className={styles.activityTimelineIcon}>
+              <div className={styles.line} />
+              <div className={styles.timelinePoint} />
+              <div className={styles.line} />
+            </div>
+            <div className={styles.activityDescription}>
+              You sent 21pr to ZakBrown93
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <ErrorContext.Provider value={() => this.renderErrorToast()}>
@@ -137,7 +166,10 @@ class App extends Component {
                     })
                   }
                 />
-                <Drawer isVisible={this.state.activityVisible} />
+                <Drawer
+                  isVisible={this.state.activityVisible}
+                  drawerContent={this.renderDrawerContent()}
+                />
                 <div className={styles.content}>
                   <div className={styles.mainContent}>
                     {this.getNavLinks().map(link => this.renderRoute(link))}

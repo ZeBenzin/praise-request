@@ -21,9 +21,11 @@ $header-height: 85px;
   flex-direction: column;
   justify-content: space-between;
   padding: 0 15px 0 30px;
+  transition: height 0.1s ease-in;
 
   &:hover {
     cursor: pointer;
+    height: 22px;
   }
 
   .top {
