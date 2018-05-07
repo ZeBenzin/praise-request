@@ -2,9 +2,6 @@
   "script": "./index.js",
   "name": "praise-request-server",
   "instances": 1,
-  "error_file": "/data0/logs/pm2/praise-request-server-err.log",
-  "out_file": "/data0/logs/pm2/praise-request-server-out.log",
-  "pid_file": "/data0/logs/pm2/praise-request-server-pid.log",
   "env": {
     "NODE_ENV": "production"
   }

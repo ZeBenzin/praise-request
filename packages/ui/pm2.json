@@ -2,9 +2,6 @@
   "script": "./server/server.js",
   "name": "praise-request-ui",
   "instances": 1,
-  "error_file": "/data0/logs/pm2/praise-request-ui-err.log",
-  "out_file": "/data0/logs/pm2/praise-request-ui-out.log",
-  "pid_file": "/data0/logs/pm2/praise-request-ui-pid.log",
   "env": {
     "NODE_ENV": "production"
   }
