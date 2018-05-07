@@ -20,7 +20,6 @@ AutoReqProv: no
 Installs PraiseRequest
 
 %prep
-%setup -q -c -n %{name}
 
 %build
 cd praise-request
