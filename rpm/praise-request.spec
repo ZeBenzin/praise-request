@@ -22,7 +22,7 @@ Installs PraiseRequest
 %prep
 
 %build
-cd praise-request
+cd ..
 yarn
 yarn build
 
