@@ -9,7 +9,7 @@ Release: %{release}
 Summary: praise-request
 
 Group: Installation Script
-License: 
+License: MIT +no-false-attribs License
 Source: %{name}.tar.gz
 BuildRoot: %{buildroot}
 Requires: nodejs
