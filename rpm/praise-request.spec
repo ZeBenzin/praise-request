@@ -46,6 +46,4 @@ echo "By Jove! This might just have worked!"
 rm -rf %{buildroot}
 
 %files
-%defattr(644, praise-request, praise-request, 755)
-/usr/lib/praise-request
-/var/log/praise-request
+%attr(-, praise-request, praise-request) /apps/praise-request
