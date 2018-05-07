@@ -1,5 +1,5 @@
 {
-  "script": "./scripts/start.js",
+  "script": "./server/server.js",
   "name": "praise-request-ui",
   "instances": 1,
   "error_file": "/data0/logs/pm2/praise-request-ui-err.log",
