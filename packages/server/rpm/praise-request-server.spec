@@ -1,4 +1,4 @@
-%define name praise-request
+%define name praise-request-server
 %define version 0.1.0
 %define release 1
 %define buildroot %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
@@ -6,7 +6,7 @@
 Name: %{name}
 Version: %{version}
 Release: %{release}
-Summary: PraiseRequest
+Summary: PraiseRequest Server
 
 Group: Installation Script
 License: MIT +no-false-attribs License
@@ -17,7 +17,7 @@ BuildRequires: nodejs
 AutoReqProv: no
 
 %description
-Installs PraiseRequest
+Installs PraiseRequest Server
 
 %prep
 rm -rf %{_builddir}/%{name}
@@ -29,15 +29,15 @@ cp -r $BASE_BUILD_DIR/../../praise-request .
 %build
 cd %{_builddir}/%{name}/praise-request
 yarn
-cd %{_builddir}/%{name}/praise-request/packages/ui
+cd %{_builddir}/%{name}/praise-request/packages/server
 yarn build
 
 %install
-cd %{_builddir}/%{name}/praise-request/packages/ui
+cd %{_builddir}/%{name}/praise-request/packages/server
 
 mkdir -p %{buildroot}/apps
-mv %{_builddir}/%{name}/praise-request/packages/ui/build %{buildroot}/apps/praise-request/ui
-cp %{_builddir}/%{name}/praise-request/packages/ui/package.json %{buildroot}/apps/praise-request/ui
+mv %{_builddir}/%{name}/praise-request/packages/server/build %{buildroot}/apps/praise-request-server
+cp %{_builddir}/%{name}/praise-request/packages/server/package.json %{buildroot}/apps/praise-request-server
 
 %post
 echo "By Jove! This might just have worked!"
@@ -46,4 +46,4 @@ echo "By Jove! This might just have worked!"
 rm -rf %{buildroot}
 
 %files
-%attr(-, praise-request, praise-request) /apps/praise-request/ui
+%attr(-, praise-request, praise-request) /apps/praise-request-server
