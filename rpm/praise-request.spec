@@ -36,8 +36,8 @@ yarn build
 cd %{_builddir}/%{name}/praise-request/packages/ui
 
 mkdir -p %{buildroot}/apps
-mv %{_builddir}/%{name}/praise-request/packages/ui/build %{buildroot}/apps/praise-request
-cp %{_builddir}/%{name}/praise-request/packages/ui/package.json %{buildroot}/apps/praise-request
+mv %{_builddir}/%{name}/praise-request/packages/ui/build %{buildroot}/apps/praise-request/ui
+cp %{_builddir}/%{name}/praise-request/packages/ui/package.json %{buildroot}/apps/praise-request/ui
 
 %post
 echo "By Jove! This might just have worked!"
@@ -46,4 +46,4 @@ echo "By Jove! This might just have worked!"
 rm -rf %{buildroot}
 
 %files
-%attr(-, praise-request, praise-request) /apps/praise-request
+%attr(-, praise-request, praise-request) /apps/praise-request/ui
