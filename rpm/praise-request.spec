@@ -6,25 +6,26 @@
 Name: %{name}
 Version: %{version}
 Release: %{release}
-Summary: praise-request
+Summary: PraiseRequest
 
 Group: Installation Script
 License: MIT +no-false-attribs License
-Source: %{name}.tar.gz
+
 BuildRoot: %{buildroot}
 Requires: nodejs
 BuildRequires: nodejs
 AutoReqProv: no
 
 %description
-
+Installs PraiseRequest
 
 %prep
 %setup -q -c -n %{name}
 
 %build
-npm prune --production
-npm rebuild
+cd praise-request
+yarn
+yarn build
 
 %pre
 getent group praise-request >/dev/null || groupadd -r praise-request
@@ -36,7 +37,7 @@ cp -r ./ %{buildroot}/usr/lib/praise-request
 mkdir -p %{buildroot}/var/log/praise-request
 
 %post
-systemctl enable /usr/lib/praise-request/praise-request.service
+# systemctl enable /usr/lib/praise-request/praise-request.service
 
 %clean
 rm -rf %{buildroot}
