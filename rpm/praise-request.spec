@@ -31,17 +31,15 @@ cd %{_builddir}/%{name}/praise-request/packages/ui
 yarn
 yarn build
 
-%pre
-getent group praise-request >/dev/null || groupadd -r praise-request
-getent passwd praise-request >/dev/null || useradd -r -g praise-request -G praise-request -d / -s /sbin/nologin -c "praise-request" praise-request
-
 %install
-mkdir -p %{buildroot}/usr/lib/praise-request
-cp -r ./ %{buildroot}/usr/lib/praise-request
-mkdir -p %{buildroot}/var/log/praise-request
+cd %{_builddir}/%{name}/praise-request/packages/ui
+
+mkdir -p %{buildroot}/apps
+mv %{_builddir}/%{name}/praise-request/packages/ui/build %{buildroot}/apps/praise-request
+cp %{_builddir}/%{name}/praise-request/packages/ui/package.json %{buildroot}/apps/praise-request
 
 %post
-# systemctl enable /usr/lib/praise-request/praise-request.service
+echo "By Jove! This might just have worked!"
 
 %clean
 rm -rf %{buildroot}
