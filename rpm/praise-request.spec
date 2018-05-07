@@ -20,9 +20,14 @@ AutoReqProv: no
 Installs PraiseRequest
 
 %prep
+rm -rf %{_builddir}/%{name}
+mkdir %{_builddir}/%{name}
+cd %{_builddir}/%{name}
+
+cp -r $BASE_BUILD_DIR/../../praise-request .
 
 %build
-cd ..
+cd %{_builddir}/%{name}/praise-request
 yarn
 yarn build
 
