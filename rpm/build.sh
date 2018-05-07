@@ -1,0 +1,1 @@
+rpmbuild --bb praise-request.spec
