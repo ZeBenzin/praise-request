@@ -43,4 +43,4 @@ echo "By Jove! This might just have worked!"
 rm -rf %{buildroot}
 
 %files
-%attr(-, praise-request, praise-request) /apps/praise-request-server
+%attr(-, praise, praise) /apps/praise-request-server
