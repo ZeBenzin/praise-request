@@ -27,8 +27,9 @@ cd %{_builddir}/%{name}
 cp -r $BASE_BUILD_DIR/../../praise-request .
 
 %build
-cd %{_builddir}/%{name}/praise-request/packages/ui
+cd %{_builddir}/%{name}/praise-request
 yarn
+cd %{_builddir}/%{name}/praise-request/packages/ui
 yarn build
 
 %install
