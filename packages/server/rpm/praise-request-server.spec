@@ -35,6 +35,7 @@ cd %{_builddir}/%{name}/praise-request/packages/server
 
 mkdir -p %{buildroot}/apps
 mv %{_builddir}/%{name}/praise-request/packages/server %{buildroot}/apps/praise-request-server
+cp -r %{_builddir}/%{name}/praise-request/node_modules %{buildroot}/apps/praise-request-server
 
 %post
 echo "By Jove! This might just have worked!"
