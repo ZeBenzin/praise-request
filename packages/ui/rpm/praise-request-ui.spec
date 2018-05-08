@@ -37,9 +37,6 @@ cd %{_builddir}/%{name}/praise-request/packages/ui
 
 mkdir -p %{buildroot}/apps
 mv %{_builddir}/%{name}/praise-request/packages/ui/build %{buildroot}/apps/praise-request-ui
-cp %{_builddir}/%{name}/praise-request/packages/ui/package.json %{buildroot}/apps/praise-request-ui
-cp %{_builddir}/%{name}/praise-request/packages/ui/pm2.json %{buildroot}/apps/praise-request-ui
-cp -r %{_builddir}/%{name}/praise-request/packages/ui/server %{buildroot}/apps/praise-request-ui
 cp -r %{_builddir}/%{name}/praise-request/node_modules %{buildroot}/apps/praise-request-ui
 
 %post
