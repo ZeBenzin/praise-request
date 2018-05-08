@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
-const config = require("../config/dev.config");
+const config = require("../config/config");
 const User = require("./resources/user/model");
 
 const signin = (req, res, next) => {
