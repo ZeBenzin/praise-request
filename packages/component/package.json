@@ -1,5 +1,11 @@
 {
   "name": "component",
-  "version": "1.0.0",
-  "dependencies": {}
+  "version": "0.1.0",
+  "private": true,
+  "babel": {
+    "presets": ["react-app"]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  }
 }
