@@ -27,6 +27,8 @@ cd %{_builddir}/%{name}
 cp -r $BASE_BUILD_DIR/../../../../praise-request .
 
 %build
+cd %{_builddir}/%{name}/praise-request
+yarn install --production=false
 cd %{_builddir}/%{name}/praise-request/packages/ui
 yarn build
 
@@ -35,6 +37,7 @@ cd %{_builddir}/%{name}/praise-request/packages/ui
 
 mkdir -p %{buildroot}/apps
 mv %{_builddir}/%{name}/praise-request/packages/ui/build %{buildroot}/apps/praise-request-ui
+cp -r %{_builddir}/%{name}/praise-request/node_modules %{buildroot}/apps/praise-request-ui
 
 %post
 echo "By Jove! This might just have worked!"
