@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /packages/ui/node_modules
+/packages/ui/build
 /packages/server/node_modules
 /packages/component/node_modules
 

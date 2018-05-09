@@ -1,0 +1,8 @@
+{
+  "script": "./index.js",
+  "name": "praise-request-server",
+  "instances": 1,
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
