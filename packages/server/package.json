@@ -13,10 +13,5 @@
     "mongoose": "^5.0.16",
     "promise": "8.0.1",
     "query-string": "^6.0.0"
-  },
-  "scripts": {
-    "start": "nodemon index.js",
-    "build":
-      "cd ../../ && rm -rf node_modules && yarn install --production && cd packages/server && mkdir -p build && cp -r ../../node_modules build && cp -r {pm2.json,package.json,server.js,index.js,db.js,utils,config,api} build"
   }
 }
