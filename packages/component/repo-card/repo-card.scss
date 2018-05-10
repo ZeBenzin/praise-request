@@ -1,11 +1,9 @@
 .repoCardWrapper {
-  margin-bottom: 57px;
   position: relative;
-  margin-right: 57px;
+  margin: 35px;
 
   &:hover {
     > .cardAction {
-      // display: block;
       opacity: 1;
     }
 
@@ -40,8 +38,8 @@
 }
 
 .repoCardContainer {
-  min-height: 168px;
-  width: 325px;
+  height: 200px;
+  width: 200px;
   padding: 8px 30px;
   display: flex;
   justify-content: space-between;

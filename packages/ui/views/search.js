@@ -190,7 +190,10 @@ class Search extends Component {
       <div className={styles.searchContainer}>
         <div className={styles.search}>
           <SearchIcon className={styles.searchIcon} />
-          <TextField onInputChange={e => this.onInputChange(e.target.value)} />
+          <TextField
+            onInputChange={e => this.onInputChange(e.target.value)}
+            placeholder="Search repositories"
+          />
           {this.state.error ? (
             <ErrorContext.Consumer>
               {val => {

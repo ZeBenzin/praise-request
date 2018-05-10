@@ -7,7 +7,7 @@ class TextField extends PureComponent {
   render() {
     return (
       <input
-        placeholder="Search repos"
+        placeholder={this.props.placeholder}
         autoFocus
         onChange={this.props.onInputChange}
         className={styles.input}
@@ -17,11 +17,13 @@ class TextField extends PureComponent {
 }
 
 TextField.propTypes = {
-  onInputChange: PropTypes.func.isRequired
+  onInputChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string
 };
 
 TextField.defaultProps = {
-  onInputChange: () => {}
+  onInputChange: () => {},
+  placeholder: ""
 };
 
 export default TextField;

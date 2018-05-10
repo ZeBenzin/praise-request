@@ -20,6 +20,7 @@
   display: flex;
   flex-direction: column;
   padding: 0px 85px;
+  align-items: center;
 }
 
 .search {
@@ -35,9 +36,10 @@
 }
 
 .repoListContainer {
-  padding-top: 40px;
+  padding-top: 35px;
   display: flex;
   flex-wrap: wrap;
+  width: 61%;
 }
 
 .prCard {
