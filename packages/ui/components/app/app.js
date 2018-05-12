@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, NavLink, Route } from "react-router-dom";
 
-import debounce from "lodash/debounce";
-
 import Home from "ui/views/home";
 import Search from "ui/views/search";
 import Account from "ui/views/account";
 import Activity from "ui/views/activity";
 import Statistic from "ui/views/statistic";
 import About from "ui/views/about";
+import SearchOverlay from "ui/components/search-overlay/search-overlay";
 
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
@@ -19,7 +18,6 @@ import AboutIcon from "@material-ui/icons/Info";
 
 import Header from "ui/components/header/header";
 import Drawer from "component/drawer/drawer";
-import TextField from "component/text-field/text-field";
 
 import { getSessionStatus } from "ui/api/user";
 
@@ -41,8 +39,6 @@ class App extends Component {
     };
 
     this.toggleSearchOverlay = this.toggleSearchOverlay.bind(this);
-    this.onInputChange = debounce(this.onInputChange.bind(this), 300);
-    this.onKeyPress = debounce(this.onKeyPress.bind(this), 300);
   }
 
   componentWillMount() {
@@ -139,16 +135,6 @@ class App extends Component {
 
   onUserLogOut() {
     this.setState({ isUserAuthenticated: false });
-  }
-
-  onInputChange(value) {
-    this.setState({ searchTerm: value });
-  }
-
-  onKeyPress(code) {
-    if (code === 13) {
-      debugger;
-    }
   }
 
   toggleSearchOverlay() {
@@ -282,23 +268,9 @@ class App extends Component {
                       drawerContent={this.renderDrawerContent()}
                     />
                     <div className={styles.content}>
-                      <div
-                        className={classNames(styles.searchOverlay, {
-                          [styles.searchOverlayVisible]: this.state
-                            .isSearchVisible
-                        })}
-                      >
-                        <div className={styles.searchContainer}>
-                          <SearchIcon className={styles.searchIcon} />
-                          <TextField
-                            onInputChange={e =>
-                              this.onInputChange(e.target.value)
-                            }
-                            onKeyPress={e => this.onKeyPress(e.charCode)}
-                            placeholder="Search repositories"
-                          />
-                        </div>
-                      </div>
+                      <SearchOverlay
+                        isSearchVisible={this.state.isSearchVisible}
+                      />
                       <div className={styles.mainContent}>
                         {this.getNavLinks().map(link => this.renderRoute(link))}
                       </div>

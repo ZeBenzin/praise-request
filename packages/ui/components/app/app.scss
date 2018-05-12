@@ -149,39 +149,6 @@
   }
 }
 
-.searchOverlay {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  visibility: hidden;
-  text-align: center;
-  opacity: 0;
-  background: linear-gradient(
-    to bottom,
-    white 40%,
-    rgba(255, 255, 255, 0) 80%,
-    transparent
-  );
-  transition: 0.2s;
-  top: 0;
-  z-index: 1;
-}
-
-.searchOverlayVisible {
-  visibility: visible;
-  opacity: 1;
-}
-
-.searchContainer {
-  padding-top: 45px;
-}
-
-.searchIcon {
-  font-size: 84px !important;
-  margin: auto 0;
-  color: #e0e0e0;
-}
-
 .mainContent {
   flex-grow: 1;
   overflow-y: auto;

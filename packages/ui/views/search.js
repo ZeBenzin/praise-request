@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import debounce from "lodash/debounce";
 import { searchRepos } from "ui/api/repo";
 import { ErrorContext } from "ui/components/app/app";
@@ -21,8 +22,8 @@ const PR_STATE = {
 };
 
 class Search extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.onInputChange = debounce(this.onInputChange.bind(this), 300);
     this.onRepoClick = this.onRepoClick.bind(this);
@@ -34,11 +35,25 @@ class Search extends Component {
       selectedRepo: null,
       modalOpen: false,
       pullRequests: [],
+      searchTerm: props.location.state.searchTerm,
       prFilters: {
         term: "",
         state: PR_STATE.open
       }
     };
+  }
+
+  componentDidMount() {
+    if (this.state.searchTerm) {
+      searchRepos(this.state.searchTerm)
+        .then(({ data }) => {
+          this.setState({ repos: data.data });
+        })
+        .catch(err => {
+          // Early toast implementation
+          this.setState({ error: true });
+        });
+    }
   }
 
   onInputChange(value) {
@@ -219,4 +234,4 @@ class Search extends Component {
   }
 }
 
-export default Search;
+export default withRouter(Search);
