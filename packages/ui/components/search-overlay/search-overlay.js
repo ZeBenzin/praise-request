@@ -3,6 +3,8 @@ import { withRouter } from "react-router-dom";
 
 import debounce from "lodash/debounce";
 
+import { searchRepos } from "ui/api/repo";
+
 import SearchIcon from "@material-ui/icons/Search";
 import TextField from "component/text-field/text-field";
 
@@ -26,8 +28,19 @@ class SearchOverlay extends Component {
   }
 
   onKeyPress(code) {
-    if (code === 13) {
-      this.props.history.push("/search", { searchTerm: this.state.searchTerm });
+    if (code === 13 && this.state.searchTerm) {
+      searchRepos(this.state.searchTerm)
+        .then(({ data }) => {
+          this.props.history.push("/search", {
+            repos: data.data,
+            searchTerm: this.state.searchTerm
+          });
+          this.props.toggleSearchOverlay();
+        })
+        .catch(err => {
+          // Early toast implementation
+          this.setState({ error: true });
+        });
     }
   }
 

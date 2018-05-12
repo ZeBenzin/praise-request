@@ -6,6 +6,7 @@ import { ErrorContext } from "ui/components/app/app";
 
 import TextField from "component/text-field/text-field";
 import RepoCard from "component/repo-card/repo-card";
+import Pagination from "component/pagination/pagination";
 import SearchIcon from "@material-ui/icons/Search";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import Modal from "component/modal/modal";
@@ -29,13 +30,22 @@ class Search extends Component {
     this.onRepoClick = this.onRepoClick.bind(this);
     this.onCloseModal = this.onCloseModal.bind(this);
     this.onFilterPRs = debounce(this.onFilterPRs.bind(this), 300);
+    this.onPrevPageClick = this.onPrevPageClick.bind(this);
+    this.onNextPageClick = this.onNextPageClick.bind(this);
+
+    const repos = props.location.state ? props.location.state.repos || [] : [];
+    const searchTerm = props.location.state
+      ? props.location.state.searchTerm || ""
+      : "";
 
     this.state = {
-      repos: [],
+      repos,
+      searchTerm,
       selectedRepo: null,
       modalOpen: false,
       pullRequests: [],
-      searchTerm: props.location.state.searchTerm,
+      pageNumber: 1,
+      totalPages: 1,
       prFilters: {
         term: "",
         state: PR_STATE.open
@@ -43,28 +53,11 @@ class Search extends Component {
     };
   }
 
-  componentDidMount() {
-    if (this.state.searchTerm) {
-      searchRepos(this.state.searchTerm)
-        .then(({ data }) => {
-          this.setState({ repos: data.data });
-        })
-        .catch(err => {
-          // Early toast implementation
-          this.setState({ error: true });
-        });
-    }
-  }
-
   onInputChange(value) {
-    searchRepos(value)
-      .then(({ data }) => {
-        this.setState({ repos: data.data });
-      })
-      .catch(err => {
-        // Early toast implementation
-        this.setState({ error: true });
-      });
+    this.setState(
+      { searchTerm: value, pageNumber: 1 },
+      this.executeSearch(value, 1)
+    );
   }
 
   onRepoClick(e, id) {
@@ -124,6 +117,33 @@ class Search extends Component {
     this.setState({
       prFilters: { ...this.state.prFilters, term: query }
     });
+  }
+
+  onPrevPageClick() {
+    const newPageNumber = this.state.pageNumber - 1;
+    this.setState(
+      { pageNumber: newPageNumber },
+      this.executeSearch(this.state.searchTerm, newPageNumber)
+    );
+  }
+
+  onNextPageClick() {
+    const newPageNumber = this.state.pageNumber + 1;
+    this.setState(
+      { pageNumber: newPageNumber },
+      this.executeSearch(this.state.searchTerm, newPageNumber)
+    );
+  }
+
+  executeSearch(value, pageNumber) {
+    searchRepos(value, pageNumber)
+      .then(({ data }) => {
+        this.setState({ repos: data.data, totalPages: data.totalPages });
+      })
+      .catch(err => {
+        // Early toast implementation
+        this.setState({ error: true });
+      });
   }
 
   renderPRModal() {
@@ -228,6 +248,12 @@ class Search extends Component {
             />
           ))}
         </div>
+        <Pagination
+          onPrevClick={this.onPrevPageClick}
+          onNextClick={this.onNextPageClick}
+          showPrevButton={this.state.pageNumber > 1}
+          showNextButton={this.state.pageNumber < this.state.totalPages}
+        />
         {this.state.modalOpen ? this.renderPRModal() : null}
       </div>
     );

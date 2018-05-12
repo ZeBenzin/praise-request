@@ -1,0 +1,14 @@
+.paginationContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  width: 200px;
+}
+
+.paginationArrow {
+  font-size: 60px !important;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

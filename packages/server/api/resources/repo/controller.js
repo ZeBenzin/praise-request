@@ -9,10 +9,19 @@ const customRequest = request.defaults({
 });
 
 const getByQuery = (req, res) => {
-  const url = githubBasePath + "/search/repositories?q=" + req.query.q;
+  const url =
+    githubBasePath +
+    "/search/repositories?q=" +
+    req.query.q +
+    "&per_page=" +
+    req.query.per_page +
+    "&page=" +
+    req.query.page;
   customRequest.get(url, (err, response) => {
+    const pageParam = response.headers.link.match(/&page=(\d+)/g)[1];
+    const totalPages = pageParam.match(/(\d+)/g)[0];
     const items = JSON.parse(response.body).items || [];
-    res.json({ data: items });
+    res.json({ data: items, totalPages });
   });
 };
 

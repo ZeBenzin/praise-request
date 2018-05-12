@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import { withRouter } from "react-router-dom";
 
 import SearchIcon from "@material-ui/icons/Search";
 
@@ -54,10 +55,12 @@ class Header extends PureComponent {
       <div className={styles.header}>
         <div className={styles.headerContent}>
           <div className={styles.rightContent}>
-            <SearchIcon
-              className={styles.searchButton}
-              onClick={this.onSearchClick}
-            />
+            {this.props.location.pathname !== "/search" ? (
+              <SearchIcon
+                className={styles.searchButton}
+                onClick={this.onSearchClick}
+              />
+            ) : null}
             {!this.props.isUserAuthenticated ? (
               <div>
                 {" "}
@@ -114,4 +117,4 @@ class Header extends PureComponent {
   }
 }
 
-export default withAuthentication(Header);
+export default withRouter(withAuthentication(Header));

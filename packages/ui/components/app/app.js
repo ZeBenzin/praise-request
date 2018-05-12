@@ -270,6 +270,7 @@ class App extends Component {
                     <div className={styles.content}>
                       <SearchOverlay
                         isSearchVisible={this.state.isSearchVisible}
+                        toggleSearchOverlay={this.toggleSearchOverlay}
                       />
                       <div className={styles.mainContent}>
                         {this.getNavLinks().map(link => this.renderRoute(link))}
