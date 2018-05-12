@@ -21,7 +21,7 @@ const getByQuery = (req, res) => {
     const pageParam = response.headers.link.match(/&page=(\d+)/g)[1];
     const totalPages = pageParam.match(/(\d+)/g)[0];
     const items = JSON.parse(response.body).items || [];
-    res.json({ data: items, totalPages });
+    res.json({ items, totalPages });
   });
 };
 

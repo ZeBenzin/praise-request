@@ -138,7 +138,10 @@ class Search extends Component {
   executeSearch(value, pageNumber) {
     searchRepos(value, pageNumber)
       .then(({ data }) => {
-        this.setState({ repos: data.data, totalPages: data.totalPages });
+        this.setState({
+          repos: data.items,
+          totalPages: Number.parseInt(data.totalPages, 10)
+        });
       })
       .catch(err => {
         // Early toast implementation

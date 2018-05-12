@@ -42,7 +42,7 @@ class Search extends Component {
   componentWillMount() {
     searchRepos("react")
       .then(({ data }) => {
-        this.setState({ repos: data.data });
+        this.setState({ repos: data.items });
       })
       .catch(err => {
         this.setState({ error: true });
