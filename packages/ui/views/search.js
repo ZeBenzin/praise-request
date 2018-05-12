@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import { searchRepos } from "ui/api/repo";
 import { ErrorContext } from "ui/components/app/app";
 

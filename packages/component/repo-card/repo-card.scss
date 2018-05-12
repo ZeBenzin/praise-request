@@ -38,20 +38,31 @@
 }
 
 .repoCardContainer {
-  height: 200px;
-  width: 200px;
-  padding: 8px 30px;
-  display: flex;
-  justify-content: space-between;
+  height: 250px;
+  width: 350px;
   box-shadow: 0 0 11px 7px #ececec;
   background-color: #fff;
-  align-items: center;
   position: relative;
   transition: all 0.2s ease-in;
 
   &:hover {
     cursor: pointer;
   }
+}
+
+.repoCard {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  flex-direction: column;
+  padding: 0px 22px;
+}
+
+.repoStats {
+  flex-grow: 1;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
 }
 
 .repoOverlay {
@@ -65,32 +76,63 @@
 }
 
 .repoIcon {
-  height: 74px;
-  margin-right: 28px;
-  left: -37px;
-  z-index: 1;
-  position: absolute;
-  transform: translateX(0%);
+  height: 36px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
 
-  & > img {
-    height: 100%;
-    box-shadow: 0 0 6px 4px #d6d6d6;
-    background-color: #fff;
-    border-radius: 50%;
-  }
+.prCount {
+  font-size: 24px;
 }
 
 .repoDetails {
-  flex-grow: 1;
-  padding: 0 30px;
-  margin-left: 31px;
-  border-left: 1px solid #ececec;
+  padding: 8px 0px 24px 0px;
+  border-top: 1px solid #f1f1f1;
+}
+
+.repoMetaData {
+  display: flex;
+  align-items: center;
+}
+
+.metaDataGroup {
+  display: flex;
+
+  & > svg {
+    margin-right: 4px;
+  }
+}
+
+.dividerPoint {
+  margin: 0 10px;
+}
+
+.repoStatBubble {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: #bbb;
+}
+
+.prTotal {
+  height: 148px;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  border: rgb(70, 189, 133);
+  color: rgb(70, 189, 133);
+
+  & > span {
+    margin: auto;
+    font-weight: 600;
+    font-size: 44px;
+  }
 }
 
 .repoName {
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 13px;
+  font-weight: 700;
+  margin-bottom: 10px;
   color: #467ebd;
   font-family: "Oswald";
 }
