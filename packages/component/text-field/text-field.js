@@ -10,6 +10,7 @@ class TextField extends PureComponent {
         placeholder={this.props.placeholder}
         autoFocus
         onChange={this.props.onInputChange}
+        onKeyPress={this.props.onKeyPress}
         className={styles.input}
       />
     );
@@ -17,12 +18,14 @@ class TextField extends PureComponent {
 }
 
 TextField.propTypes = {
-  onInputChange: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func,
+  onKeyPress: PropTypes.func,
   placeholder: PropTypes.string
 };
 
 TextField.defaultProps = {
   onInputChange: () => {},
+  onKeyPress: () => {},
   placeholder: ""
 };
 
