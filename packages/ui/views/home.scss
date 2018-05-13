@@ -21,14 +21,14 @@
   flex-direction: column;
   padding: 0px 85px;
   align-items: center;
-  width: 963px;
+  max-width: 963px;
   margin: auto;
 }
 
 .search {
   display: flex;
   border-bottom: 5px solid #e0e0e0;
-  width: 100%;
+  max-width: 809px;
 }
 
 .searchIcon {
@@ -41,9 +41,9 @@
   display: flex;
   flex-direction: column;
   opacity: 0;
-  height: 750px;
   transition: opacity 0.2s ease-in;
   padding-top: 35px;
+  height: 750px;
   width: 100%;
 }
 
@@ -54,6 +54,14 @@
 .repoList {
   display: flex;
   flex-wrap: wrap;
+}
+
+.header {
+  font-size: 72px;
+  color: #e0e0e0;
+  font-weight: 900;
+  width: 100%;
+  border-bottom: 5px solid #e0e0e0;
 }
 
 .prCard {

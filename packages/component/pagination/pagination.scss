@@ -1,0 +1,32 @@
+.paginationContainer {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  margin-bottom: 20px;
+  width: 200px;
+}
+
+.paginationButton {
+  border-radius: 2px;
+  border: 3px solid #467ebd;
+  display: flex;
+  color: #467ebd;
+  transition: background-color 0.1s ease-in, color 0.2s ease-in;
+
+  &:hover {
+    background-color: #467ebd;
+    color: #fff;
+  }
+}
+
+.paginationArrow {
+  font-size: 47px !important;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.arrowHidden {
+  visibility: hidden;
+}

@@ -9,9 +9,23 @@ $header-height: 85px;
   display: flex;
   align-items: center;
   height: 100%;
-  padding: 0 10px;
-  justify-content: flex-end;
+  padding: 0 16px;
+  justify-content: space-between;
   border-bottom: 1px solid #e2e2e2;
+}
+
+.rightContent {
+  display: flex;
+  align-items: center;
+}
+
+.searchButton {
+  font-size: 38px !important;
+  padding-right: 20px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .hamburger {

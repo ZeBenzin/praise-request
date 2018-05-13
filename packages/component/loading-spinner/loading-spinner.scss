@@ -1,0 +1,17 @@
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  height: 60px;
+  width: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  border-top: 3px solid #46bd85;
+  border-right: 3px solid transparent;
+  animation: rotate 0.4s linear infinite;
+}
