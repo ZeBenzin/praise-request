@@ -1,7 +1,6 @@
 #!/bin/bash
 
 PROJECT_ROOT="$(cd ../../ && pwd)"
-echo $PROJECT_ROOT
 
 rm -rf $PROJECT_ROOT/build/packages/server
 mkdir -p $PROJECT_ROOT/build/packages/server/build

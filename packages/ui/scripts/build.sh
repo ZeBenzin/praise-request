@@ -1,7 +1,6 @@
 #!/bin/bash
 
 PROJECT_ROOT="$(cd ../../ && pwd)"
-echo $PROJECT_ROOT
 
 node scripts/build.js
 rm -rf $PROJECT_ROOT/build/packages/ui
