@@ -149,6 +149,9 @@ class App extends Component {
         key={id}
         to={path}
         exact={exact}
+        onClick={() => {
+          return this.state.isSearchVisible ? this.toggleSearchOverlay() : null;
+        }}
       >
         <div className={styles.navIcon}>
           {icon}

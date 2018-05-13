@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import debounce from "lodash/debounce";
 import { searchRepos } from "ui/api/repo";
-import { ErrorContext } from "ui/components/app/app";
 
-import TextField from "component/text-field/text-field";
 import RepoCard from "component/repo-card/repo-card";
+import Pagination from "component/pagination/pagination";
 import SearchIcon from "@material-ui/icons/Search";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import Modal from "component/modal/modal";
@@ -24,29 +22,45 @@ class Search extends Component {
   constructor() {
     super();
 
-    this.onRepoClick = this.onRepoClick.bind(this);
-    this.onCloseModal = this.onCloseModal.bind(this);
-
     this.state = {
       repos: [],
       selectedRepo: null,
       modalOpen: false,
+      pageNumber: 1,
+      totalPages: 1,
       pullRequests: [],
       prFilters: {
         term: "",
         state: PR_STATE.open
       }
     };
+
+    this.onRepoClick = this.onRepoClick.bind(this);
+    this.onCloseModal = this.onCloseModal.bind(this);
+    this.onPrevPageClick = this.onPrevPageClick.bind(this);
+    this.onNextPageClick = this.onNextPageClick.bind(this);
   }
 
   componentWillMount() {
-    searchRepos("react")
-      .then(({ data }) => {
-        this.setState({ repos: data.items });
-      })
-      .catch(err => {
-        this.setState({ error: true });
-      });
+    this.executeSearch(this.state.pageNumber);
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  onPrevPageClick() {
+    const newPageNumber = this.state.pageNumber - 1;
+    this.executeSearch(newPageNumber);
+  }
+
+  onNextPageClick() {
+    const newPageNumber = this.state.pageNumber + 1;
+    this.executeSearch(newPageNumber);
   }
 
   onRepoClick(e, id) {
@@ -106,6 +120,24 @@ class Search extends Component {
     this.setState({
       prFilters: { ...this.state.prFilters, term: query }
     });
+  }
+
+  executeSearch(pageNumber) {
+    searchRepos("react", pageNumber)
+      .then(({ data }) => {
+        if (this._isMounted) {
+          this.setState({
+            repos: data.items,
+            totalPages: Number.parseInt(data.totalPages, 10),
+            pageNumber
+          });
+        }
+      })
+      .catch(err => {
+        if (this._isMounted) {
+          this.setState({ error: true });
+        }
+      });
   }
 
   renderPRModal() {
@@ -196,6 +228,12 @@ class Search extends Component {
             />
           ))}
         </div>
+        <Pagination
+          onPrevClick={this.onPrevPageClick}
+          onNextClick={this.onNextPageClick}
+          showPrevButton={this.state.pageNumber > 1}
+          showNextButton={this.state.pageNumber < this.state.totalPages}
+        />
         {this.state.modalOpen ? this.renderPRModal() : null}
       </div>
     );

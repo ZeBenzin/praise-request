@@ -71,12 +71,16 @@ class RegisterForm extends Component {
         <div className={styles.modalActions}>
           <button
             className={styles.confirmButton}
-            onClick={() =>
-              this.props.onRegisterUser({
-                username: this.state.username,
-                password: this.state.password
-              })
-            }
+            onClick={() => {
+              if (this.state.password === this.state.confirmedPassword) {
+                this.props.onRegisterUser({
+                  username: this.state.username,
+                  password: this.state.password
+                });
+              } else {
+                console.error("You done bad!");
+              }
+            }}
           >
             Register
           </button>
