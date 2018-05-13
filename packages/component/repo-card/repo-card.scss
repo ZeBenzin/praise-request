@@ -3,12 +3,8 @@
   margin: 22px;
 
   &:hover {
-    > .cardAction {
+    .repoAction {
       opacity: 1;
-    }
-
-    > .repoCardContainer {
-      filter: blur(10px);
     }
   }
 }
@@ -199,25 +195,83 @@
   }
 }
 
-.praiseButton {
+.repoActions {
+  position: absolute;
+  top: 9%;
+  height: 170px;
+  right: -149px;
+  z-index: 3;
+  display: flex;
+  opacity: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.repoActionContainer {
+  display: flex;
+  width: 175px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.repoAction {
   outline: none;
   display: flex;
   text-align: center;
-  width: 50px;
-  height: 50px;
-  border: 2px solid #46bd85;
   border-radius: 50%;
-  font-size: 16px;
-  color: #46bd85;
   transition: background-color 0.25s ease;
-  position: absolute;
-  top: calc(50% - 25px);
-  right: -22px;
   transition: all 0.2s ease-in;
+  margin-right: 8px;
+  opacity: 0;
 
   &:hover {
     cursor: pointer;
+  }
+}
+
+.tooltip {
+  background-color: #457dbd;
+  padding: 3px 10px;
+  border-radius: 28px;
+  color: #fff;
+}
+
+.praiseButton {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #46bd85;
+  font-size: 16px;
+  color: #46bd85;
+
+  &:hover {
     background-color: #46bd85;
+    color: #fff;
+  }
+}
+
+.githubButton {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #000;
+  font-size: 12px !important;
+  color: #000;
+
+  &:hover {
+    background-color: #000;
+    color: #fff;
+  }
+}
+
+.openButton {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #000;
+  font-size: 12px !important;
+  color: #000;
+
+  &:hover {
+    background-color: #000;
     color: #fff;
   }
 }

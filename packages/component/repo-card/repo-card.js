@@ -1,7 +1,9 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 
-import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
+import OpenInNewIcon from "@material-ui/icons/OpenInNew";
+import CodeIcon from "@material-ui/icons/Code";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import PersonIcon from "@material-ui/icons/PersonOutline";
 import StarIcon from "@material-ui/icons/StarBorder";
 
@@ -40,10 +42,32 @@ class RepoCard extends PureComponent {
             </div>
           </div>
         </div>
-
-        <button className={styles.praiseButton}>
-          <FavoriteBorder className={styles.favoriteIcon} />
-        </button>
+        <div className={styles.repoActions}>
+          <div className={styles.repoActionContainer}>
+            <button
+              className={classNames(styles.repoAction, styles.githubButton)}
+            >
+              <OpenInNewIcon className={styles.favoriteIcon} />
+            </button>
+            {/*<span className={styles.tooltip}>View on GitHub</span>*/}
+          </div>
+          <div className={styles.repoActionContainer}>
+            <button
+              className={classNames(styles.repoAction, styles.praiseButton)}
+            >
+              <FavoriteBorderIcon className={styles.favoriteIcon} />
+            </button>
+            {/*<span className={styles.tooltip}>Praise repo</span>*/}
+          </div>
+          <div className={styles.repoActionContainer}>
+            <button
+              className={classNames(styles.repoAction, styles.openButton)}
+            >
+              <CodeIcon className={styles.favoriteIcon} />
+            </button>
+            {/*<span className={styles.tooltip}>View PRs</span>*/}
+          </div>
+        </div>
       </div>
     );
   }
