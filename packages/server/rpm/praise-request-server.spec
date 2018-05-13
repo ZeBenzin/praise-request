@@ -28,14 +28,13 @@ cp -r $BASE_BUILD_DIR/../../../../praise-request .
 
 %build
 cd %{_builddir}/%{name}/praise-request
-yarn
+yarn install --production
+cd %{_builddir}/%{name}/praise-request/server
+yarn build
 
 %install
-cd %{_builddir}/%{name}/praise-request/packages/server
-
 mkdir -p %{buildroot}/apps
-mv %{_builddir}/%{name}/praise-request/packages/server %{buildroot}/apps/praise-request-server
-cp -r %{_builddir}/%{name}/praise-request/node_modules %{buildroot}/apps/praise-request-server
+mv %{_builddir}/%{name}/praise-request/build/packages/server/build %{buildroot}/apps/praise-request-server
 
 %post
 echo "By Jove! This might just have worked!"
