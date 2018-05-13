@@ -1,0 +1,17 @@
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  height: 60px;
+  width: 60px;
+  position: absolute;
+  top: 50%;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: coral;
+  border-bottom-color: coral;
+  animation: rotate 0.7s ease infinite;
+}

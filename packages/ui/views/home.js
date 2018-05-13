@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { searchRepos } from "ui/api/repo";
 
+import LoadingSpinner from "component/loading-spinner/loading-spinner";
 import RepoCard from "component/repo-card/repo-card";
 import Pagination from "component/pagination/pagination";
 import SearchIcon from "@material-ui/icons/Search";
@@ -28,6 +29,7 @@ class Search extends Component {
       modalOpen: false,
       pageNumber: 1,
       totalPages: 1,
+      loading: false,
       pullRequests: [],
       prFilters: {
         term: "",
@@ -123,13 +125,15 @@ class Search extends Component {
   }
 
   executeSearch(pageNumber) {
+    this.setState({ loading: true });
     searchRepos("react", pageNumber)
       .then(({ data }) => {
         if (this._isMounted) {
           this.setState({
             repos: data.items,
             totalPages: Number.parseInt(data.totalPages, 10),
-            pageNumber
+            pageNumber,
+            loading: false
           });
         }
       })
@@ -218,16 +222,20 @@ class Search extends Component {
     return (
       <div className={styles.searchContainer}>
         <div className={styles.header}>Popular Repositories</div>
-        <div className={styles.repoListContainer}>
-          {this.state.repos.map(repo => (
-            <RepoCard
-              id={repo.id}
-              key={repo.id}
-              repo={repo}
-              onClick={e => this.onRepoClick(e, repo.id)}
-            />
-          ))}
-        </div>
+        {this.state.loading ? (
+          <LoadingSpinner />
+        ) : (
+          <div className={styles.repoListContainer}>
+            {this.state.repos.map(repo => (
+              <RepoCard
+                id={repo.id}
+                key={repo.id}
+                repo={repo}
+                onClick={e => this.onRepoClick(e, repo.id)}
+              />
+            ))}
+          </div>
+        )}
         <Pagination
           onPrevClick={this.onPrevPageClick}
           onNextClick={this.onNextPageClick}
