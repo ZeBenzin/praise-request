@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import debounce from "lodash/debounce";
 import { searchRepos } from "ui/api/repo";
-import { ErrorContext } from "ui/components/app/app";
 
 import LoadingSpinner from "component/loading-spinner/loading-spinner";
-import TextField from "component/text-field/text-field";
 import RepoCard from "component/repo-card/repo-card";
 import Pagination from "component/pagination/pagination";
 import SearchIcon from "@material-ui/icons/Search";
@@ -16,7 +12,7 @@ import { getByRepoId } from "ui/api/pull-request";
 import { executeTransaction } from "ui/api/transaction";
 
 import classNames from "classnames";
-import styles from "./search.scss";
+import styles from "./home.scss";
 
 const PR_STATE = {
   closed: "closed",
@@ -24,42 +20,49 @@ const PR_STATE = {
 };
 
 class Search extends Component {
-  constructor(props) {
-    super(props);
-
-    this.onInputChange = debounce(this.onInputChange.bind(this), 300);
-    this.onRepoClick = this.onRepoClick.bind(this);
-    this.onCloseModal = this.onCloseModal.bind(this);
-    this.onFilterPRs = debounce(this.onFilterPRs.bind(this), 300);
-    this.onPrevPageClick = this.onPrevPageClick.bind(this);
-    this.onNextPageClick = this.onNextPageClick.bind(this);
-
-    const repos = props.location.state ? props.location.state.repos || [] : [];
-    const searchTerm = props.location.state
-      ? props.location.state.searchTerm || ""
-      : "";
+  constructor() {
+    super();
 
     this.state = {
-      repos,
-      searchTerm,
+      repos: [],
       selectedRepo: null,
       modalOpen: false,
-      pullRequests: [],
       pageNumber: 1,
       totalPages: 1,
       loading: false,
+      pullRequests: [],
       prFilters: {
         term: "",
         state: PR_STATE.open
       }
     };
+
+    this.onRepoClick = this.onRepoClick.bind(this);
+    this.onCloseModal = this.onCloseModal.bind(this);
+    this.onPrevPageClick = this.onPrevPageClick.bind(this);
+    this.onNextPageClick = this.onNextPageClick.bind(this);
   }
 
-  onInputChange(value) {
-    this.setState(
-      { searchTerm: value, pageNumber: 1 },
-      this.executeSearch(value, 1)
-    );
+  componentWillMount() {
+    this.executeSearch(this.state.pageNumber);
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  onPrevPageClick() {
+    const newPageNumber = this.state.pageNumber - 1;
+    this.executeSearch(newPageNumber);
+  }
+
+  onNextPageClick() {
+    const newPageNumber = this.state.pageNumber + 1;
+    this.executeSearch(newPageNumber);
   }
 
   onRepoClick(e, id) {
@@ -121,33 +124,27 @@ class Search extends Component {
     });
   }
 
-  onPrevPageClick() {
-    const newPageNumber = this.state.pageNumber - 1;
-    this.executeSearch(this.state.searchTerm, newPageNumber);
-  }
-
-  onNextPageClick() {
-    const newPageNumber = this.state.pageNumber + 1;
-    this.executeSearch(this.state.searchTerm, newPageNumber);
-  }
-
-  executeSearch(value, pageNumber) {
+  executeSearch(pageNumber) {
     this.setState({ loading: true });
-    searchRepos(value, pageNumber)
+    searchRepos("react", pageNumber)
       .then(({ data }) => {
-        this.setState({
-          repos: data.items,
-          totalPages: Number.parseInt(data.totalPages, 10),
-          pageNumber,
-          loading: false
-        });
+        if (this._isMounted) {
+          this.setState({
+            repos: data.items,
+            totalPages: Number.parseInt(data.totalPages, 10),
+            pageNumber,
+            loading: false
+          });
+        }
       })
       .catch(err => {
-        // Early toast implementation
-        this.setState({ error: true });
+        if (this._isMounted) {
+          this.setState({ error: true });
+        }
       });
   }
 
+  // TODO - refactor into a component
   renderPRModal() {
     const filteredPRs = this.state.prFilters.term
       ? this.state.pullRequests.filter(pr =>
@@ -225,22 +222,8 @@ class Search extends Component {
   render() {
     return (
       <div className={styles.searchContainer}>
-        <div className={styles.search}>
-          <SearchIcon className={styles.searchIcon} />
-          <TextField
-            onInputChange={e => this.onInputChange(e.target.value)}
-            placeholder="Search repositories"
-          />
-          {this.state.loading ? <LoadingSpinner /> : null}
-          {this.state.error ? (
-            <ErrorContext.Consumer>
-              {val => {
-                this.setState({ error: false });
-                val();
-              }}
-            </ErrorContext.Consumer>
-          ) : null}
-        </div>
+        <div className={styles.header}>Popular Repositories</div>
+        {this.state.loading ? <LoadingSpinner /> : null}
         <div
           className={classNames(styles.repoListContainer, {
             [styles.listVisible]: !this.state.loading
@@ -271,4 +254,4 @@ class Search extends Component {
   }
 }
 
-export default withRouter(Search);
+export default Search;

@@ -1,4 +1,7 @@
 import React, { PureComponent } from "react";
+import { withRouter } from "react-router-dom";
+
+import SearchIcon from "@material-ui/icons/Search";
 
 import AuthenticationModal from "ui/components/authentication-modal/authentication-modal";
 import { withAuthentication } from "ui/higher-order-components/with-authentication";
@@ -20,6 +23,7 @@ class Header extends PureComponent {
     this.onAuthenticationModalClosed = this.onAuthenticationModalClosed.bind(
       this
     );
+    this.onSearchClick = this.onSearchClick.bind(this);
   }
 
   onLoginClick() {
@@ -42,11 +46,22 @@ class Header extends PureComponent {
     this.setState({ authModalOpen: false });
   }
 
+  onSearchClick() {
+    this.props.toggleSearchOverlay();
+  }
+
   render() {
     return (
       <div className={styles.header}>
         <div className={styles.headerContent}>
-          <div>
+          <div className={styles.leftContent}>ALPHA v0.1.0</div>
+          <div className={styles.rightContent}>
+            {this.props.location.pathname !== "/search" ? (
+              <SearchIcon
+                className={styles.searchButton}
+                onClick={this.onSearchClick}
+              />
+            ) : null}
             {!this.props.isUserAuthenticated ? (
               <div>
                 {" "}
@@ -103,4 +118,4 @@ class Header extends PureComponent {
   }
 }
 
-export default withAuthentication(Header);
+export default withRouter(withAuthentication(Header));

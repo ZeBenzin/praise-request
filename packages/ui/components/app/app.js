@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, NavLink, Route } from "react-router-dom";
+
+import Home from "ui/views/home";
 import Search from "ui/views/search";
 import Account from "ui/views/account";
 import Activity from "ui/views/activity";
 import Statistic from "ui/views/statistic";
 import About from "ui/views/about";
+import SearchOverlay from "ui/components/search-overlay/search-overlay";
 
+import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
 import PersonIcon from "@material-ui/icons/Person";
 import ActivityIcon from "@material-ui/icons/History";
@@ -30,8 +34,11 @@ class App extends Component {
     this.state = {
       activityVisible: false,
       isUserAuthenticated: false,
-      checkingUserAuthenticationStatus: true
+      checkingUserAuthenticationStatus: true,
+      isSearchVisible: false
     };
+
+    this.toggleSearchOverlay = this.toggleSearchOverlay.bind(this);
   }
 
   componentWillMount() {
@@ -59,6 +66,16 @@ class App extends Component {
 
   getNavLinks() {
     return [
+      {
+        id: "home",
+        label: "Home",
+        path: "/",
+        exact: true,
+        icon: <HomeIcon className={styles.navIconElem} />,
+        view: Home,
+        style: styles.homeIconLabel,
+        visible: true
+      },
       {
         id: "search",
         label: "Search",
@@ -120,13 +137,21 @@ class App extends Component {
     this.setState({ isUserAuthenticated: false });
   }
 
-  renderNavLink({ id, label, icon, path, style }) {
+  toggleSearchOverlay() {
+    this.setState({ isSearchVisible: !this.state.isSearchVisible });
+  }
+
+  renderNavLink({ id, label, icon, path, style, exact }) {
     return (
       <NavLink
         className={styles.navLinkAnchor}
         activeClassName={styles.activeNavLink}
         key={id}
         to={path}
+        exact={exact}
+        onClick={() => {
+          return this.state.isSearchVisible ? this.toggleSearchOverlay() : null;
+        }}
       >
         <div className={styles.navIcon}>
           {icon}
@@ -239,12 +264,22 @@ class App extends Component {
                         })
                       }
                       isUserAuthenticated={this.state.isUserAuthenticated}
+                      toggleSearchOverlay={this.toggleSearchOverlay}
                     />
                     <Drawer
                       isVisible={this.state.activityVisible}
                       drawerContent={this.renderDrawerContent()}
                     />
                     <div className={styles.content}>
+                      <SearchOverlay
+                        isSearchVisible={this.state.isSearchVisible}
+                        toggleSearchOverlay={this.toggleSearchOverlay}
+                        onClick={() => {
+                          return this.state.isSearchVisible
+                            ? this.toggleSearchOverlay()
+                            : null;
+                        }}
+                      />
                       <div className={styles.mainContent}>
                         {this.getNavLinks().map(link => this.renderRoute(link))}
                       </div>

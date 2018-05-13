@@ -24,7 +24,7 @@ class Modal extends Component {
             this.props.containerClassName
           )}
         >
-          <div className={styles.modalContent}>{this.props.content}</div>
+          <div>{this.props.content}</div>
         </div>
       </div>
     );

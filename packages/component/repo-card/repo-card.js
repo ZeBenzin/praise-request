@@ -1,37 +1,59 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import PersonIcon from "@material-ui/icons/PersonOutline";
+import StarIcon from "@material-ui/icons/StarBorder";
+
+import classNames from "classnames";
 import styles from "./repo-card.scss";
 
 class RepoCard extends PureComponent {
-  renderTags() {
-    return ["javascript", "react", "website", "documentation"].map(tag => {
-      return (
-        <span>
-          <span className={styles.repoTag}>{tag}</span>
-        </span>
-      );
-    });
-  }
-
   render() {
-    const { name, description, owner, id } = this.props.repo;
+    const { name, description, owner, id, stargazers_count } = this.props.repo;
     return (
       <div className={styles.repoCardWrapper}>
-        <div id={id} className={styles.repoCardContainer}>
+        <div
+          id={id}
+          className={styles.repoCardContainer}
+          onClick={this.props.onClick}
+        >
           <div className={styles.repoCard}>
-            <div className={styles.repoIcon}>
-              <img alt="" src={owner.avatar_url} />
-            </div>
             <div className={styles.repoDetails}>
-              <div className={styles.repoName}>{name}</div>
-              <div className={styles.repoDescription}>{description}</div>
+              <div>
+                <div className={styles.repoHeaderInfo}>
+                  <div className={styles.repoName}>{name}</div>
+                </div>
+                <div className={styles.repoDescription} title={description}>
+                  {description && description.length > 100
+                    ? description.substring(0, 100) + " ..."
+                    : description}
+                </div>
+              </div>
+              <div className={styles.repoMetaData}>
+                <span className={styles.metaDataGroup}>
+                  <PersonIcon />
+                  <span>{owner.login}</span>
+                </span>
+                <span className={styles.dividerPoint}>•</span>
+                <span className={styles.metaDataGroup}>
+                  <StarIcon />
+                  {stargazers_count}
+                </span>
+              </div>
             </div>
           </div>
         </div>
-        <button className={styles.cardAction} onClick={this.props.onClick}>
-          Open
-        </button>
+        <div className={styles.repoActions}>
+          <div className={styles.repoActionContainer}>
+            <span className={styles.praiseCount}>125</span>
+            <button
+              className={classNames(styles.repoAction, styles.praiseButton)}
+            >
+              <FavoriteBorderIcon className={styles.favoriteIcon} />
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
