@@ -21,12 +21,14 @@
   flex-direction: column;
   padding: 0px 85px;
   align-items: center;
+  width: 1092px;
+  margin: auto;
 }
 
 .search {
   display: flex;
   border-bottom: 5px solid #e0e0e0;
-  max-width: 809px;
+  width: 100%;
 }
 
 .searchIcon {
@@ -39,7 +41,7 @@
   padding-top: 35px;
   display: flex;
   flex-wrap: wrap;
-  max-width: 1272px;
+  width: 100%;
 }
 
 .prCard {

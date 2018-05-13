@@ -271,6 +271,11 @@ class App extends Component {
                       <SearchOverlay
                         isSearchVisible={this.state.isSearchVisible}
                         toggleSearchOverlay={this.toggleSearchOverlay}
+                        onClick={() => {
+                          return this.state.isSearchVisible
+                            ? this.toggleSearchOverlay()
+                            : null;
+                        }}
                       />
                       <div className={styles.mainContent}>
                         {this.getNavLinks().map(link => this.renderRoute(link))}

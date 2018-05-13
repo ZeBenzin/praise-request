@@ -4,24 +4,29 @@ import PropTypes from "prop-types";
 import ChevronLeft from "@material-ui/icons/ChevronLeft";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 
+import classNames from "classnames";
 import styles from "./pagination.scss";
 
 class Pagination extends Component {
   render() {
     return (
       <div className={styles.paginationContainer}>
-        {this.props.showPrevButton ? (
-          <ChevronLeft
-            className={styles.paginationArrow}
-            onClick={this.props.onPrevClick}
-          />
-        ) : null}
-        {this.props.showNextButton ? (
-          <ChevronRight
-            className={styles.paginationArrow}
-            onClick={this.props.onNextClick}
-          />
-        ) : null}
+        <span
+          className={classNames(styles.paginationButton, {
+            [styles.arrowHidden]: !this.props.showPrevButton
+          })}
+          onClick={this.props.onPrevClick}
+        >
+          <ChevronLeft className={styles.paginationArrow} />
+        </span>
+        <span
+          className={classNames(styles.paginationButton, {
+            [styles.arrowHidden]: !this.props.showNextButton
+          })}
+          onClick={this.props.onNextClick}
+        >
+          <ChevronRight className={styles.paginationArrow} />
+        </span>
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
 import debounce from "lodash/debounce";
@@ -50,6 +51,7 @@ class SearchOverlay extends Component {
         className={classNames(styles.searchOverlay, {
           [styles.searchOverlayVisible]: this.props.isSearchVisible
         })}
+        onClick={this.props.onClick}
       >
         <div className={styles.searchContainer}>
           <SearchIcon className={styles.searchIcon} />
@@ -57,11 +59,19 @@ class SearchOverlay extends Component {
             onInputChange={e => this.onInputChange(e.target.value)}
             onKeyPress={e => this.onKeyPress(e.charCode)}
             placeholder="Search repositories"
+            onClick={e => e.stopPropagation()}
           />
         </div>
       </div>
     );
   }
 }
+
+SearchOverlay.propTypes = {
+  isSearchVisible: PropTypes.bool,
+  onClick: PropTypes.func,
+  history: PropTypes.object,
+  toggleSearchOverlay: PropTypes.func
+};
 
 export default withRouter(SearchOverlay);

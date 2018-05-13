@@ -121,18 +121,12 @@ class Search extends Component {
 
   onPrevPageClick() {
     const newPageNumber = this.state.pageNumber - 1;
-    this.setState(
-      { pageNumber: newPageNumber },
-      this.executeSearch(this.state.searchTerm, newPageNumber)
-    );
+    this.executeSearch(this.state.searchTerm, newPageNumber);
   }
 
   onNextPageClick() {
     const newPageNumber = this.state.pageNumber + 1;
-    this.setState(
-      { pageNumber: newPageNumber },
-      this.executeSearch(this.state.searchTerm, newPageNumber)
-    );
+    this.executeSearch(this.state.searchTerm, newPageNumber);
   }
 
   executeSearch(value, pageNumber) {
@@ -140,7 +134,8 @@ class Search extends Component {
       .then(({ data }) => {
         this.setState({
           repos: data.items,
-          totalPages: Number.parseInt(data.totalPages, 10)
+          totalPages: Number.parseInt(data.totalPages, 10),
+          pageNumber
         });
       })
       .catch(err => {

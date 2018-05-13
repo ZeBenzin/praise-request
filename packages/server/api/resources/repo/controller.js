@@ -18,7 +18,9 @@ const getByQuery = (req, res) => {
     "&page=" +
     req.query.page;
   customRequest.get(url, (err, response) => {
-    const pageParam = response.headers.link.match(/&page=(\d+)/g)[1];
+    const pageParam = response.headers.link.match(
+      /page=(\d+)>; rel="last"/g
+    )[0];
     const totalPages = pageParam.match(/(\d+)/g)[0];
     const items = JSON.parse(response.body).items || [];
     res.json({ items, totalPages });

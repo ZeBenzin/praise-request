@@ -21,6 +21,8 @@
   flex-direction: column;
   padding: 0px 85px;
   align-items: center;
+  width: 1092px;
+  margin: auto;
 }
 
 .search {
@@ -39,14 +41,14 @@
   padding-top: 35px;
   display: flex;
   flex-wrap: wrap;
-  max-width: 1272px;
+  width: 100%;
 }
 
 .header {
   font-size: 72px;
   color: #e0e0e0;
   font-weight: 900;
-  width: 1181px;
+  width: 100%;
   border-bottom: 5px solid #e0e0e0;
 }
 
