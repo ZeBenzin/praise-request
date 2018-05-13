@@ -15,5 +15,8 @@
     "promise": "8.0.1",
     "query-string": "^6.0.0",
     "request": "^2.85.0"
+  },
+  "scripts": {
+    "build": "scripts/build.sh"
   }
 }
