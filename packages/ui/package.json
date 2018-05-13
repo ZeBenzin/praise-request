@@ -56,7 +56,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "scripts /build.sh",
+    "build": "scripts/build.sh",
     "test": "node scripts/test.js --env=jsdom"
   },
   "proxy": "http://localhost:3001",
