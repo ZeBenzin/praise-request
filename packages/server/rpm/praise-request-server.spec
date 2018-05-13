@@ -29,7 +29,7 @@ cp -r $BASE_BUILD_DIR/../../../../praise-request .
 %build
 cd %{_builddir}/%{name}/praise-request
 yarn install --production
-cd %{_builddir}/%{name}/praise-request/server
+cd %{_builddir}/%{name}/praise-request/packages/server
 yarn build
 
 %install
