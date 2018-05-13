@@ -78,7 +78,7 @@ class RegisterForm extends Component {
                   password: this.state.password
                 });
               } else {
-                console.error("You done bad!");
+                // TODO: error handling
               }
             }}
           >

@@ -144,6 +144,7 @@ class Search extends Component {
       });
   }
 
+  // TODO - refactor into a component
   renderPRModal() {
     const filteredPRs = this.state.prFilters.term
       ? this.state.pullRequests.filter(pr =>

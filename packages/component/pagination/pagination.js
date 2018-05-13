@@ -34,7 +34,9 @@ class Pagination extends Component {
 
 Pagination.propTypes = {
   onPrevClick: PropTypes.func,
-  onNextClick: PropTypes.func
+  onNextClick: PropTypes.func,
+  showNextButton: PropTypes.bool,
+  showPrevButton: PropTypes.bool
 };
 
 Pagination.defaultProps = {
