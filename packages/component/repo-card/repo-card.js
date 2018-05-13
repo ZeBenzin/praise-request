@@ -1,8 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 
-import CodeIcon from "@material-ui/icons/Code";
-import PeopleIcon from "@material-ui/icons/People";
+import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import PersonIcon from "@material-ui/icons/PersonOutline";
 import StarIcon from "@material-ui/icons/StarBorder";
 
@@ -16,26 +15,16 @@ class RepoCard extends PureComponent {
       <div className={styles.repoCardWrapper}>
         <div id={id} className={styles.repoCardContainer}>
           <div className={styles.repoCard}>
-            <div className={styles.repoStats}>
-              <span className={classNames(styles.repoStatBubble)}>
-                <CodeIcon />
-                <span className={styles.prCount}>25</span>
-              </span>
-              <span
-                className={classNames(styles.repoStatBubble, styles.prTotal)}
-              >
-                <span>
-                  {Math.round(Math.random(0, 300) * 10)}
-                  <sup>pr</sup>
-                </span>
-              </span>
-              <span className={classNames(styles.repoStatBubble)}>
-                <PeopleIcon />
-                <span className={styles.prCount}>25</span>
-              </span>
-            </div>
             <div className={styles.repoDetails}>
-              <div className={styles.repoName}>{name}</div>
+              <div className={styles.repoName}>
+                <div className={styles.repoHeaderInfo}>
+                  <div>{name}</div>
+                </div>
+                <div className={styles.repoDescription}>{description}</div>
+              </div>
+              <div className={styles.repoPRCount}>
+                <span>120k</span>
+              </div>
               <div className={styles.repoMetaData}>
                 <span className={styles.metaDataGroup}>
                   <PersonIcon />
@@ -51,8 +40,9 @@ class RepoCard extends PureComponent {
             </div>
           </div>
         </div>
-        <button className={styles.cardAction} onClick={this.props.onClick}>
-          Open
+
+        <button className={styles.praiseButton}>
+          <FavoriteBorder className={styles.favoriteIcon} />
         </button>
       </div>
     );
