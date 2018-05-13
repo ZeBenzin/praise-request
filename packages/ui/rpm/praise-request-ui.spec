@@ -33,11 +33,8 @@ cd %{_builddir}/%{name}/praise-request/packages/ui
 yarn build
 
 %install
-cd %{_builddir}/%{name}/praise-request/packages/ui
-
 mkdir -p %{buildroot}/apps
-mv %{_builddir}/%{name}/praise-request/packages/ui/build %{buildroot}/apps/praise-request-ui
-cp -r %{_builddir}/%{name}/praise-request/node_modules %{buildroot}/apps/praise-request-ui
+mv %{_builddir}/%{name}/praise-request/build/packages/ui/build %{buildroot}/apps/praise-request-ui
 
 %post
 echo "By Jove! This might just have worked!"
