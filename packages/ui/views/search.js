@@ -4,6 +4,7 @@ import debounce from "lodash/debounce";
 import { searchRepos } from "ui/api/repo";
 import { ErrorContext } from "ui/components/app/app";
 
+import LoadingSpinner from "component/loading-spinner/loading-spinner";
 import TextField from "component/text-field/text-field";
 import RepoCard from "component/repo-card/repo-card";
 import Pagination from "component/pagination/pagination";
@@ -46,6 +47,7 @@ class Search extends Component {
       pullRequests: [],
       pageNumber: 1,
       totalPages: 1,
+      loading: false,
       prFilters: {
         term: "",
         state: PR_STATE.open
@@ -130,12 +132,14 @@ class Search extends Component {
   }
 
   executeSearch(value, pageNumber) {
+    this.setState({ loading: true });
     searchRepos(value, pageNumber)
       .then(({ data }) => {
         this.setState({
           repos: data.items,
           totalPages: Number.parseInt(data.totalPages, 10),
-          pageNumber
+          pageNumber,
+          loading: false
         });
       })
       .catch(err => {
@@ -227,6 +231,7 @@ class Search extends Component {
             onInputChange={e => this.onInputChange(e.target.value)}
             placeholder="Search repositories"
           />
+          {this.state.loading ? <LoadingSpinner /> : null}
           {this.state.error ? (
             <ErrorContext.Consumer>
               {val => {
@@ -236,15 +241,23 @@ class Search extends Component {
             </ErrorContext.Consumer>
           ) : null}
         </div>
-        <div className={styles.repoListContainer}>
-          {this.state.repos.map(repo => (
-            <RepoCard
-              id={repo.id}
-              key={repo.id}
-              repo={repo}
-              onClick={e => this.onRepoClick(e, repo.id)}
-            />
-          ))}
+        <div
+          className={classNames(styles.repoListContainer, {
+            [styles.listVisible]: !this.state.loading
+          })}
+        >
+          {this.state.loading ? null : (
+            <div className={styles.repoList}>
+              {this.state.repos.map(repo => (
+                <RepoCard
+                  id={repo.id}
+                  key={repo.id}
+                  repo={repo}
+                  onClick={e => this.onRepoClick(e, repo.id)}
+                />
+              ))}
+            </div>
+          )}
         </div>
         <Pagination
           onPrevClick={this.onPrevPageClick}

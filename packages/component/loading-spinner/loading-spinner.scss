@@ -9,9 +9,9 @@
   width: 60px;
   position: absolute;
   top: 50%;
+  left: 50%;
   border-radius: 50%;
-  border: 3px solid transparent;
-  border-top-color: coral;
-  border-bottom-color: coral;
-  animation: rotate 0.7s ease infinite;
+  border-top: 3px solid #46bd85;
+  border-right: 3px solid transparent;
+  animation: rotate 0.4s linear infinite;
 }

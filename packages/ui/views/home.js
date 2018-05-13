@@ -222,20 +222,25 @@ class Search extends Component {
     return (
       <div className={styles.searchContainer}>
         <div className={styles.header}>Popular Repositories</div>
-        {this.state.loading ? (
-          <LoadingSpinner />
-        ) : (
-          <div className={styles.repoListContainer}>
-            {this.state.repos.map(repo => (
-              <RepoCard
-                id={repo.id}
-                key={repo.id}
-                repo={repo}
-                onClick={e => this.onRepoClick(e, repo.id)}
-              />
-            ))}
-          </div>
-        )}
+        {this.state.loading ? <LoadingSpinner /> : null}
+        <div
+          className={classNames(styles.repoListContainer, {
+            [styles.listVisible]: !this.state.loading
+          })}
+        >
+          {this.state.loading ? null : (
+            <div className={styles.repoList}>
+              {this.state.repos.map(repo => (
+                <RepoCard
+                  id={repo.id}
+                  key={repo.id}
+                  repo={repo}
+                  onClick={e => this.onRepoClick(e, repo.id)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
         <Pagination
           onPrevClick={this.onPrevPageClick}
           onNextClick={this.onNextPageClick}
