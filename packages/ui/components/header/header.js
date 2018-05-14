@@ -12,7 +12,7 @@ import { getPraiseBalance } from "ui/api/user";
 import classNames from "classnames";
 import styles from "./header.scss";
 
-const socket = openSocket("http://localhost:3001");
+const socket = openSocket("http://localhost:3001", { query: { userId: 0 } });
 
 class Header extends PureComponent {
   constructor(props) {

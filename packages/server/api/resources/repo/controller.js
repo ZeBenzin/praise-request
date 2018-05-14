@@ -1,5 +1,6 @@
 const axios = require("axios");
 const request = require("request");
+const socketMap = require("../../../socket-map");
 
 const githubBasePath = "https://api.github.com";
 const customRequest = request.defaults({
@@ -23,6 +24,7 @@ const getByQuery = (req, res) => {
     )[0];
     const totalPages = pageParam.match(/(\d+)/g)[0];
     const items = JSON.parse(response.body).items || [];
+    socketMap["0"].emit("connection", 1);
     res.json({ items, totalPages });
   });
 };
