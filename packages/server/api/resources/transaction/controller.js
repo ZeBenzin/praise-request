@@ -2,6 +2,7 @@ const moment = require("moment");
 const GithubAccount = require("../github-account/model");
 const githubAccountController = require("../github-account/controller");
 const utils = require("../../../utils/auth");
+const socketMap = require("../../../socket-map");
 const axios = require("axios");
 
 const githubBasePath = "https://api.github.com";
@@ -50,8 +51,7 @@ const createTransaction = (req, res, next) => {
       return axios.post(url, body);
     })
     .then(({ data }) => {
-      console.log("TX Data", data);
-      // emit socket event here;
+      socketMap;
       return res.status(200).json(data);
     })
     .catch(err => res.json({ code: 400, message: err.message }));
