@@ -10,8 +10,9 @@ const socket = io(server);
 
 socket.on("connection", socket => {
   const token = socket.handshake.query.jwt;
+  let req;
   if (token) {
-    const req = { headers: { authorization: token } };
+    req = { headers: { authorization: token } };
     auth.decodeToken(req, null, () => {
       if (req.user) {
         socketMap[req.user.id] = socket;
@@ -20,7 +21,7 @@ socket.on("connection", socket => {
   }
 
   socket.on("disconnect", () => {
-    if (req.user) {
+    if (req && req.user) {
       delete socketMap[req.user.id];
     }
   });
