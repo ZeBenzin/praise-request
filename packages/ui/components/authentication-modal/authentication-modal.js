@@ -35,8 +35,7 @@ class AuthenticationModal extends Component {
         return authenticateUser({ username, password });
       })
       .then(() => {
-        this.props.onUserAuthenticated();
-        this.props.onClose();
+        window.location.reload(true);
       })
       .catch(err => console.log(err));
   }
@@ -46,8 +45,7 @@ class AuthenticationModal extends Component {
       username,
       password
     }).then(() => {
-      this.props.onUserAuthenticated();
-      this.props.onClose();
+      window.location.reload(true);
     });
   }
 

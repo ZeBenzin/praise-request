@@ -32,7 +32,7 @@ class Header extends PureComponent {
 
   onLogoutClick() {
     localStorage.removeItem("praiseRequestToken");
-    this.props.onUserLogOut();
+    window.location.reload(true);
   }
 
   onRegisterClick() {
