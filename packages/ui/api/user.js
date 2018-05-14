@@ -33,3 +33,7 @@ export const getGitHubAuthToken = authCode => {
     })
     .catch(err => console.error(err));
 };
+
+export const getPraiseBalance = () => {
+  return Promise.resolve(100);
+};

@@ -50,6 +50,8 @@ const createTransaction = (req, res, next) => {
       return axios.post(url, body);
     })
     .then(({ data }) => {
+      console.log("TX Data", data);
+      // emit socket event here;
       return res.status(200).json(data);
     })
     .catch(err => res.json({ code: 400, message: err.message }));
