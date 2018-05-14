@@ -17,8 +17,7 @@ const socket = openSocket("http://localhost:3001");
 class Header extends PureComponent {
   constructor(props) {
     super(props);
-
-    socket.on("balance", balance => {
+    socket.on("connection", balance => {
       this.setState({ balance });
     });
 

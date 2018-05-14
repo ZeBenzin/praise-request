@@ -7,7 +7,7 @@ const server = http.createServer(app);
 const socket = io(server);
 
 socket.on("connection", client => {
-  client.emit("You are connected sir!");
+  client.emit("connection", 150);
 });
 
 server.listen(3001, () => {
