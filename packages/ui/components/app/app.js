@@ -18,6 +18,7 @@ import AboutIcon from "@material-ui/icons/Info";
 
 import Header from "ui/components/header/header";
 import Drawer from "component/drawer/drawer";
+import Footer from "component/footer/footer";
 
 import { getSessionStatus } from "ui/api/user";
 
@@ -33,11 +34,14 @@ class App extends Component {
 
     this.state = {
       activityVisible: false,
+      footerVisible: false,
       isUserAuthenticated: false,
       checkingUserAuthenticationStatus: true,
       isSearchVisible: false
     };
 
+    this.hideFooter = this.hideFooter.bind(this);
+    this.displayFooter = this.displayFooter.bind(this);
     this.toggleSearchOverlay = this.toggleSearchOverlay.bind(this);
   }
 
@@ -141,6 +145,14 @@ class App extends Component {
     this.setState({ isSearchVisible: !this.state.isSearchVisible });
   }
 
+  hideFooter() {
+    this.setState({ footerVisible: false });
+  }
+
+  displayFooter() {
+    this.setState({ footerVisible: true });
+  }
+
   renderNavLink({ id, label, icon, path, style, exact }) {
     return (
       <NavLink
@@ -170,7 +182,10 @@ class App extends Component {
         exact={exact}
         path={path}
         render={() => (
-          <View isUserAuthenticated={this.state.isUserAuthenticated} />
+          <View
+            isUserAuthenticated={this.state.isUserAuthenticated}
+            displayFooter={this.displayFooter}
+          />
         )}
       />
     );
@@ -245,7 +260,7 @@ class App extends Component {
           <Router>
             {!this.state.checkingUserAuthenticationStatus ? (
               <div className={styles.app}>
-                <div className={styles.appContainer}>
+                <div className={styles.appContainer} onClick={this.hideFooter}>
                   <div className={styles.sidebar}>
                     <div className={styles.logo}>
                       <span className={styles.logoName}>{`<PR />`}</span>
@@ -286,6 +301,10 @@ class App extends Component {
                     </div>
                   </div>
                 </div>
+                <Footer
+                  isVisible={this.state.footerVisible}
+                  hideFooter={this.hideFooter}
+                />
               </div>
             ) : null}
           </Router>

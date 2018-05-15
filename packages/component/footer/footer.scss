@@ -1,0 +1,87 @@
+$footer-height: 150px;
+
+.footer {
+  position: fixed;
+  width: 100%;
+  height: $footer-height;
+  background-color: #313131;
+  transition: bottom 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 3;
+}
+
+.footerHidden {
+  bottom: -$footer-height;
+}
+
+.footerVisible {
+  bottom: 0;
+  box-shadow: -4px 0px 3px 0px #eaeaea;
+}
+
+.closeFooterButton {
+  padding: 10px 5px;
+  position: absolute;
+  &:hover {
+    cursor: pointer;
+  }
+
+  & > svg {
+    font-size: 30px;
+  }
+}
+
+.footerContentContainer {
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+.footerContentDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 20px;
+}
+
+.footerTitle {
+  color: #fff;
+  font-size: 44px;
+}
+
+.footerDescription {
+  color: #fff;
+  font-size: 16px;
+}
+
+.authenticationButton {
+  outline: none;
+  border: 2px solid #fff;
+  background-color: #313131;
+  height: 35px;
+  color: #fff;
+  font-size: 16px;
+  font-family: "Oswald";
+  transition: all 0.2s ease;
+  width: 100px;
+
+  &:hover {
+    background-color: #fff;
+    color: #313131;
+    cursor: pointer;
+  }
+}
+
+.loginButton {
+  border-top-left-radius: 35px;
+  border-bottom-left-radius: 35px;
+}
+
+.registerButton {
+  margin-left: 2px;
+
+  border-top-right-radius: 35px;
+  border-bottom-right-radius: 35px;
+}

@@ -164,6 +164,14 @@
   }
 }
 
+.clicked {
+  background-color: #fff !important;
+  color: #fff !important;
+  border: 2px solid #bbb !important;
+  border-left-color: #46bd85 !important;
+  animation: rotate 1s linear infinite;
+}
+
 .favoriteIcon {
   margin: auto;
 }

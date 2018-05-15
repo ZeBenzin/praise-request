@@ -20,7 +20,8 @@ class Drawer extends Component {
 }
 
 Drawer.propTypes = {
-  drawerContent: PropTypes.node
+  drawerContent: PropTypes.node,
+  isVisible: PropTypes.bool
 };
 
 export default Drawer;
