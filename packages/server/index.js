@@ -3,6 +3,7 @@ const app = require("./server");
 const io = require("socket.io");
 const socketMap = require("./socket-map");
 const auth = require("./api/auth");
+const controller = require("./api/resources/transaction/controller");
 
 const server = http.createServer(app);
 
@@ -28,6 +29,8 @@ socket.on("connection", socket => {
 
   socket.emit("connection", 150);
 });
+
+controller.getCurrentTransactions();
 
 server.listen(3001, () => {
   console.log("listening on port 3001");

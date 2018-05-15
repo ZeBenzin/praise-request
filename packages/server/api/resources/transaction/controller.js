@@ -6,6 +6,34 @@ const socketMap = require("../../../socket-map");
 const axios = require("axios");
 
 const githubBasePath = "https://api.github.com";
+const ostBasePath = "https://playgroundapi.ost.com";
+
+const getCurrentTransactions = () => {
+  // return setInterval(() => {
+  //   const timestamp = moment().unix();
+  //   const queryString = utils.generateQueryString(
+  //     timestamp,
+  //     "/transaction-types/status",
+  //     {
+  //       "transaction_uuids[]":
+  //         "0xc086ade501433872982753e70036633d0884bd6b84f67be1a438c2d34db26d4d"
+  //     }
+  //   );
+  //   const signature = utils.generateSignature(queryString);
+  //   const body = {
+  //     api_key: process.env.API_KEY,
+  //     request_timestamp: timestamp,
+  //     "transaction_uuids[]":
+  //       "0xc086ade501433872982753e70036633d0884bd6b84f67be1a438c2d34db26d4d",
+  //     signature
+  //   };
+  //   const url = `${ostBasePath}${queryString}&signature=${signature}`;
+  //   axios.post(url, body).then(data => {
+  //     console.log(data.data);
+  //   });
+  // }, 1000);
+  return 10;
+};
 
 const createTransaction = (req, res, next) => {
   const toAccount = GithubAccount.findOne({ userId: req.body.to.userId }).then(
@@ -39,7 +67,7 @@ const createTransaction = (req, res, next) => {
         { from_uuid: fromUUID, to_uuid: toUUID, transaction_kind: "Praise" }
       );
       const signature = utils.generateSignature(queryString);
-      const url = `https://playgroundapi.ost.com${queryString}&signature=${signature}`;
+      const url = `${ostBasePath}${queryString}&signature=${signature}`;
       const body = {
         api_key: process.env.API_KEY,
         to_uuid: toUUID,
@@ -57,4 +85,4 @@ const createTransaction = (req, res, next) => {
     .catch(err => res.json({ code: 400, message: err.message }));
 };
 
-module.exports = { createTransaction };
+module.exports = { createTransaction, getCurrentTransactions };
