@@ -5,17 +5,31 @@ const utils = require("../../../utils/auth");
 
 const getAccountById = () => {};
 
+const sanitizeUserName = userName => {
+  let strippedName = userName.replace(/[^\w\d\s]/g, "");
+  if (strippedName.length < 3) {
+    strippedName = `${strippedName}000`;
+  }
+
+  if (strippedName.length > 20) {
+    strippedName = strippedName.substring(0, 20);
+  }
+
+  return strippedName;
+};
+
 const create = (body, next) => {
   const account = body;
+  const ostLegalUserName = sanitizeUserName(account.userName);
   const timestamp = moment().unix();
   const queryString = utils.generateQueryString(timestamp, "/users/create", {
-    name: account.userName
+    name: ostLegalUserName
   });
   const signature = utils.generateSignature(queryString);
   const url = `https://playgroundapi.ost.com${queryString}&signature=${signature}`;
   const payload = {
     api_key: process.env.API_KEY,
-    name: account.userName,
+    name: ostLegalUserName,
     request_timestamp: timestamp,
     signature
   };
