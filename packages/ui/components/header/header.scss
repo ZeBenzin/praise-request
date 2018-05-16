@@ -79,6 +79,7 @@ $header-height: 85px;
   font-family: "Oswald";
   transition: all 0.2s ease;
   width: 100px;
+  border-radius: 35px;
 
   &:hover {
     background-color: #467ebd;
@@ -87,18 +88,6 @@ $header-height: 85px;
   }
 }
 
-.loginButton {
-  border-top-left-radius: 35px;
-  border-bottom-left-radius: 35px;
-}
-
 .logoutButton {
   border-radius: 35px;
-}
-
-.registerButton {
-  margin-left: 2px;
-
-  border-top-right-radius: 35px;
-  border-bottom-right-radius: 35px;
 }

@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, NavLink, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  NavLink,
+  Route,
+  Switch
+} from "react-router-dom";
 
 import Home from "ui/views/home";
 import Search from "ui/views/search";
@@ -7,6 +12,7 @@ import Account from "ui/views/account";
 import Activity from "ui/views/activity";
 import Statistic from "ui/views/statistic";
 import About from "ui/views/about";
+import Callback from "ui/views/callback";
 import SearchOverlay from "ui/components/search-overlay/search-overlay";
 
 import HomeIcon from "@material-ui/icons/Home";
@@ -84,7 +90,7 @@ class App extends Component {
         id: "search",
         label: "Search",
         path: "/search",
-        exact: false,
+        exact: true,
         icon: <SearchIcon className={styles.navIconElem} />,
         view: Search,
         style: styles.searchIconLabel,
@@ -94,7 +100,7 @@ class App extends Component {
         id: "account",
         label: "Account",
         path: "/account",
-        exact: false,
+        exact: true,
         icon: <PersonIcon className={styles.navIconElem} />,
         view: Account,
         style: styles.accountIconLabel,
@@ -104,7 +110,7 @@ class App extends Component {
         id: "activity",
         label: "Activity",
         path: "/activity",
-        exact: false,
+        exact: true,
         icon: <ActivityIcon className={styles.navIconElem} />,
         view: Activity,
         style: styles.activityIconLabel,
@@ -114,7 +120,7 @@ class App extends Component {
         id: "statistic",
         label: "Stats",
         path: "/statistic",
-        exact: false,
+        exact: true,
         icon: <StatisticIcon className={styles.navIconElem} />,
         view: Statistic,
         style: styles.statisticIconLabel,
@@ -124,7 +130,7 @@ class App extends Component {
         id: "about",
         label: "About",
         path: "/about",
-        exact: false,
+        exact: true,
         icon: <AboutIcon className={styles.navIconElem} />,
         view: About,
         style: styles.aboutIconLabel,
@@ -245,6 +251,58 @@ class App extends Component {
     );
   }
 
+  renderAppRoute() {
+    return (
+      <div className={styles.app}>
+        <div className={styles.appContainer}>
+          <div className={styles.sidebar}>
+            <div className={styles.logo}>
+              <span className={styles.logoName}>{`<PR />`}</span>
+            </div>
+            <div className={styles.navLinks}>
+              {this.getNavLinks()
+                .filter(link => link.visible)
+                .map(link => this.renderNavLink(link))}
+            </div>
+          </div>
+          <div className={styles.rightContentContainer}>
+            <Header
+              onActivityIconClick={() =>
+                this.setState({
+                  activityVisible: !this.state.activityVisible
+                })
+              }
+              isUserAuthenticated={this.state.isUserAuthenticated}
+              toggleSearchOverlay={this.toggleSearchOverlay}
+            />
+            <Drawer
+              isVisible={this.state.activityVisible}
+              drawerContent={this.renderDrawerContent()}
+            />
+            <div className={styles.content}>
+              <SearchOverlay
+                isSearchVisible={this.state.isSearchVisible}
+                toggleSearchOverlay={this.toggleSearchOverlay}
+                onClick={() => {
+                  return this.state.isSearchVisible
+                    ? this.toggleSearchOverlay()
+                    : null;
+                }}
+              />
+              <div className={styles.mainContent}>
+                {this.getNavLinks().map(link => this.renderRoute(link))}
+              </div>
+            </div>
+          </div>
+        </div>
+        <Footer
+          isVisible={this.state.footerVisible}
+          hideFooter={this.hideFooter}
+        />
+      </div>
+    );
+  }
+
   render() {
     return (
       <AuthenticationContext.Provider
@@ -259,52 +317,19 @@ class App extends Component {
         <ErrorContext.Provider value={() => this.renderErrorToast()}>
           <Router>
             {!this.state.checkingUserAuthenticationStatus ? (
-              <div className={styles.app}>
-                <div className={styles.appContainer} onClick={this.hideFooter}>
-                  <div className={styles.sidebar}>
-                    <div className={styles.logo}>
-                      <span className={styles.logoName}>{`<PR />`}</span>
-                    </div>
-                    <div className={styles.navLinks}>
-                      {this.getNavLinks()
-                        .filter(link => link.visible)
-                        .map(link => this.renderNavLink(link))}
-                    </div>
-                  </div>
-                  <div className={styles.rightContentContainer}>
-                    <Header
-                      onActivityIconClick={() =>
-                        this.setState({
-                          activityVisible: !this.state.activityVisible
-                        })
-                      }
-                      isUserAuthenticated={this.state.isUserAuthenticated}
-                      toggleSearchOverlay={this.toggleSearchOverlay}
-                    />
-                    <Drawer
-                      isVisible={this.state.activityVisible}
-                      drawerContent={this.renderDrawerContent()}
-                    />
-                    <div className={styles.content}>
-                      <SearchOverlay
-                        isSearchVisible={this.state.isSearchVisible}
-                        toggleSearchOverlay={this.toggleSearchOverlay}
-                        onClick={() => {
-                          return this.state.isSearchVisible
-                            ? this.toggleSearchOverlay()
-                            : null;
-                        }}
-                      />
-                      <div className={styles.mainContent}>
-                        {this.getNavLinks().map(link => this.renderRoute(link))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <Footer
-                  isVisible={this.state.footerVisible}
-                  hideFooter={this.hideFooter}
-                />
+              <div>
+                <Switch>
+                  <Route
+                    exact
+                    path="/auth/github/callback"
+                    component={Callback}
+                  />
+                  <Route
+                    exact={false}
+                    path="/"
+                    render={() => this.renderAppRoute()}
+                  />
+                </Switch>
               </div>
             ) : null}
           </Router>

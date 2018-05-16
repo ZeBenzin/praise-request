@@ -1,0 +1,34 @@
+.callbackView {
+  height: 100vh;
+}
+
+.callbackContent {
+  margin: 0 auto;
+  height: 50%;
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.infoContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.logo {
+  font-size: 43px;
+  font-weight: 700;
+  color: #467fbd;
+}
+
+.personIcon {
+  font-size: 90px !important;
+}
+
+.description {
+  padding-top: 10px;
+  font-size: 18px;
+}

@@ -17,7 +17,6 @@ class Header extends PureComponent {
       authModalOpen: false
     };
 
-    this.onRegisterClick = this.onRegisterClick.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.onLogoutClick = this.onLogoutClick.bind(this);
     this.onAuthenticationModalClosed = this.onAuthenticationModalClosed.bind(
@@ -27,19 +26,12 @@ class Header extends PureComponent {
   }
 
   onLoginClick() {
-    this.setState({ authModalOpen: true, activeTab: "login" });
+    this.setState({ authModalOpen: true });
   }
 
   onLogoutClick() {
     localStorage.removeItem("praiseRequestToken");
     window.location.reload(true);
-  }
-
-  onRegisterClick() {
-    this.setState({
-      authModalOpen: true,
-      activeTab: "register"
-    });
   }
 
   onAuthenticationModalClosed() {
@@ -74,15 +66,6 @@ class Header extends PureComponent {
                 >
                   Log in
                 </button>
-                <button
-                  className={classNames(
-                    styles.authenticationButton,
-                    styles.registerButton
-                  )}
-                  onClick={this.onRegisterClick}
-                >
-                  Register
-                </button>
               </div>
             ) : (
               <div className={styles.authenticatedActions}>
@@ -108,10 +91,7 @@ class Header extends PureComponent {
           </div>
         </div>
         {this.state.authModalOpen ? (
-          <AuthenticationModal
-            onClose={this.onAuthenticationModalClosed}
-            activeTab={this.state.activeTab}
-          />
+          <AuthenticationModal onClose={this.onAuthenticationModalClosed} />
         ) : null}
       </div>
     );

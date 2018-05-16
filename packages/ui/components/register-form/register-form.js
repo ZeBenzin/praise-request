@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import { Person, Lock } from "@material-ui/icons";
+
+import { registerWithGitHub } from "ui/api/user";
+
 import styles from "./register-form.scss";
 
 class RegisterForm extends Component {
@@ -17,6 +20,7 @@ class RegisterForm extends Component {
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onConfirmPasswordChange = this.onConfirmPasswordChange.bind(this);
     this.onUsernameChange = this.onUsernameChange.bind(this);
+    this.onGitHubAuth = this.onGitHubAuth.bind(this);
   }
   onPasswordChange(e) {
     this.setState({
@@ -34,6 +38,10 @@ class RegisterForm extends Component {
     this.setState({
       username: e.currentTarget.value
     });
+  }
+
+  onGitHubAuth() {
+    registerWithGitHub();
   }
 
   render() {
@@ -66,7 +74,12 @@ class RegisterForm extends Component {
               onChange={this.onConfirmPasswordChange}
             />
           </div>
-          <button className={styles.githubAuthButton}>Connect to GitHub</button>
+          <button
+            className={styles.githubAuthButton}
+            onClick={this.onGitHubAuth}
+          >
+            Connect to GitHub
+          </button>
         </div>
         <div className={styles.modalActions}>
           <button
