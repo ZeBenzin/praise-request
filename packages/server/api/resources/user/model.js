@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
-    username: { type: String, unique: true, required: true },
-    password: { type: String, required: true },
-    github_accounts: [String]
+    ghUserId: { type: Number, unique: true, required: true },
+    ghUserName: { type: String, unique: true, required: true },
+    ostUuid: { type: String }
   },
   { timestamps: true }
 );
@@ -19,13 +19,13 @@ userSchema.methods = {
 
 const User = mongoose.model("user", userSchema);
 
-userSchema.pre("save", function(next) {
-  if (!this.isModified("password")) {
-    return next();
-  }
-  const salt = bcrypt.genSaltSync(10);
-  this.password = bcrypt.hashSync(this.password, salt);
-  next();
-});
+// userSchema.pre("save", function(next) {
+//   if (!this.isModified("password")) {
+//     return next();
+//   }
+//   const salt = bcrypt.genSaltSync(10);
+//   this.password = bcrypt.hashSync(this.password, salt);
+//   next();
+// });
 
 module.exports = User;

@@ -1,92 +1,52 @@
 import React, { Component } from "react";
 
 import Modal from "component/modal/modal";
-import RegisterForm from "ui/components/register-form/register-form";
-import LoginForm from "ui/components/login-form/login-form";
-import Close from "@material-ui/icons/Close";
-import { createUser, authenticateUser } from "ui/api/user";
+import { Close } from "@material-ui/icons";
 import { withAuthentication } from "ui/higher-order-components/with-authentication";
 
-import classNames from "classnames";
-import styles from "./authentication-modal.scss";
+import { registerWithGitHub } from "ui/api/user";
 
-const TAB_ENUM = { register: 0, login: 1 };
+import styles from "./authentication-modal.scss";
 
 class AuthenticationModal extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      activeTab: TAB_ENUM[props.activeTab]
-    };
-
     this.onCloseModal = this.onCloseModal.bind(this);
-    this.onRegisterUser = this.onRegisterUser.bind(this);
-    this.onLoginUser = this.onLoginUser.bind(this);
+    this.onAuthenticateUser = this.onAuthenticateUser.bind(this);
   }
 
   onCloseModal() {
     this.props.onClose();
   }
 
-  onRegisterUser({ username, password }) {
-    createUser({ username, password })
-      .then(() => {
-        return authenticateUser({ username, password });
-      })
-      .then(() => {
-        window.location.reload(true);
-      })
-      .catch(err => console.log(err));
-  }
-
-  onLoginUser({ username, password }) {
-    return authenticateUser({
-      username,
-      password
-    }).then(() => {
-      window.location.reload(true);
-    });
+  onAuthenticateUser({ username, password }) {
+    registerWithGitHub();
   }
 
   render() {
     const content = (
       <div className={styles.contentContainer}>
-        <div className={styles.tabs}>
-          <div
-            className={classNames(styles.tab, styles.loginTab, {
-              [styles.activeTab]: this.state.activeTab === TAB_ENUM.login
-            })}
-            onClick={() => this.setState({ activeTab: TAB_ENUM.login })}
+        <div className={styles.content}>
+          <div className={styles.title}>Sign in to PraiseRequest.</div>
+          <button
+            className={styles.githubAuthButton}
+            onClick={this.onAuthenticateUser}
           >
-            <span className={styles.tabLabel}>Log in</span>
+            Log in with GitHub
+          </button>
+          <div className={styles.divider}>
+            <div className={styles.dividerSide} />
+            <span>Or</span>
+            <div className={styles.dividerSide} />
           </div>
-          <div
-            className={classNames(styles.tab, styles.registerTab, {
-              [styles.activeTab]: this.state.activeTab === TAB_ENUM.register
-            })}
-            onClick={() => this.setState({ activeTab: TAB_ENUM.register })}
+          <button
+            className={styles.githubAuthButton}
+            onClick={this.onAuthenticateUser}
           >
-            <span className={styles.tabLabel}>Register</span>
-            <span
-              className={styles.exitButton}
-              onClick={e => {
-                e.stopPropagation();
-                this.onCloseModal();
-              }}
-            >
-              <Close />
-            </span>
-          </div>
+            Register with GitHub
+          </button>
         </div>
-        {this.state.activeTab === TAB_ENUM.register ? (
-          <RegisterForm onRegisterUser={this.onRegisterUser} />
-        ) : (
-          <LoginForm
-            onLoginUser={this.onLoginUser}
-            onClose={this.props.onClose}
-          />
-        )}
       </div>
     );
     return (
