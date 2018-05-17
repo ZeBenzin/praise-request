@@ -6,13 +6,13 @@ import {
   Switch
 } from "react-router-dom";
 
-import Home from "ui/views/home";
-import Search from "ui/views/search";
-import Account from "ui/views/account";
-import Activity from "ui/views/activity";
-import Statistic from "ui/views/statistic";
-import About from "ui/views/about";
-import Callback from "ui/views/callback";
+import Home from "ui/views/home/home";
+import Search from "ui/views/search/search";
+import Account from "ui/views/account/account";
+import Activity from "ui/views/activity/activity";
+import Statistic from "ui/views/statistic/statistic";
+import About from "ui/views/about/about";
+import Callback from "ui/views/callback/callback";
 import SearchOverlay from "ui/components/search-overlay/search-overlay";
 
 import HomeIcon from "@material-ui/icons/Home";

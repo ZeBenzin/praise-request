@@ -1,30 +1,6 @@
 .repoCardWrapper {
   position: relative;
-  margin: 22px;
-}
-
-.cardAction {
-  position: absolute;
-  opacity: 0;
-  top: calc(50% - 16px);
-  left: calc(50% - 50px);
-  outline: none;
-  border-radius: 50px;
-  border: 2px solid #467ebd;
-  background-color: #467ebd;
-  height: 35px;
-  font-family: "Oswald";
-  color: #fff;
-  font-size: 16px;
-  transition: all 0.2s ease-in;
-  filter: blur(0px);
-  width: 100px;
-
-  &:hover {
-    background-color: #467ebd;
-    color: #fff;
-    cursor: pointer;
-  }
+  margin: 22px 0;
 }
 
 .repoCardContainer {
@@ -33,9 +9,11 @@
   box-shadow: 0 0 11px 7px #ececec;
   background-color: #fff;
   position: relative;
-  transition: all 0.2s ease-in;
+  transition: all 0.2s ease;
+  border-left: 4px solid transparent;
 
   &:hover {
+    border-left: 4px solid;
     cursor: pointer;
   }
 }
@@ -51,7 +29,6 @@
 .repoDetails {
   padding: 8px 0px 24px 0px;
   border-top: 1px solid #f1f1f1;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -108,7 +85,6 @@
 
 .repoDescription {
   font-size: 14px !important;
-  color: #bbb;
   width: 191px;
   font-weight: normal;
   margin: 0;
@@ -157,6 +133,7 @@
   border: 2px solid #46bd85;
   font-size: 16px;
   color: #46bd85;
+  transition: background-color 0.2s ease, color 0.2s ease;
 
   &:hover {
     background-color: #46bd85;

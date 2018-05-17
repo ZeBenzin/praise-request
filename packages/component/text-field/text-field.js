@@ -5,6 +5,10 @@ import classNames from "classnames";
 import styles from "./text-field.scss";
 
 class TextField extends PureComponent {
+  focus() {
+    this._input.focus();
+  }
+
   render() {
     const {
       autoFocus,
@@ -22,6 +26,8 @@ class TextField extends PureComponent {
         onKeyPress={onKeyPress}
         className={classNames(styles.input, className)}
         onClick={onClick}
+        ref={input => (this._input = input)}
+        onTransitionEnd={() => this.focus()}
       />
     );
   }

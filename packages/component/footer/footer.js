@@ -23,14 +23,15 @@ class Footer extends Component {
   }
 
   onLoginClick() {
-    this.setState({ authModalOpen: true, activeTab: "login" });
+    this.setState({ authModalOpen: true });
+    this.props.hideFooter();
   }
 
   onRegisterClick() {
     this.setState({
-      authModalOpen: true,
-      activeTab: "register"
+      authModalOpen: true
     });
+    this.props.hideFooter();
   }
 
   onAuthenticationModalClosed() {
