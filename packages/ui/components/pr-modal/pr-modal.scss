@@ -16,44 +16,22 @@
   }
 }
 
-.searchContainer {
+.exitButton {
+  position: absolute;
+  right: -9px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
   display: flex;
-  flex-direction: column;
-  padding: 0px 85px;
-  align-items: center;
-  width: 963px;
-  margin: auto;
-}
+  border-radius: 50%;
+  top: -9px;
 
-.search {
-  display: flex;
-  border-bottom: 5px solid #e0e0e0;
-  width: 100%;
-}
+  &:hover {
+    cursor: pointer;
+  }
 
-.searchIcon {
-  font-size: 84px !important;
-  margin: auto 0;
-  color: #e0e0e0;
-}
-
-.repoListContainer {
-  display: flex;
-  flex-direction: column;
-  opacity: 0;
-  height: 750px;
-  transition: opacity 0.2s ease-in;
-  padding-top: 35px;
-  width: 100%;
-}
-
-.listVisible {
-  opacity: 1;
-}
-
-.repoList {
-  display: flex;
-  flex-wrap: wrap;
+  & > svg {
+    font-size: 26px;
+  }
 }
 
 .prCard {
@@ -65,36 +43,9 @@
   align-items: center;
 }
 
-.input {
-  outline: none;
-  border: none;
-  font-size: 14px;
-  border-bottom: 2px solid;
-  font-family: inherit;
-  padding-bottom: 5px;
-  margin-left: -23px;
-  min-width: 0;
-  background-color: transparent;
-  padding-left: 30px;
-  width: 100%;
-
-  &::-webkit-input-placeholder {
-    color: #e0e0e0;
-  }
-}
-
-.inputContainer {
-  display: flex;
-  width: 235px;
-}
-
 .filters {
   display: flex;
   padding: 30px 16px;
-}
-
-.statusFilters {
-  padding-left: 36px;
 }
 
 .stateFilter {
@@ -111,8 +62,12 @@
 }
 
 .prTitle {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 18px;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 470px;
 }
 
 .prList {
@@ -123,13 +78,26 @@
 }
 
 .prModal {
-  width: 874px;
+  width: 600px;
 }
 
 .repoName {
   font-size: 56px;
   font-weight: 700;
   padding: 0 16px;
+}
+
+.userInfo {
+  display: flex;
+  font-size: 14px;
+
+  & > span {
+    padding-left: 5px;
+  }
+
+  & > svg {
+    font-size: 22px !important;
+  }
 }
 
 .rightSide {

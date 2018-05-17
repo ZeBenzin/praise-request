@@ -21,8 +21,17 @@
   opacity: 1;
 }
 
+.search {
+  display: flex;
+  align-items: center;
+}
+
 .searchContainer {
-  padding-top: 45px;
+  padding-top: 30px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  border-bottom: 5px solid #e0e0e0;
 }
 
 .searchIcon {

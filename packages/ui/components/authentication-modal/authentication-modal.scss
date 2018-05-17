@@ -7,7 +7,7 @@
   justify-content: space-between;
   display: flex;
   flex-direction: column;
-  padding: 15px 39px 29px;
+  padding: 23px 39px 30px;
   align-items: center;
 }
 
@@ -32,15 +32,19 @@
 
 .exitButton {
   position: absolute;
-  right: -8px;
-  background-color: #457dbd;
-  color: #d1dfef;
+  right: -9px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
   display: flex;
   border-radius: 50%;
-  top: -8px;
+  top: -9px;
 
   &:hover {
     cursor: pointer;
+  }
+
+  & > svg {
+    font-size: 26px;
   }
 }
 
@@ -48,8 +52,6 @@
   font-size: 36px;
   font-weight: 600;
   margin-bottom: 33px;
-  color: #bbb;
-  /* rgba(181, 185, 187, 0.611764705882353); */
 }
 
 .divider {

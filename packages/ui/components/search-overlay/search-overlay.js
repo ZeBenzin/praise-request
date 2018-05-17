@@ -33,7 +33,7 @@ class SearchOverlay extends Component {
       searchRepos(this.state.searchTerm)
         .then(({ data }) => {
           this.props.history.push("/search", {
-            repos: data.data,
+            repos: data.items,
             searchTerm: this.state.searchTerm
           });
           this.props.toggleSearchOverlay();
@@ -45,6 +45,10 @@ class SearchOverlay extends Component {
     }
   }
 
+  focus() {
+    this._textfield.focus();
+  }
+
   render() {
     return (
       <div
@@ -52,15 +56,20 @@ class SearchOverlay extends Component {
           [styles.searchOverlayVisible]: this.props.isSearchVisible
         })}
         onClick={this.props.onClick}
+        onTransitionEnd={() => this.focus()}
       >
-        <div className={styles.searchContainer}>
-          <SearchIcon className={styles.searchIcon} />
-          <TextField
-            onInputChange={e => this.onInputChange(e.target.value)}
-            onKeyPress={e => this.onKeyPress(e.charCode)}
-            placeholder="Search repositories"
-            onClick={e => e.stopPropagation()}
-          />
+        <div className={styles.search}>
+          <div className={styles.searchContainer}>
+            <SearchIcon className={styles.searchIcon} />
+            <TextField
+              onInputChange={e => this.onInputChange(e.target.value)}
+              onKeyPress={e => this.onKeyPress(e.charCode)}
+              placeholder="Search repositories"
+              onClick={e => e.stopPropagation()}
+              autoFocus
+              ref={r => (this._textfield = r)}
+            />
+          </div>
         </div>
       </div>
     );

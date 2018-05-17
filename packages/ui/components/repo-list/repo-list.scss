@@ -1,0 +1,19 @@
+.repoListContainer {
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
+  padding-top: 22px;
+  min-height: 750px;
+  width: 100%;
+}
+
+.listVisible {
+  opacity: 1;
+}
+
+.repoList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}

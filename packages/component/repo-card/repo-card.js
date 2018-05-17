@@ -29,6 +29,7 @@ class RepoCard extends PureComponent {
         })
         .catch(err => console.log(err));
     } else {
+      elem.classList.remove(styles.clicked);
       this.props.displayFooter();
     }
   }

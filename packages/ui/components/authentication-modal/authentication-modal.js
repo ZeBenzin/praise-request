@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import Modal from "component/modal/modal";
-import { Close } from "@material-ui/icons";
+import Close from "@material-ui/icons/Close";
 import { withAuthentication } from "ui/higher-order-components/with-authentication";
 
 import { registerWithGitHub } from "ui/api/user";
@@ -28,6 +28,15 @@ class AuthenticationModal extends Component {
     const content = (
       <div className={styles.contentContainer}>
         <div className={styles.content}>
+          <span
+            className={styles.exitButton}
+            onClick={e => {
+              e.stopPropagation();
+              this.onCloseModal();
+            }}
+          >
+            <Close />
+          </span>
           <div className={styles.title}>Sign in to PraiseRequest.</div>
           <button
             className={styles.githubAuthButton}
