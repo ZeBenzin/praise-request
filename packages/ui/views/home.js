@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+
 import { searchRepos } from "ui/api/repo";
 
 import LoadingSpinner from "component/loading-spinner/loading-spinner";
@@ -106,12 +108,16 @@ class Search extends Component {
     const pr = this.state.pullRequests.find(pr => pr.id === id);
     const elem = e.currentTarget;
     elem.classList.add(styles.clicked);
-    executeTransaction(pr)
-      .then(data => {
-        elem.classList.remove(styles.clicked);
-        console.log("success", data);
-      })
-      .catch(err => console.log(err));
+    if (this.props.isUserAuthenticated) {
+      executeTransaction(pr)
+        .then(data => {
+          elem.classList.remove(styles.clicked);
+          console.log("success", data);
+        })
+        .catch(err => console.log(err));
+    } else {
+      this.props.displayFooter();
+    }
   }
 
   onCloseModal() {
@@ -196,14 +202,16 @@ class Search extends Component {
               </div>
               <div className={styles.praiseButtonContainer}>
                 <span className={styles.praiseCount}>270</span>
-                {this.props.isUserAuthenticated ? (
-                  <button
-                    className={styles.praiseButton}
-                    onClick={e => this.onPraiseClick(e, pr.id)}
-                  >
-                    <FavoriteBorder className={styles.favoriteIcon} />
-                  </button>
-                ) : null}
+
+                <button
+                  className={styles.praiseButton}
+                  onClick={e => {
+                    e.stopPropagation();
+                    this.onPraiseClick(e, pr.id);
+                  }}
+                >
+                  <FavoriteBorder className={styles.favoriteIcon} />
+                </button>
               </div>
             </div>
           ))}
@@ -235,6 +243,8 @@ class Search extends Component {
                 <RepoCard
                   id={repo.id}
                   key={repo.id}
+                  displayFooter={this.props.displayFooter}
+                  isUserAuthenticated={this.props.isUserAuthenticated}
                   repo={repo}
                   onClick={e => this.onRepoClick(e, repo.id)}
                 />
@@ -253,5 +263,9 @@ class Search extends Component {
     );
   }
 }
+
+Search.propTypes = {
+  displayFooter: PropTypes.func.isRequired
+};
 
 export default Search;
