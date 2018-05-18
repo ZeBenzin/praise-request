@@ -1,4 +1,4 @@
-# [PraiseRequest](https://praiserequest.io) &middot; ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+# [PraiseRequest](https://praiserequest.com) &middot; ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
 
 This repository contains the code for [praiserequest.com](https://praiserequest.com).
 
