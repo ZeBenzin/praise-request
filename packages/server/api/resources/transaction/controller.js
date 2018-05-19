@@ -21,15 +21,14 @@ const onTransactionStatusChanged = transaction => {
 };
 
 const createTransaction = (req, res, next) => {
-  const toAccount = User.findOne({ ghUserName: req.body.to.ghUserName }).then(
+  const toUser = req.body.toUser;
+  const toAccount = User.findOne({ ghUserId: toUser.ghUserId }).then(
     account => {
       if (!account) {
-        const url = `${config.GITHUB_BASE_PATH}/user/${req.body.to.ghUserName}`;
+        const url = `${config.GITHUB_API_BASE_PATH}/user/${toUser.ghUserId}`;
         return axios.get(url).then(data => {
           if (data.data) {
-            return userController.create(req.body.to, next).then(model => {
-              return model;
-            });
+            return userController.createUser(toUser);
           }
         });
       }
@@ -37,27 +36,29 @@ const createTransaction = (req, res, next) => {
     }
   );
 
-  const fromAccount = User.findOne({ ghUserName: req.body.from.ghUserName });
+  const fromAccount = User.findOne({ ghUserId: req.user.id });
 
   Promise.all([toAccount, fromAccount])
     .then(accounts => {
-      const to_uuid = accounts[0]._doc.ostId;
-      const from_uuid = accounts[1]._doc.ostId;
-      const transaction_kind = "praise";
+      const to_user_id = accounts[0]._doc.ostUuid;
+      const from_user_id = accounts[1]._doc.ostUuid;
       return ostService.executeTransaction({
-        to_uuid,
-        from_uuid,
-        transaction_kind
+        to_user_id,
+        from_user_id,
+        action_id: 30096
       });
     })
     .then(({ data }) => {
       ostService.monitorTransaction(
-        data.transaction.id,
+        data.data.transaction.id,
         onTransactionStatusChanged
       );
       return res.status(200).json(data);
     })
-    .catch(err => res.json({ code: 400, message: err.message }));
+    .catch(err => {
+      const code = err.response ? err.response.status : 500;
+      res.status(code).json({ code, message: err.message });
+    });
 };
 
 module.exports = { createTransaction };

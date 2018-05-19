@@ -150,7 +150,8 @@ class PRModal extends Component {
 
 PRModal.propTypes = {
   onCloseModal: PropTypes.func.isRequired,
-  displayFooter: PropTypes.func.isRequired
+  displayFooter: PropTypes.func.isRequired,
+  isUserAuthenticated: PropTypes.bool
 };
 
 export default PRModal;

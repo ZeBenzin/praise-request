@@ -10,15 +10,7 @@ const getUserById = (req, res) => {
     .catch(err => res.status(400).json({ code: 400, error: err.message }));
 };
 
-const createUser = (req, res) => {
-  create(req.body)
-    .then(user => res.status(201).json(user))
-    .catch(err => {
-      res.status(400).json({ code: 400, error: err.message });
-    });
-};
-
-const create = user => {
+const createUser = user => {
   return ostService.createUser({ name: user.ghUserName }).then(({ data }) => {
     const enrichedUser = Object.assign({}, user, {
       ostUuid: data.data.user.id
@@ -54,7 +46,7 @@ const getGitHubToken = (req, res) => {
     })
     .then(user => {
       if (!user) {
-        return create(userObject);
+        return createUser(userObject);
       }
       return user;
     })

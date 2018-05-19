@@ -52,7 +52,7 @@ const postRequest = (endpoint, params) => {
   return axios.post(url, body);
 };
 
-const getRequest = (params, endpoint) => {
+const getRequest = (endpoint, params) => {
   const combinedParams = combineParams(params);
   const queryString = generateQueryString(endpoint, combinedParams);
   const signature = generateSignature(queryString);
@@ -64,14 +64,16 @@ const getRequest = (params, endpoint) => {
 };
 
 const updateTransactionStatuses = () => {
-  listTransactions(Object.keys(monitoredTransactions)).then(({ data }) => {
-    data.transactions.forEach(tx => {
-      if (tx.status === COMPLETE || tx.status === FAILED) {
-        monitoredTransactions[tx.id].callback(tx);
-        stopMonitoringTransaction(tx.id);
-      }
-    });
-  });
+  listTransactions({ uuids: Object.keys(monitoredTransactions) }).then(
+    ({ data }) => {
+      data.data.transactions.forEach(tx => {
+        if (tx.status === COMPLETE || tx.status === FAILED) {
+          monitoredTransactions[tx.id].callback(tx);
+          stopMonitoringTransaction(tx.id);
+        }
+      });
+    }
+  );
 };
 
 const monitorTransaction = (uuid, callback) => {
@@ -111,16 +113,16 @@ const getUser = ({ id }) => {
   return getRequest("/users/", { id });
 };
 
-const executeTransaction = ({ to_uuid, from_uuid, transaction_kind }) => {
-  postRequest("/transaction-status/execute", {
-    to_uuid,
-    from_uuid,
-    transaction_kind
+const executeTransaction = ({ to_user_id, from_user_id, action_id }) => {
+  return postRequest("/transactions/", {
+    to_user_id,
+    from_user_id,
+    action_id
   });
 };
 
 const listTransactions = ({ uuids }) => {
-  getRequest("/transactions", { id: uuids });
+  return getRequest("/transactions", { id: uuids, limit: 100 });
 };
 
 module.exports = {
