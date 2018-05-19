@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "babel-eslint": "7.2.3",
     "eslint": "4.10.0"
   },
   "dependencies": {

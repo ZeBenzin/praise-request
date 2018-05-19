@@ -12,11 +12,18 @@ const getUserById = (req, res) => {
 };
 
 const createUser = (req, res) => {
-  User.create(req.body)
+  create(req.body)
     .then(user => res.status(201).json(user))
     .catch(err => {
       res.status(400).json({ code: 400, error: err.message });
     });
+};
+
+const create = user => {
+  return ostService.createUser({ name: user.ghUserName }).then(({ data }) => {
+    const enrichedUser = Object.assign({}, user, { ostUuid: data.user.id });
+    return User.create(enrichedUser);
+  });
 };
 
 const getGitHubToken = (req, res) => {
@@ -46,21 +53,7 @@ const getGitHubToken = (req, res) => {
     })
     .then(user => {
       if (!user) {
-        return User.create(userObject);
-      }
-      return user;
-    })
-    .then(user => {
-      if (!user._doc.ostUuid) {
-        return ostService
-          .createUser({ name: user._doc.ghUserName })
-          .then(({ data }) => {
-            const ostUser = data.data.economy_users[0];
-            return User.findOneAndUpdate(
-              { ghUserId: body.ghUserId },
-              { ostUuid: ostUser.uuid }
-            );
-          });
+        return create(userObject);
       }
       return user;
     })

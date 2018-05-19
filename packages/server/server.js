@@ -1,7 +1,6 @@
 const express = require("express");
 const repoRouter = require("./api/resources/repo/router");
 const userRouter = require("./api/resources/user/router");
-const githubAccountRouter = require("./api/resources/github-account/router");
 const transactionRouter = require("./api/resources/transaction/router");
 const authController = require("./api/auth");
 const connect = require("./db");
@@ -16,7 +15,6 @@ connect();
 
 app.use("/praise/repo", repoRouter);
 app.use("/praise/user", userRouter);
-app.use("/praise/githubaccount", githubAccountRouter);
 app.use("/praise/transaction", transactionRouter);
 app.use(
   "/praise/session",

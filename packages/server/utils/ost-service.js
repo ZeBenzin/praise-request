@@ -90,6 +90,10 @@ const createUser = ({ name }) => {
   postRequest("/users/create", { name });
 };
 
+const getUser = ({ id }) => {
+  getRequest("/users/", { id });
+};
+
 const executeTransaction = ({ to_uuid, from_uuid, transaction_kind }) => {
   postRequest("/transaction-status/execute", {
     to_uuid,
@@ -99,7 +103,13 @@ const executeTransaction = ({ to_uuid, from_uuid, transaction_kind }) => {
 };
 
 const listTransactions = ({ uuids }) => {
-  sendRequest("/transactions", { id: uuids });
+  getRequest("/transactions", { id: uuids });
 };
 
-module.exports = { executeTransaction, createUser };
+module.exports = {
+  createUser,
+  getUser,
+  executeTransaction,
+  monitorTransaction,
+  stopMonitoringTransaction
+};
