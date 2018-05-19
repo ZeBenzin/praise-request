@@ -1,9 +1,10 @@
 const crypto = require("crypto");
 const queryString = require("query-string");
 const config = require("../config/config");
+const moment = require("moment");
+const axios = require("axios");
 
 const monitoredTransactions = {};
-const PROCESSING = "processing";
 const COMPLETE = "complete";
 const FAILED = "failed";
 
@@ -44,11 +45,14 @@ const postRequest = (endpoint, params) => {
     config.OST_API_BASE_PATH
   }${queryString}&signature=${signature}`;
   const body = combinedParams;
+  body.signature = signature;
 
+  axios.defaults.headers.post["Content-Type"] =
+    "application/x-www-form-urlencoded";
   return axios.post(url, body);
 };
 
-const getRequest = () => {
+const getRequest = (params, endpoint) => {
   const combinedParams = combineParams(params);
   const queryString = generateQueryString(endpoint, combinedParams);
   const signature = generateSignature(queryString);
@@ -85,13 +89,26 @@ const stopMonitoringTransaction = uuid => {
   }
 };
 
+const sanitizeUserName = userName => {
+  let strippedName = userName.replace(/[^\w\d\s]/g, "");
+  if (strippedName.length < 3) {
+    strippedName = `${strippedName}000`;
+  }
+
+  if (strippedName.length > 20) {
+    strippedName = strippedName.substring(0, 20);
+  }
+
+  return strippedName;
+};
+
 const createUser = ({ name }) => {
   const sanitizedUserName = sanitizeUserName(name);
-  postRequest("/users/create", { name });
+  return postRequest("/users/", { name: sanitizedUserName });
 };
 
 const getUser = ({ id }) => {
-  getRequest("/users/", { id });
+  return getRequest("/users/", { id });
 };
 
 const executeTransaction = ({ to_uuid, from_uuid, transaction_kind }) => {

@@ -1,8 +1,7 @@
 const axios = require("axios");
-const moment = require("moment");
 const jwt = require("jsonwebtoken");
 const config = require("../../../config/config");
-const utils = require("../../../utils/ost-service");
+const ostService = require("../../../utils/ost-service");
 const User = require("./model");
 
 const getUserById = (req, res) => {
@@ -21,7 +20,9 @@ const createUser = (req, res) => {
 
 const create = user => {
   return ostService.createUser({ name: user.ghUserName }).then(({ data }) => {
-    const enrichedUser = Object.assign({}, user, { ostUuid: data.user.id });
+    const enrichedUser = Object.assign({}, user, {
+      ostUuid: data.data.user.id
+    });
     return User.create(enrichedUser);
   });
 };

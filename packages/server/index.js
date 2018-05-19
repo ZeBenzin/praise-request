@@ -30,8 +30,6 @@ socket.on("connection", socket => {
   socket.emit("connection", 150);
 });
 
-controller.getCurrentTransactions();
-
 server.listen(3001, () => {
   console.log("listening on port 3001");
 });

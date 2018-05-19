@@ -1,7 +1,5 @@
-const moment = require("moment");
 const User = require("../user/model");
 const userController = require("../user/controller");
-const utils = require("../../../utils/ost-service");
 const socketMap = require("../../../socket-map");
 const config = require("../../../config/config");
 const ostService = require("../../../utils/ost-service");
