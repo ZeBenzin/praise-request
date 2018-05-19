@@ -3,6 +3,7 @@ const GithubAccount = require("../github-account/model");
 const githubAccountController = require("../github-account/controller");
 const utils = require("../../../utils/auth");
 const socketMap = require("../../../socket-map");
+const config = require("../../../config/config");
 const axios = require("axios");
 
 const githubBasePath = "https://api.github.com";
@@ -20,7 +21,7 @@ const getCurrentTransactions = () => {
     );
     const signature = utils.generateSignature(queryString);
     const body = {
-      api_key: process.env.API_KEY,
+      api_key: config.OST_API_KEY,
       request_timestamp: timestamp,
       transaction_uuids: "60b91a69-21e9-4d54-9bd4-fa970198801a",
       signature
@@ -68,7 +69,7 @@ const createTransaction = (req, res, next) => {
       const signature = utils.generateSignature(queryString);
       const url = `${ostBasePath}${queryString}&signature=${signature}`;
       const body = {
-        api_key: process.env.API_KEY,
+        api_key: config.OST_API_KEY,
         to_uuid: toUUID,
         from_uuid: fromUUID,
         transaction_kind: "Praise",

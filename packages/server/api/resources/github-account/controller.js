@@ -2,6 +2,7 @@ const axios = require("axios");
 const moment = require("moment");
 const GithubAccount = require("./model");
 const utils = require("../../../utils/auth");
+const config = require("../../../config/config");
 
 const getAccountById = () => {};
 
@@ -28,7 +29,7 @@ const create = (body, next) => {
   const signature = utils.generateSignature(queryString);
   const url = `https://playgroundapi.ost.com${queryString}&signature=${signature}`;
   const payload = {
-    api_key: process.env.API_KEY,
+    api_key: config.OST_API_KEY,
     name: ostLegalUserName,
     request_timestamp: timestamp,
     signature

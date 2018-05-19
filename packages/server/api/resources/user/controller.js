@@ -28,7 +28,7 @@ const createOstUser = body => {
   const signature = utils.generateSignature(queryString);
   const url = `https://playgroundapi.ost.com${queryString}&signature=${signature}`;
   const payload = {
-    api_key: process.env.API_KEY,
+    api_key: config.OST_API_KEY,
     name: ostLegalUserName,
     request_timestamp: timestamp,
     signature
@@ -92,13 +92,9 @@ const getGitHubToken = (req, res) => {
       return user;
     })
     .then(user => {
-      const token = jwt.sign(
-        { id: user._doc.ghUserId },
-        config.config.JWT_SECRET,
-        {
-          expiresIn: "12h"
-        }
-      );
+      const token = jwt.sign({ id: user._doc.ghUserId }, config.JWT_SECRET, {
+        expiresIn: "12h"
+      });
       res.status(200).json({ token });
     })
     .catch(err => {
