@@ -66,12 +66,19 @@ const getRequest = (endpoint, params) => {
 const updateTransactionStatuses = () => {
   listTransactions({ uuids: Object.keys(monitoredTransactions) }).then(
     ({ data }) => {
+      const promises = [];
       data.data.transactions.forEach(tx => {
         if (tx.status === COMPLETE || tx.status === FAILED) {
-          monitoredTransactions[tx.id].callback(tx);
+          const cb = monitoredTransactions[tx.id].callback;
           stopMonitoringTransaction(tx.id);
+          promises.push(cb(tx));
         }
       });
+      return Promise.all(promises).then(data => {
+        // By this point you've run all your callbacks and got data
+        statusCheckInterval = setTimeout(updateTransactionStatuses, 1000);
+      });
+      // monitoredTransactions[tx.id].callback(tx);
     }
   );
 };
@@ -81,14 +88,11 @@ const monitorTransaction = (uuid, callback) => {
     callback
   };
 
-  statusCheckInterval = setInterval(updateTransactionStatuses, 1000);
+  statusCheckInterval = setTimeout(updateTransactionStatuses, 1000);
 };
 
 const stopMonitoringTransaction = uuid => {
   delete monitoredTransactions[uuid];
-  if (Object.keys(monitoredTransactions).length === 0) {
-    clearInterval(statusCheckInterval);
-  }
 };
 
 const sanitizeUserName = userName => {
