@@ -60,14 +60,24 @@ const getRequest = (endpoint, params) => {
     config.OST_API_BASE_PATH
   }${queryString}&signature=${signature}`;
 
+  console.log(url);
   return axios.get(url);
 };
 
 const updateTransactionStatuses = () => {
-  listTransactions({ uuids: Object.keys(monitoredTransactions) }).then(
-    ({ data }) => {
+  if (!Object.keys(monitoredTransactions).length) {
+    return;
+  }
+
+  listTransactions({ uuids: Object.keys(monitoredTransactions) })
+    .then(({ data }) => {
+      console.log("timer fired");
       const promises = [];
-      data.data.transactions.forEach(tx => {
+      const transactions = data.data.transactions;
+      if (!transactions.length) {
+        return;
+      }
+      transactions.forEach(tx => {
         if (tx.status === COMPLETE || tx.status === FAILED) {
           const cb = monitoredTransactions[tx.id].callback;
           stopMonitoringTransaction(tx.id);
@@ -76,11 +86,14 @@ const updateTransactionStatuses = () => {
       });
       return Promise.all(promises).then(data => {
         // By this point you've run all your callbacks and got data
+        console.log("timer reset");
         statusCheckInterval = setTimeout(updateTransactionStatuses, 1000);
+        return Promise.resolve();
       });
-      // monitoredTransactions[tx.id].callback(tx);
-    }
-  );
+    })
+    .catch(err => {
+      console.log(err);
+    });
 };
 
 const monitorTransaction = (uuid, callback) => {
