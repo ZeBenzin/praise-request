@@ -1,7 +1,7 @@
 const axios = require("axios");
 const moment = require("moment");
 const GithubAccount = require("./model");
-const utils = require("../../../utils/auth");
+const utils = require("../../../utils/ost-service");
 const config = require("../../../config/config");
 
 const getAccountById = () => {};
