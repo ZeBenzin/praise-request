@@ -1,23 +1,43 @@
-const moment = require("moment");
-const GithubAccount = require("../github-account/model");
-const githubAccountController = require("../github-account/controller");
-const utils = require("../../../utils/auth");
+const User = require("../user/model");
+const userController = require("../user/controller");
+const socketMap = require("../../../socket-map");
+const config = require("../../../config/config");
+const ostService = require("../../../utils/ost-service");
 const axios = require("axios");
 
-const githubBasePath = "https://api.github.com";
+const onTransactionStatusChanged = transaction => {
+  const { status, from_user_id, to_user_id } = transaction;
+  if (status === "complete") {
+    return Promise.all([
+      ostService.getUser({ id: from_user_id }),
+      ostService.getUser({ id: to_user_id })
+    ]).then(data => {
+      const fromUser = data[0].data.data.users[0];
+      const toUser = data[1].data.data.users[0];
+      if (socketMap[toUser.id]) {
+        socketMap[toUser.id].socket.emit("balance", toUser.token_balance);
+      }
+
+      if (socketMap[fromUser.id]) {
+        socketMap[fromUser.id].socket.emit("balance", fromUser.token_balance);
+      }
+
+      return Promise.resolve();
+    });
+  }
+
+  return Promise.resolve();
+};
 
 const createTransaction = (req, res, next) => {
-  const toAccount = GithubAccount.findOne({ userId: req.body.to.userId }).then(
+  const toUser = req.body.toUser;
+  const toAccount = User.findOne({ ghUserId: toUser.ghUserId }).then(
     account => {
       if (!account) {
-        const url = `${githubBasePath}/user/${req.body.to.userId}`;
+        const url = `${config.GITHUB_API_BASE_PATH}/user/${toUser.ghUserId}`;
         return axios.get(url).then(data => {
           if (data.data) {
-            return githubAccountController
-              .create(req.body.to, next)
-              .then(model => {
-                return model;
-              });
+            return userController.createUser(toUser);
           }
         });
       }
@@ -25,34 +45,29 @@ const createTransaction = (req, res, next) => {
     }
   );
 
-  const fromAccount = GithubAccount.findOne({ userId: req.body.from.userId });
+  const fromAccount = User.findOne({ ghUserId: req.user.id });
 
   Promise.all([toAccount, fromAccount])
     .then(accounts => {
-      const toUUID = accounts[0]._doc.ostId;
-      const fromUUID = accounts[1]._doc.ostId;
-      const timestamp = moment().unix();
-      const queryString = utils.generateQueryString(
-        timestamp,
-        "/transaction-types/execute",
-        { from_uuid: fromUUID, to_uuid: toUUID, transaction_kind: "Praise" }
-      );
-      const signature = utils.generateSignature(queryString);
-      const url = `https://playgroundapi.ost.com${queryString}&signature=${signature}`;
-      const body = {
-        api_key: process.env.API_KEY,
-        to_uuid: toUUID,
-        from_uuid: fromUUID,
-        transaction_kind: "Praise",
-        request_timestamp: timestamp,
-        signature
-      };
-      return axios.post(url, body);
+      const to_user_id = accounts[0]._doc.ostUuid;
+      const from_user_id = accounts[1]._doc.ostUuid;
+      return ostService.executeTransaction({
+        to_user_id,
+        from_user_id,
+        action_id: 30096
+      });
     })
     .then(({ data }) => {
+      ostService.monitorTransaction(
+        data.data.transaction.id,
+        onTransactionStatusChanged
+      );
       return res.status(200).json(data);
     })
-    .catch(err => res.json({ code: 400, message: err.message }));
+    .catch(err => {
+      const code = err.response ? err.response.status : 500;
+      res.status(code).json({ code, message: err.message });
+    });
 };
 
 module.exports = { createTransaction };

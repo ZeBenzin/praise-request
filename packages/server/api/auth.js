@@ -4,7 +4,7 @@ const config = require("../config/config");
 const User = require("./resources/user/model");
 
 const signin = (req, res, next) => {
-  const token = jwt.sign({ id: req.user.id }, config.config.JWT_SECRET, {
+  const token = jwt.sign({ id: req.user.id }, config.JWT_SECRET, {
     expiresIn: "12h"
   });
   res.json({ token });
@@ -39,7 +39,7 @@ const decodeToken = (req, res, next) => {
   }
 
   req.headers.authorization = `Bearer ${req.headers.authorization}`;
-  expressJwt({ secret: config.config.JWT_SECRET })(req, res, next);
+  expressJwt({ secret: config.JWT_SECRET })(req, res, next);
 };
 
 const checkUser = (req, res, next) => {

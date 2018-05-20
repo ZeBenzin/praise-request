@@ -2,7 +2,14 @@
   "name": "server",
   "version": "0.1.0",
   "private": true,
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-eslint": "7.2.3",
+    "eslint": "4.10.0",
+    "eslint-config-react-app": "^2.1.0",
+    "eslint-loader": "1.9.0",
+    "eslint-plugin-flowtype": "2.39.1",
+    "eslint-plugin-import": "2.8.0"
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "bcrypt": "^2.0.1",
@@ -14,9 +21,13 @@
     "mongoose": "^5.0.16",
     "promise": "8.0.1",
     "query-string": "^6.0.0",
-    "request": "^2.85.0"
+    "request": "^2.85.0",
+    "socket.io": "^2.1.0"
   },
   "scripts": {
     "build": "scripts/build.sh"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   }
 }

@@ -77,6 +77,7 @@ class Home extends Component {
           displayFooter={this.props.displayFooter}
           repos={this.state.repos}
           totalPages={this.state.totalPages}
+          isUserAuthenticated={this.props.isUserAuthenticated}
           pageNumber={this.state.pageNumber}
           loading={this.state.loading}
           onPrevPageClick={this.onPrevPageClick}
@@ -88,7 +89,8 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  displayFooter: PropTypes.func.isRequired
+  displayFooter: PropTypes.func.isRequired,
+  isUserAuthenticated: PropTypes.bool
 };
 
 export default Home;

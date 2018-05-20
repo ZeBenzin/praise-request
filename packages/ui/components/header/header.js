@@ -1,20 +1,30 @@
 import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
-import SearchIcon from "@material-ui/icons/Search";
+import openSocket from "socket.io-client";
 
+import SearchIcon from "@material-ui/icons/Search";
 import AuthenticationModal from "ui/components/authentication-modal/authentication-modal";
 import { withAuthentication } from "ui/higher-order-components/with-authentication";
 
 import classNames from "classnames";
 import styles from "./header.scss";
 
+const socket = openSocket("http://localhost:3001", {
+  query: { jwt: localStorage.getItem("praiseRequestToken") }
+});
+
 class Header extends PureComponent {
   constructor(props) {
     super(props);
+    socket.on("balance", balance => {
+      this.setState({ balance });
+    });
 
     this.state = {
-      authModalOpen: false
+      authModalOpen: false,
+      balance: 0
     };
 
     this.onLoginClick = this.onLoginClick.bind(this);
@@ -47,6 +57,9 @@ class Header extends PureComponent {
       <div className={styles.header}>
         <div className={styles.headerContent}>
           <div className={styles.leftContent}>ALPHA v0.1.0</div>
+          {this.props.isUserAuthenticated ? (
+            <div className={styles.praiseBalance}>{this.state.balance} </div>
+          ) : null}
           <div className={styles.rightContent}>
             {this.props.location.pathname !== "/search" ? (
               <SearchIcon
@@ -97,5 +110,12 @@ class Header extends PureComponent {
     );
   }
 }
+
+Header.propTypes = {
+  isUserAuthenticated: PropTypes.bool.isRequired,
+  toggleSearchOverlay: PropTypes.func.isRequired,
+  onActivityIconClick: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired
+};
 
 export default withRouter(withAuthentication(Header));

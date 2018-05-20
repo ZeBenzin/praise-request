@@ -77,6 +77,7 @@ class RepoList extends Component {
               pullRequests={this.state.pullRequests}
               selectedRepo={this.state.selectedRepo}
               onCloseModal={this.onCloseModal}
+              isUserAuthenticated={this.props.isUserAuthenticated}
               displayFooter={this.props.displayFooter}
             />
           ) : null}

@@ -96,6 +96,7 @@ class Search extends Component {
           loading={this.state.loading}
           onPrevPageClick={this.onPrevPageClick}
           onNextPageClick={this.onNextPageClick}
+          isUserAuthenticated={this.props.isUserAuthenticated}
         />
       </div>
     );
