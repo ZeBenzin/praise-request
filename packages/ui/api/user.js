@@ -19,7 +19,7 @@ export const getSessionStatus = () => {
 
 export const registerWithGitHub = () => {
   const client_id = "08f64958183eb1761115";
-  const redirect_uri = "http://localhost:3000/auth/github/callback";
+  const redirect_uri = "https://praiserequest.com/auth/github/callback";
   const url = `https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=user`;
   window.location.replace(url);
 };
