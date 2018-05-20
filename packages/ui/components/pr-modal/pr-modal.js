@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 import CloseIcon from "@material-ui/icons/Close";
 import PersonIcon from "@material-ui/icons/PersonOutline";
-import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import Modal from "component/modal/modal";
 import LoadingSpinner from "component/loading-spinner/loading-spinner";
+import PraiseButton from "component/praise-button/praise-button";
 
 import { getByRepoId } from "ui/api/pull-request";
 import { executeTransaction } from "ui/api/transaction";
@@ -30,6 +30,8 @@ class PRModal extends Component {
         state: PR_STATE.open
       }
     };
+
+    this.onPraiseClick = this.onPraiseClick.bind(this);
   }
 
   componentDidMount() {
@@ -71,20 +73,10 @@ class PRModal extends Component {
     });
   }
 
-  onPraiseClick(e, id) {
-    const pr = this.state.pullRequests.find(pr => pr.id === id);
-    const elem = e.currentTarget;
-    elem.classList.add(styles.clicked);
-    if (this.props.isUserAuthenticated) {
-      executeTransaction(pr.user)
-        .then(() => {
-          elem.classList.remove(styles.clicked);
-        })
-        .catch(err => console.log(err));
-    } else {
-      elem.classList.remove(styles.clicked);
-      this.props.displayFooter();
-    }
+  onPraiseClick(pr) {
+    return executeTransaction(pr.user).catch(err => {
+      console.error("Error executing transaction", err);
+    });
   }
 
   render() {
@@ -142,19 +134,11 @@ class PRModal extends Component {
                     <span>{pr.user.login}</span>
                   </div>
                 </div>
-                <div className={styles.praiseButtonContainer}>
-                  <span className={styles.praiseCount}>270</span>
-
-                  <button
-                    className={styles.praiseButton}
-                    onClick={e => {
-                      e.stopPropagation();
-                      this.onPraiseClick(e, pr.id);
-                    }}
-                  >
-                    <FavoriteBorder className={styles.favoriteIcon} />
-                  </button>
-                </div>
+                <PraiseButton
+                  onPraiseClickCallback={() => this.onPraiseClick(pr)}
+                  onPraisePreventedCallback={this.props.displayFooter}
+                  isPraiseEnabled={this.props.isUserAuthenticated}
+                />
               </div>
             ))
           )}
