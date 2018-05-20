@@ -11,8 +11,9 @@ import { withAuthentication } from "ui/higher-order-components/with-authenticati
 import classNames from "classnames";
 import styles from "./header.scss";
 
-const socket = openSocket("/", {
-  query: { jwt: localStorage.getItem("praiseRequestToken") }
+const socket = openSocket.connect("/", {
+  query: { jwt: localStorage.getItem("praiseRequestToken") },
+  port: 3001
 });
 
 class Header extends PureComponent {
