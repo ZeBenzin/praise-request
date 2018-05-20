@@ -6,39 +6,24 @@ const ostService = require("../../../utils/ost-service");
 const axios = require("axios");
 
 const onTransactionStatusChanged = transaction => {
-  if (transaction.status === "complete") {
-    const fromUserBalancePromise = ostService.getUser({
-      id: transaction.from_user_id
-    });
-
-    const toUserBalancePromise = ostService.getUser({
-      id: transaction.to_user_id
-    });
-
-    return Promise.all([fromUserBalancePromise, toUserBalancePromise]).then(
-      data => {
-        const toBalance = data[0].data.data.users[0].token_balance;
-        const fromBalance = data[1].data.data.users[0].token_balance;
-        return User.findOne({ ostUuid: data[0].data.data.users[0].id })
-          .then(user => {
-            return socketMap[user._doc.ghUserId]
-              ? socketMap[user._doc.ghUserId].emit("connection", toBalance)
-              : null;
-          })
-          .then(() => {
-            return User.findOne({
-              ostUuid: data[1].data.data.users[0].id
-            }).then(user => {
-              return socketMap[user._doc.ghUserId]
-                ? socketMap[user._doc.ghUserId].emit("connection", fromBalance)
-                : null;
-            });
-          })
-          .then(() => {
-            return "sockets updated";
-          });
+  const { status, from_user_id, to_user_id } = transaction;
+  if (status === "complete") {
+    return Promise.all([
+      ostService.getUser({ id: from_user_id }),
+      ostService.getUser({ id: to_user_id })
+    ]).then(data => {
+      const fromUser = data[0].data.data.users[0];
+      const toUser = data[1].data.data.users[0];
+      if (socketMap[toUser.id]) {
+        socketMap[toUser.id].socket.emit("balance", toUser.token_balance);
       }
-    );
+
+      if (socketMap[fromUser.id]) {
+        socketMap[fromUser.id].socket.emit("balance", fromUser.token_balance);
+      }
+
+      return Promise.resolve();
+    });
   }
 
   return Promise.resolve();

@@ -51,9 +51,13 @@ const getGitHubToken = (req, res) => {
       return user;
     })
     .then(user => {
-      const token = jwt.sign({ id: user._doc.ghUserId }, config.JWT_SECRET, {
-        expiresIn: "12h"
-      });
+      const token = jwt.sign(
+        { id: user._doc.ghUserId, ostId: user._doc.ostUuid },
+        config.JWT_SECRET,
+        {
+          expiresIn: "12h"
+        }
+      );
       res.status(200).json({ token });
     })
     .catch(err => {
