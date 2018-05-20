@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export const executeTransaction = pr => {
+export const executeTransaction = ({ id, login }) => {
   const body = {
     toUser: {
-      ghUserId: pr.user.id,
-      ghUserName: pr.user.login
+      ghUserId: id,
+      ghUserName: login
     }
   };
 

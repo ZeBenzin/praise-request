@@ -22,10 +22,9 @@ class RepoCard extends PureComponent {
     elem.classList.add(styles.clicked);
 
     if (this.props.isUserAuthenticated) {
-      executeTransaction(this.props.repo)
-        .then(data => {
+      executeTransaction(this.props.repo.owner)
+        .then(() => {
           elem.classList.remove(styles.clicked);
-          console.log("success", data);
         })
         .catch(err => console.log(err));
     } else {

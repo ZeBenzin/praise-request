@@ -56,10 +56,9 @@ class PRModal extends Component {
     const elem = e.currentTarget;
     elem.classList.add(styles.clicked);
     if (this.props.isUserAuthenticated) {
-      executeTransaction(pr)
-        .then(data => {
+      executeTransaction(pr.user)
+        .then(() => {
           elem.classList.remove(styles.clicked);
-          console.log("success", data);
         })
         .catch(err => console.log(err));
     } else {
