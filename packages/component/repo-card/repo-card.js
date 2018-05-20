@@ -70,7 +70,6 @@ class RepoCard extends PureComponent {
         </div>
         <div className={styles.repoActions}>
           <div className={styles.repoActionContainer}>
-            <span className={styles.praiseCount}>125</span>
             <button
               className={classNames(styles.repoAction, styles.praiseButton)}
               onClick={e => {
