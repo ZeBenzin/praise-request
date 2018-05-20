@@ -34,19 +34,20 @@ class RepoList extends Component {
 
   onRepoClick(e, id) {
     const repo = this.props.repos.find(repo => repo.id === id);
-    getByRepoId(repo.name, repo.owner.login, {
-      state: this.state.prFilters.state
-    })
-      .then(({ data }) => {
-        this.setState({
-          selectedRepo: repo,
-          pullRequests: data,
-          modalOpen: true
-        });
-      })
-      .catch(err => {
-        // Do a toast or suttin
-      });
+    // getByRepoId(repo.name, repo.owner.login, {
+    //   state: this.state.prFilters.state
+    // })
+    //   .then(({ data }) => {
+    //     this.setState({
+    //       selectedRepo: repo,
+    //       pullRequests: data,
+    //       modalOpen: true
+    //     });
+    //   })
+    //   .catch(err => {
+    //     // Do a toast or suttin
+    //   });
+    this.setState({ selectedRepo: repo, modalOpen: true });
   }
 
   render() {

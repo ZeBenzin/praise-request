@@ -5,6 +5,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import PersonIcon from "@material-ui/icons/PersonOutline";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import Modal from "component/modal/modal";
+import LoadingSpinner from "component/loading-spinner/loading-spinner";
 
 import { getByRepoId } from "ui/api/pull-request";
 import { executeTransaction } from "ui/api/transaction";
@@ -22,7 +23,8 @@ class PRModal extends Component {
     super(props);
 
     this.state = {
-      pullRequests: props.pullRequests,
+      pullRequests: [],
+      loading: true,
       prFilters: {
         term: "",
         state: PR_STATE.open
@@ -30,16 +32,34 @@ class PRModal extends Component {
     };
   }
 
+  componentDidMount() {
+    const { name, owner } = this.props.selectedRepo;
+    getByRepoId(name, owner.login, {
+      state: this.state.prFilters.state
+    })
+      .then(({ data }) => {
+        this.setState({
+          pullRequests: data,
+          loading: false
+        });
+      })
+      .catch(err => {
+        console.error("Error fetching pull requests", err);
+      });
+  }
+
   onPRFilterChanged(nextFilters) {
     const { name, owner } = this.props.selectedRepo;
     this.setState(
       {
-        prFilters: { ...this.state.prFilters, ...nextFilters }
+        prFilters: { ...this.state.prFilters, ...nextFilters },
+        loading: true
       },
       () =>
         getByRepoId(name, owner.login, nextFilters).then(({ data }) => {
           this.setState({
-            pullRequests: data
+            pullRequests: data,
+            loading: false
           });
         })
     );
@@ -110,30 +130,34 @@ class PRModal extends Component {
           </div>
         </div>
         <div className={styles.prList}>
-          {filteredPRs.map(pr => (
-            <div className={styles.prCard} key={pr.id}>
-              <div className={styles.rightSide}>
-                <div className={styles.prTitle}>{pr.title}</div>
-                <div className={styles.userInfo}>
-                  <PersonIcon />
-                  <span>{pr.user.login}</span>
+          {this.state.loading ? (
+            <LoadingSpinner />
+          ) : (
+            filteredPRs.map(pr => (
+              <div className={styles.prCard} key={pr.id}>
+                <div className={styles.rightSide}>
+                  <div className={styles.prTitle}>{pr.title}</div>
+                  <div className={styles.userInfo}>
+                    <PersonIcon />
+                    <span>{pr.user.login}</span>
+                  </div>
+                </div>
+                <div className={styles.praiseButtonContainer}>
+                  <span className={styles.praiseCount}>270</span>
+
+                  <button
+                    className={styles.praiseButton}
+                    onClick={e => {
+                      e.stopPropagation();
+                      this.onPraiseClick(e, pr.id);
+                    }}
+                  >
+                    <FavoriteBorder className={styles.favoriteIcon} />
+                  </button>
                 </div>
               </div>
-              <div className={styles.praiseButtonContainer}>
-                <span className={styles.praiseCount}>270</span>
-
-                <button
-                  className={styles.praiseButton}
-                  onClick={e => {
-                    e.stopPropagation();
-                    this.onPraiseClick(e, pr.id);
-                  }}
-                >
-                  <FavoriteBorder className={styles.favoriteIcon} />
-                </button>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     );

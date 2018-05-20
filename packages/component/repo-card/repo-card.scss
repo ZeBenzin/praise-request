@@ -25,13 +25,16 @@
 @keyframes count {
   0% {
     opacity: 0;
+    padding-bottom: 0;
   }
 
   50% {
     opacity: 1;
+    padding-bottom: 30px;
   }
 
   100% {
+    padding-bottom: 30px;
     opacity: 0;
   }
 }
@@ -165,7 +168,7 @@
 }
 
 .praiseCountVisible {
-  animation: count 0.5s linear;
+  animation: count 1s linear;
 }
 
 .praiseButton {
