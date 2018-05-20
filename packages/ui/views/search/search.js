@@ -55,7 +55,7 @@ class Search extends Component {
 
   executeSearch(value, pageNumber) {
     this.setState({ loading: true });
-    searchRepos(value)
+    searchRepos(value, pageNumber)
       .then(({ data }) => {
         this.setState({
           repos: data.items,

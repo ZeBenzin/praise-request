@@ -51,7 +51,7 @@ class Home extends Component {
 
   executeSearch(pageNumber) {
     this.setState({ loading: true });
-    searchRepos("react")
+    searchRepos("react", pageNumber)
       .then(({ data }) => {
         if (this._isMounted) {
           this.setState({
