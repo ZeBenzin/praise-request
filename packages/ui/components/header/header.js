@@ -11,7 +11,7 @@ import { withAuthentication } from "ui/higher-order-components/with-authenticati
 import classNames from "classnames";
 import styles from "./header.scss";
 
-const socket = openSocket("http://localhost:3001", {
+const socket = openSocket("https://praiserequest.com", {
   query: { jwt: localStorage.getItem("praiseRequestToken") }
 });
 
