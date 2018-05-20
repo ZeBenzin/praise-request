@@ -8,6 +8,5 @@ export const executeTransaction = ({ id, login }) => {
     }
   };
 
-  // return axios.post("/praise/transaction", body);
-  return Promise.resolve("yay!");
+  return axios.post("/praise/transaction", body);
 };
