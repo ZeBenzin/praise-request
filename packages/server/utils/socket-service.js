@@ -7,6 +7,7 @@ const initialise = server => {
   const socket = io(server);
 
   socket.on("connection", socket => {
+    console.log("connected");
     const token = socket.handshake.query.jwt;
     let req;
     if (token) {
