@@ -6,48 +6,42 @@ const ostService = require("../../../utils/ost-service");
 const axios = require("axios");
 
 const onTransactionStatusChanged = transaction => {
-  // if (transaction.status === "complete") {
-  const fromUserBalancePromise = ostService
-    .getUser({
+  if (transaction.status === "complete") {
+    const fromUserBalancePromise = ostService.getUser({
       id: transaction.from_user_id
-    })
-    .then(({ data }) => {
-      const fromBalance = data.data.users[0].token_balance;
-      const fromId = transaction.from_user_id;
-      return User.findOne({ ostUuid: fromId }).then(user => {
-        return socketMap[user._doc.ghUserId]
-          ? socketMap[user._doc.ghUserId].emit("connection", fromBalance)
-          : null;
-      });
     });
 
-  const toUserBalancePromise = ostService
-    .getUser({
+    const toUserBalancePromise = ostService.getUser({
       id: transaction.to_user_id
-    })
-    .then(({ data }) => {
-      const toBalance = data.data.users[0].token_balance;
-      const toId = transaction.from_user_id;
-      return User.findOne({ ostUuid: toId }).then(user => {
-        return socketMap[user._doc.ghUserId]
-          ? socketMap[user._doc.ghUserId].emit("connection", toBalance)
-          : null;
-      });
     });
 
-  // return Promise.all([fromUserBalancePromise, toUserBalancePromise], data => {
-  //   const fromBalance = data[0].token_balance;
-  //   const toBalance = data[1].token_balance;
+    return Promise.all([fromUserBalancePromise, toUserBalancePromise]).then(
+      data => {
+        const toBalance = data[0].data.data.users[0].token_balance;
+        const fromBalance = data[1].data.data.users[0].token_balance;
+        return User.findOne({ ostUuid: data[0].data.data.users[0].id })
+          .then(user => {
+            return socketMap[user._doc.ghUserId]
+              ? socketMap[user._doc.ghUserId].emit("connection", toBalance)
+              : null;
+          })
+          .then(() => {
+            return User.findOne({
+              ostUuid: data[1].data.data.users[0].id
+            }).then(user => {
+              return socketMap[user._doc.ghUserId]
+                ? socketMap[user._doc.ghUserId].emit("connection", fromBalance)
+                : null;
+            });
+          })
+          .then(() => {
+            return "sockets updated";
+          });
+      }
+    );
+  }
 
-  //   socketMap[transaction.from_user_id].socket.emit("connection", fromBalance);
-  //   socketMap[transaction.to_user_id].socket.emit("connection", toBalance);
-  // });
-
-  return fromUserBalancePromise.then(() => toUserBalancePromise);
-  // return Promise.resolve("HEY!");
-  // }
-
-  // return Promise.resolve();
+  return Promise.resolve();
 };
 
 const createTransaction = (req, res, next) => {

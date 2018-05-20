@@ -60,7 +60,6 @@ const getRequest = (endpoint, params) => {
     config.OST_API_BASE_PATH
   }${queryString}&signature=${signature}`;
 
-  console.log(url);
   return axios.get(url);
 };
 
@@ -69,9 +68,8 @@ const updateTransactionStatuses = () => {
     return;
   }
 
-  listTransactions({ uuids: Object.keys(monitoredTransactions) })
-    .then(({ data }) => {
-      console.log("timer fired");
+  listTransactions({ uuids: Object.keys(monitoredTransactions) }).then(
+    ({ data }) => {
       const promises = [];
       const transactions = data.data.transactions;
       if (!transactions.length) {
@@ -85,15 +83,11 @@ const updateTransactionStatuses = () => {
         }
       });
       return Promise.all(promises).then(data => {
-        // By this point you've run all your callbacks and got data
-        console.log("timer reset");
         statusCheckInterval = setTimeout(updateTransactionStatuses, 1000);
         return Promise.resolve();
       });
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    }
+  );
 };
 
 const monitorTransaction = (uuid, callback) => {
