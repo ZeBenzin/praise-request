@@ -1,0 +1,100 @@
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 11px 2px #d8dad9;
+  }
+
+  20% {
+    box-shadow: 0 0 11px 7px #9cdebf;
+  }
+
+  40%,
+  100% {
+    box-shadow: 0 0 11px 2px #d8dad9;
+  }
+}
+
+@keyframes count {
+  0% {
+    opacity: 0;
+    padding-bottom: 0;
+  }
+
+  50% {
+    opacity: 1;
+    padding-bottom: 30px;
+  }
+
+  100% {
+    padding-bottom: 30px;
+    opacity: 0;
+  }
+}
+
+.praiseActionContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: auto;
+}
+
+.praiseCount {
+  font-size: 12px;
+  padding-right: 10px;
+  opacity: 0;
+}
+
+.praiseCountVisible {
+  animation: count 1s linear;
+}
+
+.praiseButton {
+  outline: none;
+  display: flex;
+  text-align: center;
+  border-radius: 50%;
+  margin-left: 5px;
+  margin-right: 8px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 11px 2px #d8dad9;
+
+  & > svg {
+    font-size: 39px !important;
+    width: 0.5em;
+    height: 0.5em;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.praiseButtonHover {
+  &:hover {
+    animation: ripple linear 4s infinite;
+  }
+}
+
+.clicked {
+  background-color: #fff !important;
+  color: #fff !important;
+  border: 2px solid rgba(0, 0, 0, 0.1) !important;
+  border-left-color: #46bd85 !important;
+  animation: rotate 1s linear infinite;
+}
+
+.favoriteIcon {
+  margin: auto;
+}

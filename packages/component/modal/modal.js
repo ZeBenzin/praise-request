@@ -8,6 +8,10 @@ class Modal extends Component {
   componentDidMount() {
     this._parentElement = this._container.parentElement;
     document.querySelector("body").appendChild(this._container);
+    setTimeout(() => {
+      this._contentContainer.classList.add(styles.modalContainerVisible);
+      this._overlay.classList.add(styles.overlayVisible);
+    }, 0);
   }
 
   componentWillUnmount() {
@@ -17,14 +21,19 @@ class Modal extends Component {
   render() {
     return (
       <div className={styles.container} ref={r => (this._container = r)}>
-        <div className={styles.overlay} onClick={this.props.onClose} />
+        <div
+          className={styles.overlay}
+          onClick={this.props.onClose}
+          ref={r => (this._overlay = r)}
+        />
         <div
           className={classNames(
             styles.modalContainer,
             this.props.containerClassName
           )}
+          ref={r => (this._contentContainer = r)}
         >
-          <div>{this.props.content}</div>
+          <div className={styles.content}>{this.props.content}</div>
         </div>
       </div>
     );

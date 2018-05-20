@@ -79,6 +79,7 @@
 
 .prModal {
   width: 600px;
+  height: 787px;
 }
 
 .repoName {
@@ -102,47 +103,4 @@
 
 .rightSide {
   flex-grow: 1;
-}
-
-.praiseButtonContainer {
-  display: flex;
-  align-items: center;
-}
-
-.clicked {
-  background-color: #fff !important;
-  color: #fff !important;
-  border: 2px solid #bbb !important;
-  border-left-color: #46bd85 !important;
-  animation: rotate 1s linear infinite;
-}
-
-.praiseButton {
-  outline: none;
-  display: flex;
-  text-align: center;
-  width: 50px;
-  height: 50px;
-  border: 2px solid #46bd85;
-  border-radius: 50%;
-  font-size: 16px;
-  color: #46bd85;
-  transition: background-color 0.25s ease;
-
-  &:hover {
-    cursor: pointer;
-    background-color: #46bd85;
-    color: #fff;
-    // animation: pulse 3s infinite;
-  }
-}
-
-.favoriteIcon {
-  margin: auto;
-}
-
-.praiseCount {
-  font-size: 14px;
-  color: #bbb;
-  padding-right: 10px;
 }

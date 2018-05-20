@@ -6,8 +6,6 @@ import LoadingSpinner from "component/loading-spinner/loading-spinner";
 import Pagination from "component/pagination/pagination";
 import PRModal from "ui/components/pr-modal/pr-modal";
 
-import { getByRepoId } from "ui/api/pull-request";
-
 import classNames from "classnames";
 import styles from "./repo-list.scss";
 
@@ -34,19 +32,7 @@ class RepoList extends Component {
 
   onRepoClick(e, id) {
     const repo = this.props.repos.find(repo => repo.id === id);
-    getByRepoId(repo.name, repo.owner.login, {
-      state: this.state.prFilters.state
-    })
-      .then(({ data }) => {
-        this.setState({
-          selectedRepo: repo,
-          pullRequests: data,
-          modalOpen: true
-        });
-      })
-      .catch(err => {
-        // Do a toast or suttin
-      });
+    this.setState({ selectedRepo: repo, modalOpen: true });
   }
 
   render() {
