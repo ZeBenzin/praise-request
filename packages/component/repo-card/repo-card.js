@@ -20,17 +20,28 @@ class RepoCard extends PureComponent {
   onPraiseClick(e) {
     const elem = e.currentTarget;
     elem.classList.add(styles.clicked);
+    elem.classList.remove(styles.praiseButtonHover);
+    this._praiseCount.classList.remove(styles.praiseCountVisible);
 
-    if (this.props.isUserAuthenticated) {
-      executeTransaction(this.props.repo.owner)
-        .then(() => {
-          elem.classList.remove(styles.clicked);
-        })
-        .catch(err => console.log(err));
-    } else {
+    // if (this.props.isUserAuthenticated) {
+    // setTimeout(
+    //   executeTransaction(this.props.repo.owner)
+    //     .then(() => {
+    //       elem.classList.remove(styles.clicked);
+    //     })
+    //     .catch(err => console.log(err)),
+    //   3000
+    // );
+
+    setTimeout(() => {
       elem.classList.remove(styles.clicked);
-      this.props.displayFooter();
-    }
+      elem.classList.add(styles.praiseButtonHover);
+      this._praiseCount.classList.add(styles.praiseCountVisible);
+    }, 3000);
+    // } else {
+    //   elem.classList.remove(styles.clicked);
+    //   this.props.displayFooter();
+    // }
   }
 
   render() {
@@ -70,8 +81,18 @@ class RepoCard extends PureComponent {
         </div>
         <div className={styles.repoActions}>
           <div className={styles.repoActionContainer}>
+            <span
+              className={styles.praiseCount}
+              ref={r => (this._praiseCount = r)}
+            >
+              +1
+            </span>
             <button
-              className={classNames(styles.repoAction, styles.praiseButton)}
+              className={classNames(
+                styles.repoAction,
+                styles.praiseButton,
+                styles.praiseButtonHover
+              )}
               onClick={e => {
                 e.stopPropagation();
                 this.onPraiseClick(e);
