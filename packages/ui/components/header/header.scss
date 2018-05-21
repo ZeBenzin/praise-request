@@ -91,3 +91,20 @@ $header-height: 85px;
 .logoutButton {
   border-radius: 35px;
 }
+
+.praiseBalance {
+  font-size: 31px;
+  z-index: 3;
+  text-align: center;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+
+  & > span {
+    padding-left: 10px;
+  }
+
+  & > svg {
+    font-size: 32px;
+  }
+}

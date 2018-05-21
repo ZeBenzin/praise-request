@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 
 import openSocket from "socket.io-client";
 
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import SearchIcon from "@material-ui/icons/Search";
 import AuthenticationModal from "ui/components/authentication-modal/authentication-modal";
 import { withAuthentication } from "ui/higher-order-components/with-authentication";
@@ -60,7 +61,10 @@ class Header extends PureComponent {
         <div className={styles.headerContent}>
           <div className={styles.leftContent}>ALPHA v0.1.0</div>
           {this.props.isUserAuthenticated ? (
-            <div className={styles.praiseBalance}>{this.state.balance} </div>
+            <div className={styles.praiseBalance}>
+              <FavoriteBorderIcon />
+              <span>{this.state.balance}</span>
+            </div>
           ) : null}
           <div className={styles.rightContent}>
             {this.props.location.pathname !== "/search" ? (
