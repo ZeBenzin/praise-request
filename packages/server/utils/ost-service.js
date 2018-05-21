@@ -91,7 +91,7 @@ const updateTransactionStatuses = () => {
         }
       });
       return Promise.all(promises).then(data => {
-        statusCheckInterval = setTimeout(updateTransactionStatuses, 1000);
+        statusCheckInterval = setTimeout(updateTransactionStatuses, 100);
         return Promise.resolve();
       });
     }
@@ -103,7 +103,7 @@ const monitorTransaction = (uuid, callback) => {
     callback
   };
 
-  statusCheckInterval = setTimeout(updateTransactionStatuses, 1000);
+  statusCheckInterval = setTimeout(updateTransactionStatuses, 100);
 };
 
 const stopMonitoringTransaction = uuid => {
