@@ -1,5 +1,6 @@
 const axios = require("axios");
 const request = require("request");
+const logger = require("log4js").getLogger();
 
 const githubBasePath = "https://api.github.com";
 const customRequest = request.defaults({
@@ -17,7 +18,10 @@ const getByQuery = (req, res) => {
     req.query.per_page +
     "&page=" +
     req.query.page;
+  logger.level = "info";
+  logger.info(url);
   customRequest.get(url, (err, response) => {
+    logger.info(response.body);
     const pageParam = response.headers.link.match(
       /page=(\d+)>; rel="last"/g
     )[0];
@@ -29,7 +33,9 @@ const getByQuery = (req, res) => {
 
 const getById = (req, res) => {
   const url = githubBasePath + "/repositories/" + req.params.id;
+  logger.info(url);
   customRequest.get(url, (err, response) => {
+    logger.info(response.body);
     res.json({ data: JSON.parse(response.body) });
   });
 };
@@ -43,11 +49,13 @@ const getPullRequests = (req, res) => {
   const url = `${githubBasePath}/repos/${repoName}/${ownerName}/pulls?${convertedQueryParams.join(
     "&"
   )}`;
+  logger.info(url);
   axios
     .get(url, {
       headers: { "User-Agent": "PraiseRequest" }
     })
     .then(({ data }) => {
+      logger.info(data);
       res.status(200).json(data);
     })
     .catch(err => {
