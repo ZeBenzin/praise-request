@@ -1,7 +1,5 @@
 const axios = require("axios");
 const request = require("request");
-const logger = require("log4js").getLogger();
-logger.level = "info";
 
 const githubBasePath = "https://api.github.com";
 const customRequest = request.defaults({
@@ -19,9 +17,9 @@ const getByQuery = (req, res) => {
     req.query.per_page +
     "&page=" +
     req.query.page;
-  logger.info(url);
+  console.log("GET - ", url);
   customRequest.get(url, (err, response) => {
-    logger.info(response.body);
+    console.log("Response - ", response.body);
     const pageParam = response.headers.link.match(
       /page=(\d+)>; rel="last"/g
     )[0];
@@ -35,7 +33,7 @@ const getPopularRepos = (req, res) => {
   const url = `${githubBasePath}/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=${
     req.query.per_page
   }&page=${req.query.page}`;
-  logger.info(url);
+  console.log("GET - ", url);
   customRequest.get(url, (err, response) => {
     if (!response.headers.link) {
       // Rate limit potentially imposed
@@ -46,16 +44,16 @@ const getPopularRepos = (req, res) => {
     )[0];
     const totalPages = pageParam.match(/(\d+)/g)[0];
     const items = JSON.parse(response.body).items || [];
-    logger.info(response.body);
+    console.log("Response - ", response.body);
     res.json({ items, totalPages });
   });
 };
 
 const getById = (req, res) => {
   const url = githubBasePath + "/repositories/" + req.params.id;
-  logger.info(url);
+  console.log("GET - ", url);
   customRequest.get(url, (err, response) => {
-    logger.info(response.body);
+    console.log("Response - ", response.body);
     res.json({ data: JSON.parse(response.body) });
   });
 };
@@ -69,13 +67,13 @@ const getPullRequests = (req, res) => {
   const url = `${githubBasePath}/repos/${repoName}/${ownerName}/pulls?${convertedQueryParams.join(
     "&"
   )}`;
-  logger.info(url);
+  console.log("GET - ", url);
   axios
     .get(url, {
       headers: { "User-Agent": "PraiseRequest" }
     })
     .then(({ data }) => {
-      logger.info(data);
+      console.log("Response - ", data);
       res.status(200).json(data);
     })
     .catch(err => {

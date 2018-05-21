@@ -3,8 +3,6 @@ const queryString = require("query-string");
 const config = require("../config/config");
 const moment = require("moment");
 const axios = require("axios");
-const logger = require("log4js").getLogger();
-logger.level = "info";
 
 const monitoredTransactions = {};
 const COMPLETE = "complete";
@@ -51,9 +49,9 @@ const postRequest = (endpoint, params) => {
 
   axios.defaults.headers.post["Content-Type"] =
     "application/x-www-form-urlencoded";
-  logger.info(url, body);
+  console.log("POST - ", url, body);
   return axios.post(url, body).then(response => {
-    logger.info(response.data.data.data);
+    console.log("Response - ", response.data.data.data);
     return response;
   });
 };
@@ -66,9 +64,9 @@ const getRequest = (endpoint, params) => {
     config.OST_API_BASE_PATH
   }${queryString}&signature=${signature}`;
 
-  logger.info(url);
+  console.log("GET - ", url);
   return axios.get(url).then(response => {
-    logger.info(response.data.data.data);
+    console.log("Response - ", response.data.data.data);
     return response;
   });
 };
