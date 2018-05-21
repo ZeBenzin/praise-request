@@ -85,9 +85,11 @@ const updateTransactionStatuses = () => {
       }
       transactions.forEach(tx => {
         if (tx.status === COMPLETE || tx.status === FAILED) {
-          const cb = monitoredTransactions[tx.id].callback;
-          stopMonitoringTransaction(tx.id);
-          promises.push(cb(tx));
+          if (monitoredTransactions[tx.id]) {
+            const cb = monitoredTransactions[tx.id].callback;
+            stopMonitoringTransaction(tx.id);
+            promises.push(cb(tx));
+          }
         }
       });
       return Promise.all(promises).then(data => {
@@ -141,7 +143,7 @@ const executeTransaction = ({ to_user_id, from_user_id, action_id }) => {
 };
 
 const listTransactions = ({ uuids }) => {
-  return getRequest("/transactions", { id: uuids, limit: 100 });
+  return getRequest("/transactions", { id: uuids.join(","), limit: 100 });
 };
 
 module.exports = {
