@@ -51,7 +51,7 @@ const postRequest = (endpoint, params) => {
     "application/x-www-form-urlencoded";
   console.log("POST - ", url, body);
   return axios.post(url, body).then(response => {
-    console.log("Response - ", response.data.data.data);
+    console.log("Response - ", response.data.data);
     return response;
   });
 };
@@ -66,7 +66,7 @@ const getRequest = (endpoint, params) => {
 
   console.log("GET - ", url);
   return axios.get(url).then(response => {
-    console.log("Response - ", response.data.data.data);
+    console.log("Response - ", response.data.data);
     return response;
   });
 };
