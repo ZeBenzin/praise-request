@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import RepoList from "ui/components/repo-list/repo-list";
 
-import { searchRepos } from "ui/api/repo";
+import { fetchPopularRepos } from "ui/api/repo";
 
 import styles from "./home.scss";
 
@@ -51,7 +51,7 @@ class Home extends Component {
 
   executeSearch(pageNumber) {
     this.setState({ loading: true });
-    searchRepos("react", pageNumber)
+    fetchPopularRepos(pageNumber)
       .then(({ data }) => {
         if (this._isMounted) {
           this.setState({
