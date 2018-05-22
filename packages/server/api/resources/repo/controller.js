@@ -20,6 +20,13 @@ const getByQuery = (req, res) => {
   console.log("GET - ", url);
   customRequest.get(url, (err, response) => {
     console.log("Response - ", response.body);
+    if (!response.headers.link) {
+      // Rate limit potentially imposed
+      return res.json({
+        items: JSON.parse(response.body).items || [],
+        totalPages: 1
+      });
+    }
     const pageParam = response.headers.link.match(
       /page=(\d+)>; rel="last"/g
     )[0];
@@ -37,7 +44,7 @@ const getPopularRepos = (req, res) => {
   customRequest.get(url, (err, response) => {
     if (!response.headers.link) {
       // Rate limit potentially imposed
-      res.json({ items: [], totalPages: 1 });
+      return res.json({ items: [], totalPages: 1 });
     }
     const pageParam = response.headers.link.match(
       /page=(\d+)>; rel="last"/g
