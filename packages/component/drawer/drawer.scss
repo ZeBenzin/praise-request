@@ -4,6 +4,7 @@ $drawer-width: 340px;
   position: fixed;
   width: $drawer-width;
   height: 100%;
+  z-index: 2;
   background-color: #fff;
   transition: right 0.2s ease;
 }
