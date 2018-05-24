@@ -49,7 +49,11 @@ const postRequest = (endpoint, params) => {
 
   axios.defaults.headers.post["Content-Type"] =
     "application/x-www-form-urlencoded";
-  return axios.post(url, body);
+  console.log("POST - ", url, body);
+  return axios.post(url, body).then(response => {
+    console.log("Response - ", response.data.data);
+    return response;
+  });
 };
 
 const getRequest = (endpoint, params) => {
@@ -60,7 +64,11 @@ const getRequest = (endpoint, params) => {
     config.OST_API_BASE_PATH
   }${queryString}&signature=${signature}`;
 
-  return axios.get(url);
+  console.log("GET - ", url);
+  return axios.get(url).then(response => {
+    console.log("Response - ", response.data.data);
+    return response;
+  });
 };
 
 const updateTransactionStatuses = () => {

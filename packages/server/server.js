@@ -26,7 +26,7 @@ app.use(
     meta: true,
     msg: "HTTP {{req.method}} {{req.url}}",
     expressFormat: true,
-    colorize: false
+    colorize: true
   })
 );
 
