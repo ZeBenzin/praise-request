@@ -17,9 +17,7 @@ const getByQuery = (req, res) => {
     req.query.per_page +
     "&page=" +
     req.query.page;
-  console.log("GET - ", url);
   customRequest.get(url, (err, response) => {
-    console.log("Response - ", response.body);
     if (!response.headers.link) {
       // Rate limit potentially imposed
       return res.json({
@@ -40,7 +38,6 @@ const getPopularRepos = (req, res) => {
   const url = `${githubBasePath}/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=${
     req.query.per_page
   }&page=${req.query.page}`;
-  console.log("GET - ", url);
   customRequest.get(url, (err, response) => {
     if (!response.headers.link) {
       // Rate limit potentially imposed
@@ -51,16 +48,13 @@ const getPopularRepos = (req, res) => {
     )[0];
     const totalPages = pageParam.match(/(\d+)/g)[0];
     const items = JSON.parse(response.body).items || [];
-    console.log("Response - ", response.body);
     res.json({ items, totalPages });
   });
 };
 
 const getById = (req, res) => {
   const url = githubBasePath + "/repositories/" + req.params.id;
-  console.log("GET - ", url);
   customRequest.get(url, (err, response) => {
-    console.log("Response - ", response.body);
     res.json({ data: JSON.parse(response.body) });
   });
 };
@@ -74,13 +68,11 @@ const getPullRequests = (req, res) => {
   const url = `${githubBasePath}/repos/${repoName}/${ownerName}/pulls?${convertedQueryParams.join(
     "&"
   )}`;
-  console.log("GET - ", url);
   axios
     .get(url, {
       headers: { "User-Agent": "PraiseRequest" }
     })
     .then(({ data }) => {
-      console.log("Response - ", data);
       res.status(200).json(data);
     })
     .catch(err => {
