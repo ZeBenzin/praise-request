@@ -8,6 +8,10 @@ export const searchRepos = (queryString, pageNumber = 1) => {
   );
 };
 
+export const fetchPopularRepos = (pageNumber = 1) => {
+  return axios.get(`${BASE_PATH}/repo/popular?per_page=9&page=${pageNumber}`);
+};
+
 export const getRepoById = id => {
   return axios.get(`${BASE_PATH}/repo/${id}`);
 };

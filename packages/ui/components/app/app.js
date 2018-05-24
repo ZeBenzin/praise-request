@@ -237,15 +237,11 @@ class App extends Component {
       <div className={styles.activityDrawerContent}>
         <div className={styles.balanceContainer}>
           <div className={styles.balance}>
-            <span className={styles.balanceAmount}>
-              1500<sup className={styles.currencyTicker}>pr</sup>
-            </span>
+            <span className={styles.balanceAmount}>Example Drawer</span>
           </div>
         </div>
         <div className={styles.activity}>
-          {activityItems.map((item, index) => {
-            return this.renderActivityItem(item, index);
-          })}
+          <span>Activity Timeline (under development)</span>
         </div>
       </div>
     );

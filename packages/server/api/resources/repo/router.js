@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.param("id", controller.getById);
 router.route("/").get(controller.getByQuery);
+router.route("/popular").get(controller.getPopularRepos);
 router.route("/:id").get(controller.getById);
 router.route("/:ownerName/:repoName/pulls").get(controller.getPullRequests);
 

@@ -49,7 +49,11 @@ const postRequest = (endpoint, params) => {
 
   axios.defaults.headers.post["Content-Type"] =
     "application/x-www-form-urlencoded";
-  return axios.post(url, body);
+  console.log("POST - ", url, body);
+  return axios.post(url, body).then(response => {
+    console.log("Response - ", response.data.data);
+    return response;
+  });
 };
 
 const getRequest = (endpoint, params) => {
@@ -60,7 +64,11 @@ const getRequest = (endpoint, params) => {
     config.OST_API_BASE_PATH
   }${queryString}&signature=${signature}`;
 
-  return axios.get(url);
+  console.log("GET - ", url);
+  return axios.get(url).then(response => {
+    console.log("Response - ", response.data.data);
+    return response;
+  });
 };
 
 const updateTransactionStatuses = () => {
@@ -77,9 +85,11 @@ const updateTransactionStatuses = () => {
       }
       transactions.forEach(tx => {
         if (tx.status === COMPLETE || tx.status === FAILED) {
-          const cb = monitoredTransactions[tx.id].callback;
-          stopMonitoringTransaction(tx.id);
-          promises.push(cb(tx));
+          if (monitoredTransactions[tx.id]) {
+            const cb = monitoredTransactions[tx.id].callback;
+            stopMonitoringTransaction(tx.id);
+            promises.push(cb(tx));
+          }
         }
       });
       return Promise.all(promises).then(data => {
@@ -133,7 +143,7 @@ const executeTransaction = ({ to_user_id, from_user_id, action_id }) => {
 };
 
 const listTransactions = ({ uuids }) => {
-  return getRequest("/transactions", { id: uuids, limit: 100 });
+  return getRequest("/transactions", { id: uuids.join(","), limit: 100 });
 };
 
 module.exports = {
