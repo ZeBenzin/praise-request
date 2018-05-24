@@ -34,7 +34,11 @@ const createTransaction = (req, res, next) => {
   const toAccount = User.findOne({ ghUserId: toUser.ghUserId }).then(
     account => {
       if (!account) {
-        const url = `${config.GITHUB_API_BASE_PATH}/user/${toUser.ghUserId}`;
+        const url = `${config.GITHUB_API_BASE_PATH}/user/${
+          toUser.ghUserId
+        }?client_id=${config.GITHUB_CLIENT_ID}&client_secret=${
+          config.GITHUB_CLIENT_SECRET
+        }`;
         return axios.get(url).then(data => {
           if (data.data) {
             return userController.createUser(toUser);

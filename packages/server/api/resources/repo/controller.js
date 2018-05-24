@@ -1,5 +1,6 @@
 const axios = require("axios");
 const request = require("request");
+const config = require("../../../config/config");
 
 const githubBasePath = "https://api.github.com";
 const customRequest = request.defaults({
@@ -9,14 +10,11 @@ const customRequest = request.defaults({
 });
 
 const getByQuery = (req, res) => {
-  const url =
-    githubBasePath +
-    "/search/repositories?q=" +
-    req.query.q +
-    "&per_page=" +
-    req.query.per_page +
-    "&page=" +
-    req.query.page;
+  const url = `${githubBasePath}/search/repositories?q=${
+    req.query.q
+  }&per_page=${req.query.per_page}&page=${req.query.page}&client_id=${
+    config.GITHUB_CLIENT_ID
+  }&client_secret=${config.GITHUB_CLIENT_SECRET}`;
   customRequest.get(url, (err, response) => {
     if (!response.headers.link) {
       // Rate limit potentially imposed
@@ -25,9 +23,7 @@ const getByQuery = (req, res) => {
         totalPages: 1
       });
     }
-    const pageParam = response.headers.link.match(
-      /page=(\d+)>; rel="last"/g
-    )[0];
+    const pageParam = response.headers.link.match(/page=(\d+)&client_id/g)[1];
     const totalPages = pageParam.match(/(\d+)/g)[0];
     const items = JSON.parse(response.body).items || [];
     res.json({ items, totalPages });
@@ -37,15 +33,15 @@ const getByQuery = (req, res) => {
 const getPopularRepos = (req, res) => {
   const url = `${githubBasePath}/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=${
     req.query.per_page
-  }&page=${req.query.page}`;
+  }&page=${req.query.page}&client_id=${config.GITHUB_CLIENT_ID}&client_secret=${
+    config.GITHUB_CLIENT_SECRET
+  }`;
   customRequest.get(url, (err, response) => {
     if (!response.headers.link) {
       // Rate limit potentially imposed
       return res.json({ items: [], totalPages: 1 });
     }
-    const pageParam = response.headers.link.match(
-      /page=(\d+)>; rel="last"/g
-    )[0];
+    const pageParam = response.headers.link.match(/page=(\d+)&client_id/g)[1];
     const totalPages = pageParam.match(/(\d+)/g)[0];
     const items = JSON.parse(response.body).items || [];
     res.json({ items, totalPages });
@@ -53,7 +49,9 @@ const getPopularRepos = (req, res) => {
 };
 
 const getById = (req, res) => {
-  const url = githubBasePath + "/repositories/" + req.params.id;
+  const url = `githubBasePath/repositories/${req.params.id}?client_id=${
+    config.GITHUB_CLIENT_ID
+  }&client_secret=${config.GITHUB_CLIENT_SECRET}`;
   customRequest.get(url, (err, response) => {
     res.json({ data: JSON.parse(response.body) });
   });
@@ -67,7 +65,9 @@ const getPullRequests = (req, res) => {
   );
   const url = `${githubBasePath}/repos/${repoName}/${ownerName}/pulls?${convertedQueryParams.join(
     "&"
-  )}`;
+  )}&client_id=${config.GITHUB_CLIENT_ID}&client_secret=${
+    config.GITHUB_CLIENT_SECRET
+  }`;
   axios
     .get(url, {
       headers: { "User-Agent": "PraiseRequest" }
