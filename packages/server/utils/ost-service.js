@@ -105,7 +105,7 @@ const monitorTransaction = (uuid, callback) => {
     callback
   };
 
-  statusCheckInterval = setTimeout(updateTransactionStatuses, 100);
+  statusCheckInterval = setTimeout(updateTransactionStatuses, 1000);
 };
 
 const stopMonitoringTransaction = uuid => {
