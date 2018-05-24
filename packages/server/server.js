@@ -5,6 +5,8 @@ const transactionRouter = require("./api/resources/transaction/router");
 const authController = require("./api/auth");
 const connect = require("./db");
 const bodyParser = require("body-parser");
+const winston = require("winston");
+const expressWinston = require("express-winston");
 
 const app = express();
 
@@ -12,6 +14,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 connect();
+
+app.use(
+  expressWinston.logger({
+    transports: [
+      new winston.transports.Console({
+        json: true,
+        colorize: true
+      })
+    ],
+    meta: true,
+    msg: "HTTP {{req.method}} {{req.url}}",
+    expressFormat: true,
+    colorize: false
+  })
+);
 
 app.use("/praise/repo", repoRouter);
 app.use("/praise/user", userRouter);
