@@ -74,4 +74,8 @@ const createTransaction = (req, res, next) => {
     });
 };
 
-module.exports = { createTransaction };
+const getTransactions = (req, res) => {
+  return ostService.getUserTransactions({ user_id: req.user_id });
+};
+
+module.exports = { createTransaction, getTransactions };

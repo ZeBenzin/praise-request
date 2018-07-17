@@ -223,16 +223,6 @@ class App extends Component {
   }
 
   renderDrawerContent() {
-    const activityItems = [
-      { date: "JAN 01", description: "You sent a thing to a thing" },
-      { date: "JAN 01", description: "You sent a thing to a thing" },
-      { date: "JAN 01", description: "You sent a thing to a thing" },
-      { date: "JAN 01", description: "You sent a thing to a thing" },
-      { date: "JAN 01", description: "You sent a thing to a thing" },
-      { date: "JAN 01", description: "You sent a thing to a thing" },
-      { date: "JAN 01", description: "You sent a thing to a thing" },
-      { date: "JAN 01", description: "You sent a thing to a thing" }
-    ];
     return (
       <div className={styles.activityDrawerContent}>
         <div className={styles.balanceContainer}>
