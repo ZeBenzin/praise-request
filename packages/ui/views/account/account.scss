@@ -1,8 +1,15 @@
 .accountView {
   display: flex;
+  height: 100%;
 }
 
 .leftHandSide {
   display: flex;
+  flex: 1;
   flex-direction: column;
+  height: 100%;
+}
+
+.rightHandSide {
+  flex: 1;
 }

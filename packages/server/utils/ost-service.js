@@ -147,7 +147,7 @@ const listTransactions = ({ uuids }) => {
 };
 
 const getLedger = ({ user_id }) => {
-  return getRequest(`/ledger/${user_id}`);
+  return getRequest(`/ledger/${user_id}`, { limit: 50 });
 };
 
 module.exports = {

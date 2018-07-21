@@ -1,5 +1,34 @@
 .panelContainer {
   height: 100%;
   flex: 1;
-  background-color: green;
+  flex-direction: column;
+}
+
+.timelineContainer {
+  height: 300px;
+}
+
+.transactionList {
+  height: calc(100vh - 86px - 300px);
+  overflow-y: scroll;
+  padding: 0 35px;
+}
+
+.transactionCard {
+  height: 65px;
+  margin-bottom: 25px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.transactionCardTop {
+  display: flex;
+  justify-content: space-between;
 }
