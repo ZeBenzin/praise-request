@@ -1,24 +1,18 @@
 import React, { Component } from "react";
 
-import { getTransactions } from "ui/api/ledger";
+import TransactionPanel from "ui/components/transaction-panel/transaction-panel";
+// import BalancePanel from "ui/components/balance-panel/balance-panel";
 
 import styles from "./account.scss";
 
 class Account extends Component {
-  componentDidMount() {
-    getTransactions().then(data => {
-      console.log(data);
-    });
-  }
-
   render() {
     return (
       <div className={styles.accountView}>
         <div className={styles.leftHandSide}>
-          <div className={styles.timelineContainer} />
-          <div className={styles.transactionList} />
+          <TransactionPanel />
         </div>
-        <div className={styles.rightHandSide} />
+        <div className={styles.rightHandSide}>{/* <BalancePanel /> */}</div>
       </div>
     );
   }
