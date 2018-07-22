@@ -41,27 +41,33 @@ class TransactionPanel extends Component {
       if (previousTx) {
         balance = balance + parseInt(previousTx.amount, 10);
       }
-      return { name: moment(tx.timestamp).format("DD MMM"), value: balance };
+      return {
+        name: tx.timestamp,
+        value: balance
+      };
     });
-    return sortBy(graphData, data => data.name);
+    const sortedData = sortBy(graphData, data => data.name);
+    return sortedData.map(d => ({
+      name: moment(d.name).format("hh mm DD MMM YYYY"),
+      value: d.value
+    }));
   }
 
   render() {
     return (
       <div className={styles.panelContainer}>
         <div className={styles.timelineContainer}>
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height={200}>
             <LineChart data={this.computeLineChartData()}>
-              <XAxis dataKey="name" />
-              <YAxis />
               <Tooltip />
-              <CartesianGrid strokeDasharray="3 3" />
+
               <Line
                 type="monotone"
                 strokeWidth={3}
                 dataKey="value"
                 dot={false}
               />
+              <XAxis dataKey="name" />
             </LineChart>
           </ResponsiveContainer>
         </div>
