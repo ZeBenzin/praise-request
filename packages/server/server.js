@@ -3,6 +3,7 @@ const repoRouter = require("./api/resources/repo/router");
 const userRouter = require("./api/resources/user/router");
 const transactionRouter = require("./api/resources/transaction/router");
 const ledgerRouter = require("./api/resources/ledger/router");
+const balanceRouter = require("./api/resources/balance/router");
 const authController = require("./api/auth");
 const connect = require("./db");
 const bodyParser = require("body-parser");
@@ -35,6 +36,7 @@ app.use("/praise/repo", repoRouter);
 app.use("/praise/user", userRouter);
 app.use("/praise/transaction", transactionRouter);
 app.use("/praise/ledger", ledgerRouter);
+app.use("/praise/balance", balanceRouter);
 app.use(
   "/praise/session",
   authController.decodeToken,
