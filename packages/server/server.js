@@ -42,7 +42,7 @@ app.use(
   authController.decodeToken,
   authController.checkUser,
   (req, res) => {
-    res.status(200).send("Session is valid");
+    res.status(200).send(req.user);
   }
 );
 app.use("/praise/signin", authController.verifyUser, authController.signin);

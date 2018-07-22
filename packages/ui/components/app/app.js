@@ -43,7 +43,8 @@ class App extends Component {
       footerVisible: false,
       isUserAuthenticated: false,
       checkingUserAuthenticationStatus: true,
-      isSearchVisible: false
+      isSearchVisible: false,
+      userData: {}
     };
 
     this.hideFooter = this.hideFooter.bind(this);
@@ -57,7 +58,8 @@ class App extends Component {
         .then(data => {
           this.setState({
             isUserAuthenticated: data.status === 200,
-            checkingUserAuthenticationStatus: false
+            checkingUserAuthenticationStatus: false,
+            userData: data.data
           });
         })
         .catch(() => {
@@ -191,6 +193,7 @@ class App extends Component {
           <View
             isUserAuthenticated={this.state.isUserAuthenticated}
             displayFooter={this.displayFooter}
+            userData={this.state.userData}
           />
         )}
       />

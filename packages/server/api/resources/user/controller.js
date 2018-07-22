@@ -52,7 +52,14 @@ const getGitHubToken = (req, res) => {
     })
     .then(user => {
       const token = jwt.sign(
-        { id: user._doc.ghUserId, ostId: user._doc.ostUuid },
+        Object.assign(
+          {},
+          {
+            id: user._doc.ghUserId,
+            ostId: user._doc.ostUuid
+          },
+          user._doc
+        ),
         config.JWT_SECRET,
         {
           expiresIn: "12h"
