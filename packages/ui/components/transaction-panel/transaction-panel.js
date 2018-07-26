@@ -32,7 +32,7 @@ class TransactionPanel extends Component {
             return (
               <div className={styles.txPoint}>
                 <div className={styles.txDetails}>
-                  <div className={styles.txDetailsContent} />
+                  <div className={styles.txDetailsContent}>{tx.to_user_id}</div>
                   <div className={styles.arrow} />
                 </div>
 
