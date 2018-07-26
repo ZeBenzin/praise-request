@@ -1,0 +1,34 @@
+.activityDrawerContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.balanceContainer {
+  height: 250px;
+  display: flex;
+  border-bottom: 1px solid #f3f3f3;
+}
+
+.balance {
+  margin: auto;
+  width: 188px;
+  height: 188px;
+  border-radius: 50%;
+  color: #46bd85;
+  display: flex;
+}
+
+.balanceAmount {
+  margin: auto;
+  font-size: 75px;
+}
+
+.currencyTicker {
+  font-size: 23px;
+}
+
+.activity {
+  flex-grow: 1;
+  padding: 15px 23px;
+}

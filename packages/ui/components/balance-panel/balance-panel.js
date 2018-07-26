@@ -55,10 +55,11 @@ class BalancePanel extends Component {
     return (
       <div className={styles.balanceDetailsContainer}>
         <PersonIcon className={styles.personIcon} />
-        <div>{this.props.userData.ghUserName}</div>
-        <div>{this.props.userBalance} PRAISE</div>
+        <div className={styles.userInfo}>
+          {this.props.userData.ghUserName} • {this.props.userBalance}
+        </div>
         <div className={styles.timelineContainer}>
-          <ResponsiveContainer width={"100%"} height={200} margin="auto">
+          <ResponsiveContainer width={"100%"} height={100} margin="auto">
             <LineChart data={this.computeLineChartData()}>
               <Tooltip />
 

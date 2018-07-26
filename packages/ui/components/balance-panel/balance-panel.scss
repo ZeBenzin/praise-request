@@ -4,15 +4,21 @@
   width: 100%;
   align-items: center;
   margin: auto;
-  font-size: 36px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 22px;
+  font-weight: 600;
+  padding: 15px 0;
 }
 
 .personIcon {
-  font-size: 90px !important;
+  font-size: 60px !important;
+}
+
+.userInfo {
+  padding-bottom: 10px;
 }
 
 .timelineContainer {
-  height: 300px;
   width: 65%;
   display: flex;
   align-items: center;

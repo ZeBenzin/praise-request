@@ -5,9 +5,11 @@ import TransactionPanel from "ui/components/transaction-panel/transaction-panel"
 import { getUserBalance } from "ui/api/balance";
 import BalancePanel from "ui/components/balance-panel/balance-panel";
 
-import styles from "./account.scss";
+import Drawer from "component/drawer/drawer";
 
-class Account extends Component {
+import styles from "./ledger-drawer.scss";
+
+class LedgerWallet extends Component {
   constructor(props) {
     super(props);
 
@@ -24,28 +26,34 @@ class Account extends Component {
     });
   }
 
-  render() {
+  renderDrawerContent() {
     return (
       <div className={styles.accountView}>
-        <div className={styles.leftHandSide}>
-          <TransactionPanel
-            userBalance={this.state.userBalance}
-            userData={this.props.userData}
-          />
-        </div>
-        <div className={styles.rightHandSide}>
-          <BalancePanel
-            userBalance={parseInt(this.state.userBalance, 10)}
-            userData={this.props.userData}
-          />
-        </div>
+        <BalancePanel
+          userBalance={parseInt(this.state.userBalance, 10)}
+          userData={this.props.userData}
+        />
+
+        <TransactionPanel
+          userBalance={this.state.userBalance}
+          userData={this.props.userData}
+        />
       </div>
+    );
+  }
+
+  render() {
+    return (
+      <Drawer
+        isVisible={this.props.isVisible}
+        drawerContent={this.renderDrawerContent()}
+      />
     );
   }
 }
 
-Account.propTypes = {
-  userData: PropTypes.object
+LedgerWallet.propTypes = {
+  isVisible: PropTypes.bool
 };
 
-export default Account;
+export default LedgerWallet;
