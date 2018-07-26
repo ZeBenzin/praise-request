@@ -18,7 +18,6 @@ class Account extends Component {
 
   componentDidMount() {
     getUserBalance().then(({ data }) => {
-      console.log(data.data.balance);
       this.setState(() => ({
         userBalance: parseInt(data.data.balance.available_balance, 10)
       }));
