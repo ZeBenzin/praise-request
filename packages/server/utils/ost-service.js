@@ -146,9 +146,19 @@ const listTransactions = ({ uuids }) => {
   return getRequest("/transactions", { id: uuids.join(","), limit: 100 });
 };
 
+const getLedger = ({ user_id }) => {
+  return getRequest(`/ledger/${user_id}`, { limit: 50 });
+};
+
+const getBalance = ({ user_id }) => {
+  return getRequest(`/balances/${user_id}`);
+};
+
 module.exports = {
   createUser,
   getUser,
+  getLedger,
+  getBalance,
   executeTransaction,
   monitorTransaction,
   stopMonitoringTransaction
