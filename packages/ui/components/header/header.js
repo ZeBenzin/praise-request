@@ -22,7 +22,7 @@ class Header extends PureComponent {
   constructor(props) {
     super(props);
     socket.on("balance", balance => {
-      this.setState({ balance });
+      this.setState({ balance: parseInt(balance, 10) });
     });
 
     this.state = {

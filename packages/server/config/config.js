@@ -9,7 +9,7 @@ const config = {
   OST_API_SECRET: process.env.OST_API_SECRET,
   GITHUB_BASE_PATH: "https://github.com",
   GITHUB_API_BASE_PATH: "https://api.github.com",
-  OST_API_BASE_PATH: "https://sandboxapi.ost.com/v1"
+  OST_API_BASE_PATH: "https://sandboxapi.ost.com/v1.1"
 };
 
 module.exports = config;

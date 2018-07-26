@@ -2,6 +2,8 @@ const express = require("express");
 const repoRouter = require("./api/resources/repo/router");
 const userRouter = require("./api/resources/user/router");
 const transactionRouter = require("./api/resources/transaction/router");
+const ledgerRouter = require("./api/resources/ledger/router");
+const balanceRouter = require("./api/resources/balance/router");
 const authController = require("./api/auth");
 const connect = require("./db");
 const bodyParser = require("body-parser");
@@ -33,12 +35,14 @@ app.use(
 app.use("/praise/repo", repoRouter);
 app.use("/praise/user", userRouter);
 app.use("/praise/transaction", transactionRouter);
+app.use("/praise/ledger", ledgerRouter);
+app.use("/praise/balance", balanceRouter);
 app.use(
   "/praise/session",
   authController.decodeToken,
   authController.checkUser,
   (req, res) => {
-    res.status(200).send("Session is valid");
+    res.status(200).send(req.user);
   }
 );
 app.use("/praise/signin", authController.verifyUser, authController.signin);

@@ -1,6 +1,16 @@
-.placeholderLabel {
-  font-size: 72px;
-  font-weight: 900;
-  color: #e0e0e0;
-  padding: 0px 85px;
+.accountView {
+  display: flex;
+  height: 100%;
+}
+
+.leftHandSide {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: 100%;
+}
+
+.rightHandSide {
+  display: flex;
+  flex: 1;
 }

@@ -9,12 +9,7 @@ router
   .get(
     authController.decodeToken,
     authController.checkUser,
-    controller.getTransactions
-  )
-  .post(
-    authController.decodeToken,
-    authController.checkUser,
-    controller.createTransaction
+    controller.getLedger
   );
 
 module.exports = router;
