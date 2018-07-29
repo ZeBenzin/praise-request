@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import moment from "moment";
+import Done from "@material-ui/icons/Done";
 
 import { getTransactions } from "ui/api/ledger";
 
@@ -29,9 +30,16 @@ class TransactionPanel extends Component {
       <div className={styles.transactionList}>
         {this.state.transactions.map(tx => {
           return (
-            <div className={styles.txPoint}>
+            <div className={styles.txPoint} key={tx.id}>
               <div className={styles.txDetails}>
-                <div className={styles.txDetailsContent} />
+                <div className={styles.txDetailsContent}>
+                  <div className={styles.txStatus}>
+                    <div className={styles.txStatusIcon}>
+                      <Done className={styles.doneIcon} />
+                    </div>
+                    <span>+{tx.amount}</span>
+                  </div>
+                </div>
                 <div className={styles.arrow} />
               </div>
 
@@ -46,18 +54,6 @@ class TransactionPanel extends Component {
               </div>
             </div>
           );
-          // return (
-          //   <div key={tx.id} className={styles.transactionCard}>
-          //     <div className={styles.transactionCardTop}>
-          //       <span>{tx.to_user_id}</span>
-          //       <span>
-          //         {tx.to_user_id === this.props.userData.ostUuid ? "+" : "-"}
-          //         {tx.amount}
-          //       </span>
-          //     </div>
-          //     <div>{moment(tx.timestamp).format("DD MMM YYYY")}</div>
-          //   </div>
-          // );
         })}
       </div>
     );
