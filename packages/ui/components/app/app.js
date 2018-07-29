@@ -17,7 +17,6 @@ import LedgerDrawer from "ui/components/ledger-drawer/ledger-drawer";
 
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
-import PersonIcon from "@material-ui/icons/Person";
 import ActivityIcon from "@material-ui/icons/History";
 import StatisticIcon from "@material-ui/icons/ShowChart";
 import AboutIcon from "@material-ui/icons/Info";

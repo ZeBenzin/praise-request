@@ -7,7 +7,6 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   font-size: 22px;
   font-weight: 600;
-  padding: 15px 0;
 }
 
 .personIcon {
@@ -22,4 +21,12 @@
   width: 65%;
   display: flex;
   align-items: center;
+}
+
+.timelineTooltip {
+  width: 100px;
+  height: 20px;
+  border-radius: 3px;
+  box-shadow: 0 0 4px 2px rgba(236, 236, 236, 0.8);
+  background-color: #fff;
 }

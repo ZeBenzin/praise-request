@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import { LineChart, Line, XAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer } from "recharts";
 import moment from "moment";
 import sortBy from "lodash/sortBy";
 
@@ -46,7 +46,7 @@ class BalancePanel extends Component {
     });
     const sortedData = sortBy(graphData, data => data.name);
     return sortedData.map(d => ({
-      name: moment(d.name).format("hh mm DD MMM YYYY"),
+      name: d.name,
       value: d.value
     }));
   }
@@ -60,16 +60,40 @@ class BalancePanel extends Component {
         </div>
         <div className={styles.timelineContainer}>
           <ResponsiveContainer width={"100%"} height={100} margin="auto">
-            <LineChart data={this.computeLineChartData()}>
-              <Tooltip />
-
-              <Line
+            <AreaChart data={this.computeLineChartData()}>
+              <defs>
+                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#467ebd" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#467ebd" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <Tooltip
+                wrapperStyle={{
+                  top: "-40px",
+                  fontSize: "11px",
+                  textAlign: "center"
+                }}
+                content={(v, i, l) => {
+                  return v.active ? (
+                    <div className={styles.timelineTooltip}>
+                      <span>
+                        {moment(v.payload[0].payload.name).format("DD MMM")}
+                      </span>{" "}
+                      |
+                      <span> {v.payload[0].payload.value}</span>
+                    </div>
+                  ) : null;
+                }}
+              />
+              <XAxis dataKey="name" hide />
+              <Area
                 type="monotone"
                 strokeWidth={3}
                 dataKey="value"
                 dot={false}
+                fill="url(#colorUv)"
               />
-            </LineChart>
+            </AreaChart>
           </ResponsiveContainer>
         </div>
       </div>
