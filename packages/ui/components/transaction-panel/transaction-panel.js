@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 import moment from "moment";
 import Done from "@material-ui/icons/Done";
+import PersonIcon from "@material-ui/icons/Person";
+import AccountBalance from "@material-ui/icons/AccountBalance";
 
 import { getTransactions } from "ui/api/ledger";
 
@@ -33,19 +35,24 @@ class TransactionPanel extends Component {
             <div className={styles.txPoint} key={tx.id}>
               <div className={styles.txDetails}>
                 <div className={styles.txDetailsContent}>
-                  <div className={styles.txStatus}>
-                    <div className={styles.txStatusIcon}>
-                      <Done className={styles.doneIcon} />
-                    </div>
-                    <span>+{tx.amount}</span>
+                  <PersonIcon className={styles.icon} />
+                  <div className={styles.txConnection}>
+                    <span className={styles.txAmount}>
+                      {this.props.userData.ostId === tx.to_user_id ? "+" : "-"}
+                      {tx.amount}
+                    </span>
+                    <div className={styles.txConnectionLine} />
                   </div>
+                  <AccountBalance className={styles.icon} />
                 </div>
                 <div className={styles.arrow} />
               </div>
-
               <div className={styles.txTimeline}>
                 <div className={styles.txLine} />
-                <div className={styles.txCircle} />
+                {/* <div className={styles.txCircle} /> */}
+                <div className={styles.txStatusIcon}>
+                  <Done className={styles.doneIcon} />
+                </div>
                 <div className={styles.txLine} />
               </div>
 
