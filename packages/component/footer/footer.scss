@@ -5,6 +5,7 @@ $footer-height: 150px;
   width: 100%;
   height: $footer-height;
   background-color: #313131;
+  visibility: hidden;
   transition: bottom 0.2s ease;
   display: flex;
   flex-direction: column;
@@ -18,6 +19,7 @@ $footer-height: 150px;
 
 .footerVisible {
   bottom: 0;
+  visibility: visible;
   box-shadow: -4px 0px 3px 0px #eaeaea;
 }
 
