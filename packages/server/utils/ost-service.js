@@ -146,8 +146,8 @@ const listTransactions = ({ uuids }) => {
   return getRequest("/transactions", { id: uuids.join(","), limit: 100 });
 };
 
-const getLedger = ({ user_id }) => {
-  return getRequest(`/ledger/${user_id}`, { limit: 50 });
+const getLedger = ({ user_id, page_no }) => {
+  return getRequest(`/ledger/${user_id}`, { limit: 50, page_no });
 };
 
 const getBalance = ({ user_id }) => {
