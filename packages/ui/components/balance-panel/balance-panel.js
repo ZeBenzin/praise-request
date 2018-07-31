@@ -14,31 +14,13 @@ import sortBy from "lodash/sortBy";
 
 import PersonIcon from "@material-ui/icons/PersonOutline";
 
-import { getTransactions } from "ui/api/ledger";
-
 import styles from "./balance-panel.scss";
 
 class BalancePanel extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      transactions: []
-    };
-  }
-
-  componentDidMount() {
-    getTransactions().then(({ data }) => {
-      this.setState(() => ({
-        transactions: data.data.transactions
-      }));
-    });
-  }
-
   computeLineChartData() {
     let balance = this.props.userBalance;
-    const graphData = this.state.transactions.map((tx, index) => {
-      const previousTx = this.state.transactions[index - 1];
+    const graphData = this.props.transactions.map((tx, index) => {
+      const previousTx = this.props.transactions[index - 1];
       if (previousTx) {
         if (previousTx.to_user_id === this.props.userData.ostUuid) {
           balance = balance - parseInt(previousTx.amount, 10);
@@ -111,7 +93,14 @@ class BalancePanel extends Component {
 
 BalancePanel.propTypes = {
   userBalance: PropTypes.number,
-  userData: PropTypes.object
+  userData: PropTypes.object,
+  transactions: PropTypes.arrayOf(PropTypes.object)
+};
+
+BalancePanel.defaultProps = {
+  userBalance: 0,
+  userData: {},
+  transactions: []
 };
 
 export default BalancePanel;

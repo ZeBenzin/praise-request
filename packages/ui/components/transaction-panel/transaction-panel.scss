@@ -40,27 +40,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  &:nth-child(even) {
-    flex-direction: row-reverse;
-
-    & .txCreatedDate {
-      text-align: right;
-    }
-
-    & .txDetails {
-      flex-direction: row-reverse;
-    }
-
-    & .arrow {
-      width: 0;
-      height: 0;
-      border-top: 10px solid transparent;
-      border-bottom: 10px solid transparent;
-      border-left: 10px solid transparent;
-      border-right: 10px solid #f3f3f3;
-    }
-  }
 }
 
 .txLine {
