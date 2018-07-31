@@ -12,14 +12,15 @@
 }
 
 .transactionList {
-  height: calc(100vh - 86px);
+  height: calc(100vh - 86px - 203px);
   overflow-y: scroll;
+  padding: 0 20px;
 }
 
 .transactionCard {
   height: 65px;
   margin-bottom: 25px;
-  background-color: #fff;
+  background-color: #f3f3f3;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -57,15 +58,15 @@
       border-top: 10px solid transparent;
       border-bottom: 10px solid transparent;
       border-left: 10px solid transparent;
-      border-right: 10px solid #fff;
+      border-right: 10px solid #f3f3f3;
     }
   }
 }
 
 .txLine {
-  height: 30px;
+  height: 25px;
   width: 3px;
-  background-color: grey;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .txDate {
@@ -83,9 +84,11 @@
 
 .txCircle {
   border-radius: 50%;
-  border: 3px solid #626262;
-  height: 17px;
-  width: 17px;
+  border: 3px solid rgba(0, 0, 0, 0.08);
+  height: 10px;
+  width: 10px;
+  margin: 3px 0;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .txDetails {
@@ -100,16 +103,67 @@
   height: 0;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  border-left: 10px solid #fff;
+  border-left: 10px solid #f3f3f3;
 }
 
 .txDetailsContent {
   height: 100%;
   width: 100%;
-  background-color: #fff;
+  background-color: #f3f3f3;
   font-size: 11px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 7px;
 }
 
 .txCreatedDate {
   width: 200px;
+  font-size: 12px;
+}
+
+.txAmount {
+  margin-bottom: 2px;
+  background-color: #fff;
+  padding: 0px 10px;
+  border-radius: 10px;
+}
+
+.txStatusIcon {
+  width: 15px;
+  display: flex;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  height: 15px;
+  background-color: #008479;
+  color: #fff;
+  text-align: center;
+
+  align-items: center;
+  margin: auto;
+  top: calc(50% - 8px);
+  left: -7px;
+}
+
+.doneIcon {
+  margin: auto;
+  font-size: 10px !important;
+}
+
+.icon {
+  font-size: 16px !important;
+}
+
+.txConnection {
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.txConnectionLine {
+  width: 45px;
+  border: none;
+  margin-top: 3px;
+  height: 0px;
+  border-top: 2px dashed;
 }

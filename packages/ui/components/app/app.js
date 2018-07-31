@@ -8,22 +8,20 @@ import {
 
 import Home from "ui/views/home/home";
 import Search from "ui/views/search/search";
-import Account from "ui/views/account/account";
 import Activity from "ui/views/activity/activity";
 import Statistic from "ui/views/statistic/statistic";
 import About from "ui/views/about/about";
 import Callback from "ui/views/callback/callback";
 import SearchOverlay from "ui/components/search-overlay/search-overlay";
+import LedgerDrawer from "ui/components/ledger-drawer/ledger-drawer";
 
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
-import PersonIcon from "@material-ui/icons/Person";
 import ActivityIcon from "@material-ui/icons/History";
 import StatisticIcon from "@material-ui/icons/ShowChart";
 import AboutIcon from "@material-ui/icons/Info";
 
 import Header from "ui/components/header/header";
-import Drawer from "component/drawer/drawer";
 import Footer from "component/footer/footer";
 
 import { getSessionStatus } from "ui/api/user";
@@ -39,7 +37,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      activityVisible: false,
+      activityVisible: true,
       footerVisible: false,
       isUserAuthenticated: false,
       checkingUserAuthenticationStatus: true,
@@ -97,16 +95,6 @@ class App extends Component {
         view: Search,
         style: styles.searchIconLabel,
         visible: true
-      },
-      {
-        id: "account",
-        label: "Account",
-        path: "/account",
-        exact: true,
-        icon: <PersonIcon className={styles.navIconElem} />,
-        view: Account,
-        style: styles.accountIconLabel,
-        visible: this.state.isUserAuthenticated
       },
       {
         id: "activity",
@@ -209,37 +197,6 @@ class App extends Component {
     console.log("Toast");
   }
 
-  renderActivityItem({ date, description }, index) {
-    return (
-      <div key={index} className={styles.activityItem}>
-        <div className={styles.activityDate}>
-          <span>{date}</span>
-        </div>
-        <div className={styles.activityTimelineIcon}>
-          <div className={styles.line} />
-          <div className={styles.timelinePoint} />
-          <div className={styles.line} />
-        </div>
-        <div className={styles.activityDescription}>{description}</div>
-      </div>
-    );
-  }
-
-  renderDrawerContent() {
-    return (
-      <div className={styles.activityDrawerContent}>
-        <div className={styles.balanceContainer}>
-          <div className={styles.balance}>
-            <span className={styles.balanceAmount}>Example Drawer</span>
-          </div>
-        </div>
-        <div className={styles.activity}>
-          <span>Activity Timeline (under development)</span>
-        </div>
-      </div>
-    );
-  }
-
   renderAppRoute() {
     return (
       <div className={styles.app}>
@@ -264,9 +221,9 @@ class App extends Component {
               isUserAuthenticated={this.state.isUserAuthenticated}
               toggleSearchOverlay={this.toggleSearchOverlay}
             />
-            <Drawer
+            <LedgerDrawer
               isVisible={this.state.activityVisible}
-              drawerContent={this.renderDrawerContent()}
+              userData={this.state.userData}
             />
             <div className={styles.content}>
               <SearchOverlay
