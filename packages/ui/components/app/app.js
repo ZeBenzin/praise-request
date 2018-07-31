@@ -37,7 +37,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      activityVisible: false,
+      activityVisible: true,
       footerVisible: false,
       isUserAuthenticated: false,
       checkingUserAuthenticationStatus: true,

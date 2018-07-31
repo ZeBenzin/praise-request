@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Brush
+} from "recharts";
 import moment from "moment";
 import sortBy from "lodash/sortBy";
 
@@ -67,6 +74,7 @@ class BalancePanel extends Component {
                   <stop offset="95%" stopColor="#467ebd" stopOpacity={0} />
                 </linearGradient>
               </defs>
+              <Brush height={20} />
               <Tooltip
                 wrapperStyle={{
                   top: "-40px",
@@ -74,12 +82,12 @@ class BalancePanel extends Component {
                   textAlign: "center"
                 }}
                 content={(v, i, l) => {
-                  return v.active ? (
+                  return v.active && v.payload ? (
                     <div className={styles.timelineTooltip}>
                       <span>
                         {moment(v.payload[0].payload.name).format("DD MMM")}
                       </span>{" "}
-                      |
+                      <span className={styles.tooltipLabelDivider}>|</span>
                       <span> {v.payload[0].payload.value}</span>
                     </div>
                   ) : null;

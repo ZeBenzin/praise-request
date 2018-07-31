@@ -49,7 +49,6 @@ class TransactionPanel extends Component {
               </div>
               <div className={styles.txTimeline}>
                 <div className={styles.txLine} />
-                {/* <div className={styles.txCircle} /> */}
                 <div className={styles.txStatusIcon}>
                   <Done className={styles.doneIcon} />
                 </div>
