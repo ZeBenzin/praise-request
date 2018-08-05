@@ -34,9 +34,9 @@ class BalancePanel extends Component {
       };
     });
     const sortedData = sortBy(graphData, data => data.name);
-    return sortedData.map(d => ({
-      name: d.name,
-      value: d.value
+    return sortedData.map(({ name, value }) => ({
+      name,
+      value
     }));
   }
 
@@ -56,7 +56,7 @@ class BalancePanel extends Component {
                   <stop offset="95%" stopColor="#467ebd" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <Brush height={20} />
+              <Brush height={20} onChange={this.props.onTransactionsFiltered} />
               <Tooltip
                 wrapperStyle={{
                   top: "-40px",
