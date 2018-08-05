@@ -2,3 +2,102 @@
   height: 250px;
   min-width: 330px;
 }
+
+.modalContentContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.exitButton {
+  position: absolute;
+  right: -9px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  display: flex;
+  border-radius: 50%;
+  top: -9px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  & > svg {
+    font-size: 26px;
+  }
+}
+
+.txDetailsContent {
+  height: 100%;
+  border-top: 1px solid #e2e2e2;
+  width: 100%;
+  padding-top: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.txUser {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.txCreatedDate {
+  width: 200px;
+  font-size: 12px;
+}
+
+.txAmount {
+  margin-bottom: 2px;
+  background-color: #fff;
+  padding: 0px 10px;
+  border-radius: 10px;
+}
+
+.txStatusIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  border-radius: 50%;
+  border: 1px solid #008479;
+  color: #008479;
+  text-align: center;
+  align-items: center;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.doneIcon {
+  margin: auto;
+  font-size: 19px !important;
+}
+
+.txConnection {
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.txConnectionLine {
+  width: 160px;
+  border: none;
+  margin-top: 7px;
+  height: 0px;
+  border-top: 2px dashed;
+}
+
+.txConnectionArrow {
+  display: flex;
+  align-items: center;
+}
+
+.arrowHead {
+  font-size: 26px;
+}
+
+.reversed {
+  flex-direction: row-reverse;
+  & > .arrowHead {
+    transform: rotateY(180deg);
+  }
+}

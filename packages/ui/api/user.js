@@ -33,3 +33,13 @@ export const getGitHubAuthToken = authCode => {
     })
     .catch(err => console.error(err));
 };
+
+export const getUser = ({ id, isFetchingOSTUser }) => {
+  return axios
+    .get(`/praise/user/${id}?ost_user=${isFetchingOSTUser}`)
+    .then(result => result.data.data)
+    .catch(err => {
+      console.error(err);
+      return { users: [{}] };
+    });
+};

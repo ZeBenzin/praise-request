@@ -5,9 +5,17 @@ const ostService = require("../../../utils/ost-service");
 const User = require("./model");
 
 const getUserById = (req, res) => {
-  User.findById(req.params.id)
-    .then(user => res.status(200).json(user))
-    .catch(err => res.status(400).json({ code: 400, error: err.message }));
+  const userId = req.params.id;
+  if (!req.query.ost_user) {
+    User.findById(userId)
+      .then(user => res.status(200).json(user))
+      .catch(err => res.status(400).json({ code: 400, error: err.message }));
+  } else {
+    return ostService
+      .getUser({ id: userId })
+      .then(result => res.status(200).json(result.data))
+      .catch(err => res.status(400).json({ code: 400, error: err.message }));
+  }
 };
 
 const createUser = user => {
