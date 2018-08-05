@@ -6,15 +6,18 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(
-    authController.decodeToken,
-    authController.checkUser,
-    controller.getTransactions
-  )
   .post(
     authController.decodeToken,
     authController.checkUser,
     controller.createTransaction
+  );
+
+router
+  .route("/:id")
+  .get(
+    authController.decodeToken,
+    authController.checkUser,
+    controller.getTransaction
   );
 
 module.exports = router;

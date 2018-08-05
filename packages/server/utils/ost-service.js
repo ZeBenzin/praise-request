@@ -146,6 +146,10 @@ const listTransactions = ({ uuids }) => {
   return getRequest("/transactions", { id: uuids.join(","), limit: 100 });
 };
 
+const getTransaction = ({ id }) => {
+  return getRequest(`/transactions/${id}`);
+};
+
 const getLedger = ({ user_id, page_no }) => {
   return getRequest(`/ledger/${user_id}`, { limit: 50, page_no });
 };
@@ -160,6 +164,7 @@ module.exports = {
   getLedger,
   getBalance,
   executeTransaction,
+  getTransaction,
   monitorTransaction,
   stopMonitoringTransaction
 };

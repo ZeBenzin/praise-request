@@ -7,14 +7,49 @@ import Done from "@material-ui/icons/Done";
 import PersonIcon from "@material-ui/icons/Person";
 import AccountBalance from "@material-ui/icons/AccountBalance";
 
+import TransactionModal from "ui/components/transaction-modal/transaction-modal";
+
+import { getTransaction } from "ui/api/transaction";
+import { getUser } from "ui/api/user";
+
 import styles from "./transaction-panel.scss";
 
 class TransactionPanel extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      isTransactionModalOpen: false,
+      selectedTransaction: {},
+      otherUser: {}
+    };
+
     this.rowRenderer = this.rowRenderer.bind(this);
     this.isRowLoaded = this.isRowLoaded.bind(this);
+    this.onTransactionClicked = this.onTransactionClicked.bind(this);
+    this.onCloseModal = this.onCloseModal.bind(this);
+  }
+
+  onTransactionClicked(tx) {
+    const otherUserId =
+      tx.to_user_id === this.props.userData.ostId
+        ? tx.from_user_id
+        : tx.to_user_id;
+    const promises = [
+      getTransaction({ id: tx.id }),
+      getUser({ id: otherUserId, isFetchingOSTUser: true })
+    ];
+    Promise.all(promises).then(result => {
+      this.setState({
+        isTransactionModalOpen: true,
+        selectedTransaction: result[0].transaction,
+        otherUser: result[1].users[0]
+      });
+    });
+  }
+
+  onCloseModal() {
+    this.setState({ isTransactionModalOpen: false });
   }
 
   isRowLoaded({ index }) {
@@ -24,7 +59,12 @@ class TransactionPanel extends Component {
   rowRenderer({ index, key, style }) {
     const tx = this.props.transactions[index];
     return (
-      <div className={styles.txPoint} key={key} style={style}>
+      <div
+        className={styles.txPoint}
+        key={key}
+        style={style}
+        onClick={() => this.onTransactionClicked(tx)}
+      >
         <div className={styles.txDetails}>
           <div className={styles.txDetailsContent}>
             <PersonIcon className={styles.icon} />
@@ -83,6 +123,14 @@ class TransactionPanel extends Component {
             );
           }}
         </InfiniteLoader>
+        {this.state.isTransactionModalOpen ? (
+          <TransactionModal
+            transaction={this.state.selectedTransaction}
+            otherUser={this.state.otherUser}
+            onCloseModal={this.onCloseModal}
+            userData={this.props.userData}
+          />
+        ) : null}
       </div>
     );
   }
