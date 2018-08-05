@@ -7,14 +7,33 @@ import Done from "@material-ui/icons/Done";
 import PersonIcon from "@material-ui/icons/Person";
 import AccountBalance from "@material-ui/icons/AccountBalance";
 
+import TransactionModal from "ui/components/transaction-modal/transaction-modal";
+
+import { getTransaction } from "ui/api/transaction";
+
 import styles from "./transaction-panel.scss";
 
 class TransactionPanel extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      isTransactionModalOpen: false,
+      selectedTransaction: {}
+    };
+
     this.rowRenderer = this.rowRenderer.bind(this);
     this.isRowLoaded = this.isRowLoaded.bind(this);
+    this.onTransactionClicked = this.onTransactionClicked.bind(this);
+  }
+
+  onTransactionClicked(txId) {
+    getTransaction({ id: txId }).then(result => {
+      this.setState({
+        isTransactionModalOpen: true,
+        selectedTransaction: result.transaction
+      });
+    });
   }
 
   isRowLoaded({ index }) {
@@ -24,7 +43,12 @@ class TransactionPanel extends Component {
   rowRenderer({ index, key, style }) {
     const tx = this.props.transactions[index];
     return (
-      <div className={styles.txPoint} key={key} style={style}>
+      <div
+        className={styles.txPoint}
+        key={key}
+        style={style}
+        onClick={() => this.onTransactionClicked(tx.id)}
+      >
         <div className={styles.txDetails}>
           <div className={styles.txDetailsContent}>
             <PersonIcon className={styles.icon} />
@@ -83,6 +107,9 @@ class TransactionPanel extends Component {
             );
           }}
         </InfiniteLoader>
+        {this.state.isTransactionModalOpen ? (
+          <TransactionModal transaction={this.state.selectedTransaction} />
+        ) : null}
       </div>
     );
   }

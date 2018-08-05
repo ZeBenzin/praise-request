@@ -74,8 +74,11 @@ const createTransaction = (req, res, next) => {
     });
 };
 
-const getTransactions = (req, res) => {
-  return ostService.getUserTransactions({ user_id: req.user_id });
+const getTransaction = (req, res) => {
+  return ostService
+    .getTransaction({ id: req.params.id })
+    .then(result => res.status(200).send(result.data))
+    .catch(err => res.status(400).send(err.message));
 };
 
-module.exports = { createTransaction, getTransactions };
+module.exports = { createTransaction, getTransaction };
