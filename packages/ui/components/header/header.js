@@ -97,14 +97,16 @@ class Header extends PureComponent {
                 >
                   Log out
                 </button>
-                <div
-                  className={styles.hamburger}
-                  onClick={this.props.onActivityIconClick}
-                >
-                  <div className={styles.top} />
-                  <div className={styles.middle} />
-                  <div className={styles.bottom} />
-                </div>
+                {this.props.isUserAuthenticated ? (
+                  <div
+                    className={styles.hamburger}
+                    onClick={this.props.onActivityIconClick}
+                  >
+                    <div className={styles.top} />
+                    <div className={styles.middle} />
+                    <div className={styles.bottom} />
+                  </div>
+                ) : null}
               </div>
             )}
           </div>

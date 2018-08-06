@@ -8,6 +8,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import AccountBalance from "@material-ui/icons/AccountBalance";
 
 import TransactionModal from "ui/components/transaction-modal/transaction-modal";
+import TransactionStatus from "ui/components/transaction-status/transaction-status";
 
 import { getTransaction } from "ui/api/transaction";
 import { getUser } from "ui/api/user";
@@ -81,9 +82,11 @@ class TransactionPanel extends Component {
         </div>
         <div className={styles.txTimeline}>
           <div className={styles.txLine} />
-          <div className={styles.txStatusIcon}>
-            <Done className={styles.doneIcon} />
-          </div>
+          <TransactionStatus
+            status={tx.status}
+            containerClassName={styles.txStatusIcon}
+            iconClassName={styles.statusIcon}
+          />
           <div className={styles.txLine} />
         </div>
 

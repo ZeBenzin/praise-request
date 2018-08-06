@@ -11,22 +11,22 @@ import styles from "./transaction-status.scss";
 
 const statusIconMap = {
   complete: {
-    icon: <Done className={styles.statusIcon} />,
+    icon: <Done />,
     iconClassName: styles.doneIcon,
     containerClassName: styles.txStatusIcon
   },
   processing: {
-    icon: <Cached className={styles.statusIcon} />,
+    icon: <Cached />,
     iconClassName: styles.processingIcon,
     containerClassName: styles.txStatusIcon
   },
   failed: {
-    icon: <Close className={styles.statusIcon} />,
+    icon: <Close />,
     iconClassName: styles.failedIcon,
     containerClassName: styles.txStatusIcon
   },
   waiting_for_mining: {
-    icon: <Gavel className={styles.statusIcon} />,
+    icon: <Gavel />,
     iconClassName: styles.miningIcon,
     containerClassName: styles.txStatusIcon
   }
@@ -42,7 +42,9 @@ class TransactionStatus extends PureComponent {
           statusIconMap[this.props.status].iconClassName
         )}
       >
-        {React.cloneElement(statusIconMap[this.props.status].icon)}
+        {React.cloneElement(statusIconMap[this.props.status].icon, {
+          className: classnames(styles.statusIcon, this.props.iconClassName)
+        })}
       </div>
     );
   }

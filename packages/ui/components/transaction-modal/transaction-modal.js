@@ -27,7 +27,10 @@ class TransactionModal extends Component {
           <Close />
         </span>
 
-        <TransactionStatus status={this.props.transaction.status} />
+        <TransactionStatus
+          status={this.props.transaction.status}
+          containerClassName={styles.txStatusIcon}
+        />
 
         <div className={styles.txDetailsContent}>
           <div className={styles.txUser}>

@@ -37,7 +37,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      activityVisible: true,
+      activityVisible: false,
       footerVisible: false,
       isUserAuthenticated: false,
       checkingUserAuthenticationStatus: true,
@@ -56,6 +56,7 @@ class App extends Component {
         .then(data => {
           this.setState({
             isUserAuthenticated: data.status === 200,
+            activityVisible: true,
             checkingUserAuthenticationStatus: false,
             userData: data.data
           });
