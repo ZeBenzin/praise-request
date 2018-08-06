@@ -6,10 +6,10 @@ import classnames from "classnames";
 
 import PersonIcon from "@material-ui/icons/Person";
 import AccountBalance from "@material-ui/icons/AccountBalance";
-import Done from "@material-ui/icons/Done";
 import Close from "@material-ui/icons/Close";
 
 import Modal from "component/modal/modal";
+import TransactionStatus from "ui/components/transaction-status/transaction-status";
 
 import styles from "./transaction-modal.scss";
 
@@ -26,9 +26,9 @@ class TransactionModal extends Component {
         >
           <Close />
         </span>
-        <div className={styles.txStatusIcon}>
-          <Done className={styles.doneIcon} />
-        </div>
+
+        <TransactionStatus status={this.props.transaction.status} />
+
         <div className={styles.txDetailsContent}>
           <div className={styles.txUser}>
             <PersonIcon className={styles.icon} />

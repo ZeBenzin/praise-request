@@ -1,0 +1,36 @@
+.statusIcon {
+  margin: auto;
+  font-size: 19px !important;
+}
+
+.txStatusIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  border-radius: 50%;
+  border: 1px solid;
+  text-align: center;
+  align-items: center;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.doneIcon {
+  border-color: #008479;
+  color: #008479;
+}
+
+.processingIcon {
+  border-color: #a0a039;
+  color: #a0a039;
+}
+
+.failedIcon {
+  border-color: #b51212;
+  color: #b51212;
+}
+
+.miningIcon {
+  border-color: #a9a9a9;
+  color: #a9a9a9;
+}
