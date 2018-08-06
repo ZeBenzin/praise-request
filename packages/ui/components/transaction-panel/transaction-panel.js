@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 
 import { InfiniteLoader, List, AutoSizer } from "react-virtualized";
 import moment from "moment";
-import Done from "@material-ui/icons/Done";
 import PersonIcon from "@material-ui/icons/Person";
 import AccountBalance from "@material-ui/icons/AccountBalance";
 

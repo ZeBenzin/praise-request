@@ -14,9 +14,11 @@ const initialise = server => {
       auth.decodeToken(req, null, () => {
         if (req.user) {
           socketMap[req.user.ostId] = { socket, ghUserId: req.user.id };
-          ostService.getUser({ id: req.user.ostId }).then(({ data }) => {
-            socket.emit("balance", data.data.users[0].token_balance);
-          });
+          ostService
+            .getBalance({ user_id: req.user.ostId })
+            .then(({ data }) => {
+              socket.emit("balance", data.data.balance.available_balance);
+            });
         }
       });
     }

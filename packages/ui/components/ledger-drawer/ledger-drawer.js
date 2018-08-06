@@ -7,7 +7,6 @@ import TransactionPanel from "ui/components/transaction-panel/transaction-panel"
 import BalancePanel from "ui/components/balance-panel/balance-panel";
 import Drawer from "component/drawer/drawer";
 
-import { getUserBalance } from "ui/api/balance";
 import { getTransactions } from "ui/api/ledger";
 
 import styles from "./ledger-drawer.scss";
@@ -30,12 +29,23 @@ class LedgerDrawer extends Component {
     );
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.userBalance !== this.props.userBalance &&
+      !this.state.isFilterActive
+    ) {
+      getTransactions({}).then(result => {
+        this.setState(() => ({
+          transactions: result.transactions
+        }));
+      });
+    }
+  }
+
   componentDidMount() {
-    const promises = [getUserBalance(), getTransactions({})];
-    Promise.all(promises).then(results => {
+    getTransactions({}).then(result => {
       this.setState(() => ({
-        userBalance: parseInt(results[0].balance.available_balance, 10),
-        transactions: results[1].transactions
+        transactions: result.transactions
       }));
     });
   }
@@ -64,13 +74,13 @@ class LedgerDrawer extends Component {
     return (
       <div className={styles.accountView}>
         <BalancePanel
-          userBalance={parseInt(this.state.userBalance, 10)}
+          userBalance={parseInt(this.props.userBalance, 10)}
           userData={this.props.userData}
           transactions={this.state.transactions}
           onTransactionsFiltered={this.onTransactionsFiltered}
         />
         <TransactionPanel
-          userBalance={this.state.userBalance}
+          userBalance={this.props.userBalance}
           userData={this.props.userData}
           transactions={this.state.transactions}
           getTransactions={this.getTransactions}

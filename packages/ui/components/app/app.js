@@ -6,6 +6,8 @@ import {
   Switch
 } from "react-router-dom";
 
+import openSocket from "socket.io-client";
+
 import Home from "ui/views/home/home";
 import Search from "ui/views/search/search";
 import Activity from "ui/views/activity/activity";
@@ -32,9 +34,19 @@ import styles from "./app.scss";
 export const ErrorContext = React.createContext("error");
 export const AuthenticationContext = React.createContext("auth");
 
+const socket = openSocket("/", {
+  secure: true,
+  rejectUnauthorized: false,
+  query: { jwt: localStorage.getItem("praiseRequestToken") }
+});
+
 class App extends Component {
   constructor(props) {
     super(props);
+
+    socket.on("balance", balance => {
+      this.setState({ balance: parseInt(balance, 10) });
+    });
 
     this.state = {
       activityVisible: false,
@@ -221,10 +233,12 @@ class App extends Component {
               }
               isUserAuthenticated={this.state.isUserAuthenticated}
               toggleSearchOverlay={this.toggleSearchOverlay}
+              balance={this.state.balance}
             />
             <LedgerDrawer
               isVisible={this.state.activityVisible}
               userData={this.state.userData}
+              userBalance={this.state.balance}
             />
             <div className={styles.content}>
               <SearchOverlay
