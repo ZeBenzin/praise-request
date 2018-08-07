@@ -33,22 +33,17 @@ class LedgerDrawer extends Component {
   componentWillReceiveProps(nextProps) {
     if (
       nextProps.userBalance !== this.props.userBalance &&
-      !this.state.isFilterActive
+      !this.state.isFilterActive &&
+      !this._isFetching
     ) {
+      this._isFetching = true;
       getTransactions({}).then(result => {
         this.setState(() => ({
           transactions: result.transactions
         }));
+        this._isFetching = false;
       });
     }
-  }
-
-  componentDidMount() {
-    getTransactions({}).then(result => {
-      this.setState(() => ({
-        transactions: result.transactions
-      }));
-    });
   }
 
   onTransactionsFiltered({ startIndex, endIndex }) {
