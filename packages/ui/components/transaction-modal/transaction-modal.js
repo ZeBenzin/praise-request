@@ -68,7 +68,9 @@ class TransactionModal extends Component {
               "hh:mm:ss DD MMM YYYY"
             )}
           </div>
-          <div>{this.props.transaction.transaction_hash}</div>
+          <div className={styles.txHash}>
+            {this.props.transaction.transaction_hash}
+          </div>
           <div>{this.props.transaction.block_number}</div>
         </div>
       </div>

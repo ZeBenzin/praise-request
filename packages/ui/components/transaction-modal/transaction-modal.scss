@@ -1,6 +1,6 @@
 .modalContainer {
   height: 250px;
-  min-width: 330px;
+  max-width: 330px;
 }
 
 .modalContentContainer {
@@ -86,4 +86,9 @@
   & > .arrowHead {
     transform: rotateY(180deg);
   }
+}
+
+.txHash {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
