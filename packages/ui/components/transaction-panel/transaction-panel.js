@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { InfiniteLoader, List, AutoSizer } from "react-virtualized";
 import moment from "moment";
 import PersonIcon from "@material-ui/icons/Person";
+import Cached from "@material-ui/icons/Cached";
 import AccountBalance from "@material-ui/icons/AccountBalance";
 
 import TransactionModal from "ui/components/transaction-modal/transaction-modal";
@@ -12,6 +13,7 @@ import TransactionStatus from "ui/components/transaction-status/transaction-stat
 import { getTransaction } from "ui/api/transaction";
 import { getUser } from "ui/api/user";
 
+import classnames from "classnames";
 import styles from "./transaction-panel.scss";
 
 class TransactionPanel extends Component {
@@ -73,7 +75,15 @@ class TransactionPanel extends Component {
                 {this.props.userData.ostId === tx.to_user_id ? "+" : "-"}
                 {tx.amount}
               </span>
-              <div className={styles.txConnectionLine} />
+              {/*<div className={styles.txConnectionLine} />*/}
+              <div
+                className={classnames(styles.txConnectionArrow, {
+                  [styles.reversed]: this.props.userData.ostId === tx.to_user_id
+                })}
+              >
+                <div className={styles.arrowHead}>{`<`}</div>
+                <div className={styles.txConnectionLine} />
+              </div>
             </div>
             <AccountBalance className={styles.icon} />
           </div>
@@ -99,10 +109,13 @@ class TransactionPanel extends Component {
   render() {
     return (
       <div className={styles.transactionList}>
+        <div className={styles.refreshButton}>
+          <Cached onClick={this.props.onRefreshClicked} />
+        </div>
         <InfiniteLoader
           isRowLoaded={this.isRowLoaded}
           loadMoreRows={this.props.getTransactions}
-          rowCount={10000}
+          rowCount={Number.MAX_SAFE_INTEGER}
         >
           {({ onRowsRendered, registerChild }) => {
             return (

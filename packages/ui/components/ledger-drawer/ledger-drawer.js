@@ -27,6 +27,7 @@ class LedgerDrawer extends Component {
       this.onTransactionsFiltered.bind(this),
       300
     );
+    this.onRefreshClicked = this.onRefreshClicked.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -57,6 +58,17 @@ class LedgerDrawer extends Component {
     }));
   }
 
+  onRefreshClicked() {
+    if (!this._isFetching) {
+      getTransactions({}).then(result => {
+        this.setState(() => ({
+          transactions: result.transactions
+        }));
+        this._isFetching = false;
+      });
+    }
+  }
+
   getTransactions() {
     if (!this._isFetching && !this.state.isFilterActive) {
       this._isFetching = true;
@@ -84,6 +96,7 @@ class LedgerDrawer extends Component {
           userData={this.props.userData}
           transactions={this.state.transactions}
           getTransactions={this.getTransactions}
+          onRefreshClicked={this.onRefreshClicked}
         />
       </div>
     );
