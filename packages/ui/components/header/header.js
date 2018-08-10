@@ -2,8 +2,6 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
-import openSocket from "socket.io-client";
-
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import SearchIcon from "@material-ui/icons/Search";
 import AuthenticationModal from "ui/components/authentication-modal/authentication-modal";
@@ -12,18 +10,9 @@ import { withAuthentication } from "ui/higher-order-components/with-authenticati
 import classNames from "classnames";
 import styles from "./header.scss";
 
-const socket = openSocket("/", {
-  secure: true,
-  rejectUnauthorized: false,
-  query: { jwt: localStorage.getItem("praiseRequestToken") }
-});
-
 class Header extends PureComponent {
   constructor(props) {
     super(props);
-    socket.on("balance", balance => {
-      this.setState({ balance: parseInt(balance, 10) });
-    });
 
     this.state = {
       authModalOpen: false,
@@ -63,7 +52,7 @@ class Header extends PureComponent {
           {this.props.isUserAuthenticated ? (
             <div className={styles.praiseBalance}>
               <FavoriteBorderIcon />
-              <span>{this.state.balance}</span>
+              <span>{this.props.balance}</span>
             </div>
           ) : null}
           <div className={styles.rightContent}>
@@ -97,14 +86,16 @@ class Header extends PureComponent {
                 >
                   Log out
                 </button>
-                <div
-                  className={styles.hamburger}
-                  onClick={this.props.onActivityIconClick}
-                >
-                  <div className={styles.top} />
-                  <div className={styles.middle} />
-                  <div className={styles.bottom} />
-                </div>
+                {this.props.isUserAuthenticated ? (
+                  <div
+                    className={styles.hamburger}
+                    onClick={this.props.onActivityIconClick}
+                  >
+                    <div className={styles.top} />
+                    <div className={styles.middle} />
+                    <div className={styles.bottom} />
+                  </div>
+                ) : null}
               </div>
             )}
           </div>
@@ -121,7 +112,8 @@ Header.propTypes = {
   isUserAuthenticated: PropTypes.bool.isRequired,
   toggleSearchOverlay: PropTypes.func.isRequired,
   onActivityIconClick: PropTypes.func.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  balance: PropTypes.number
 };
 
 export default withRouter(withAuthentication(Header));
