@@ -48,7 +48,7 @@ class Header extends PureComponent {
     return (
       <div className={styles.header}>
         <div className={styles.headerContent}>
-          <div className={styles.leftContent}>ALPHA v0.1.0</div>
+          <div className={styles.leftContent}>ALPHA v0.2.0</div>
           {this.props.isUserAuthenticated ? (
             <div className={styles.praiseBalance}>
               <FavoriteBorderIcon />
