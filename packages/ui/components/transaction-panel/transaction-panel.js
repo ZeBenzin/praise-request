@@ -75,7 +75,6 @@ class TransactionPanel extends Component {
                 {this.props.userData.ostId === tx.to_user_id ? "+" : "-"}
                 {tx.amount}
               </span>
-              {/*<div className={styles.txConnectionLine} />*/}
               <div
                 className={classnames(styles.txConnectionArrow, {
                   [styles.reversed]: this.props.userData.ostId === tx.to_user_id
