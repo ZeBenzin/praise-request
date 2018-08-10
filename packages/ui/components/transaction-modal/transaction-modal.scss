@@ -1,6 +1,6 @@
 .modalContainer {
   height: 250px;
-  min-width: 330px;
+  max-width: 330px;
 }
 
 .modalContentContainer {
@@ -55,24 +55,6 @@
   border-radius: 10px;
 }
 
-.txStatusIcon {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  border-radius: 50%;
-  border: 1px solid #008479;
-  color: #008479;
-  text-align: center;
-  align-items: center;
-  margin: auto;
-  margin-bottom: 20px;
-}
-
-.doneIcon {
-  margin: auto;
-  font-size: 19px !important;
-}
-
 .txConnection {
   text-align: center;
   padding-bottom: 15px;
@@ -91,6 +73,10 @@
   align-items: center;
 }
 
+.txStatusIcon {
+  margin-bottom: 20px;
+}
+
 .arrowHead {
   font-size: 26px;
 }
@@ -100,4 +86,9 @@
   & > .arrowHead {
     transform: rotateY(180deg);
   }
+}
+
+.txHash {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

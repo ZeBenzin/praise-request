@@ -17,6 +17,17 @@
   padding: 0 20px;
 }
 
+.refreshButton {
+  padding-right: 36px;
+  position: absolute;
+  z-index: 1;
+  right: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .transactionCard {
   height: 65px;
   margin-bottom: 25px;
@@ -115,22 +126,13 @@
 
 .txStatusIcon {
   width: 15px;
-  display: flex;
-  border-radius: 50%;
-  border: 1px solid #fff;
   height: 15px;
-  background-color: #008479;
-  color: #fff;
   text-align: center;
-
-  align-items: center;
-  margin: auto;
   top: calc(50% - 8px);
   left: -7px;
 }
 
-.doneIcon {
-  margin: auto;
+.statusIcon {
   font-size: 10px !important;
 }
 
@@ -149,4 +151,21 @@
   margin-top: 3px;
   height: 0px;
   border-top: 2px dashed;
+}
+
+.txConnectionArrow {
+  display: flex;
+  align-items: center;
+  height: 10px;
+}
+
+.arrowHead {
+  font-size: 16px;
+}
+
+.reversed {
+  flex-direction: row-reverse;
+  & > .arrowHead {
+    transform: rotateY(180deg);
+  }
 }

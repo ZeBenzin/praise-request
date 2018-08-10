@@ -7,7 +7,6 @@ import TransactionPanel from "ui/components/transaction-panel/transaction-panel"
 import BalancePanel from "ui/components/balance-panel/balance-panel";
 import Drawer from "component/drawer/drawer";
 
-import { getUserBalance } from "ui/api/balance";
 import { getTransactions } from "ui/api/ledger";
 
 import styles from "./ledger-drawer.scss";
@@ -28,16 +27,23 @@ class LedgerDrawer extends Component {
       this.onTransactionsFiltered.bind(this),
       300
     );
+    this.onRefreshClicked = this.onRefreshClicked.bind(this);
   }
 
-  componentDidMount() {
-    const promises = [getUserBalance(), getTransactions({})];
-    Promise.all(promises).then(results => {
-      this.setState(() => ({
-        userBalance: parseInt(results[0].balance.available_balance, 10),
-        transactions: results[1].transactions
-      }));
-    });
+  componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.userBalance !== this.props.userBalance &&
+      !this.state.isFilterActive &&
+      !this._isFetching
+    ) {
+      this._isFetching = true;
+      getTransactions({}).then(result => {
+        this.setState(() => ({
+          transactions: result.transactions
+        }));
+        this._isFetching = false;
+      });
+    }
   }
 
   onTransactionsFiltered({ startIndex, endIndex }) {
@@ -45,6 +51,17 @@ class LedgerDrawer extends Component {
       transactions: [...prevState.transactions.slice(startIndex, endIndex + 1)],
       isFilterActive: true
     }));
+  }
+
+  onRefreshClicked() {
+    if (!this._isFetching) {
+      getTransactions({}).then(result => {
+        this.setState(() => ({
+          transactions: result.transactions
+        }));
+        this._isFetching = false;
+      });
+    }
   }
 
   getTransactions() {
@@ -64,16 +81,17 @@ class LedgerDrawer extends Component {
     return (
       <div className={styles.accountView}>
         <BalancePanel
-          userBalance={parseInt(this.state.userBalance, 10)}
+          userBalance={parseInt(this.props.userBalance, 10)}
           userData={this.props.userData}
           transactions={this.state.transactions}
           onTransactionsFiltered={this.onTransactionsFiltered}
         />
         <TransactionPanel
-          userBalance={this.state.userBalance}
+          userBalance={this.props.userBalance}
           userData={this.props.userData}
           transactions={this.state.transactions}
           getTransactions={this.getTransactions}
+          onRefreshClicked={this.onRefreshClicked}
         />
       </div>
     );
