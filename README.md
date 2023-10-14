@@ -29,3 +29,5 @@ This repository makes use of yarns experimental workspaces feature.
 2.  `API_SECRET=<api_secret> API_KEY=<api_key> node index.js`
 
 Open `http://localhost:3000` to view the site.
+
+Test
